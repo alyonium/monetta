@@ -5,12 +5,15 @@ import '@mantine/dates/styles.css';
 import { MantineProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { BrowserRouter } from 'react-router';
+import AppRouter from '@/router/AppRouter.tsx';
 
 function App() {
   return (
-    <MantineProvider defaultColorScheme="dark">
+    <MantineProvider defaultColorScheme='dark'>
       <DatesProvider settings={{}}>
-        <BrowserRouter />
+        <BrowserRouter>
+          <AppRouter />
+        </BrowserRouter>
       </DatesProvider>
     </MantineProvider>
   );

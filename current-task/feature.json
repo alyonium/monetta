@@ -1,0 +1,633 @@
+{
+  "project": "Monetta",
+  "relatedSources": [
+    "current-task/prd.md",
+    "schema.yaml",
+    "src/api",
+    "src/modules/budget",
+    "src/router/AppRouter.tsx",
+    "src/constants/router.ts"
+  ],
+  "Functional Requirements Summary": [
+    "FR-1: Sign in with Firefly III personal access token and API base URL (must include /api); persist both in localStorage",
+    "FR-2: Four footer tabs after sign-in: Budget, History, Analytics, Settings",
+    "FR-3: Budget shows Income, Current, and Expense blocks; Expense block includes Firefly liabilities as Debt",
+    "FR-4: Account icon, color, and block order persist in Firefly preferences (moneta.accountAppearance.*, moneta.accountOrder.*)",
+    "FR-5: Hidden accounts use Firefly active=false and disappear from the app",
+    "FR-6: Create / edit / delete accounts and create / edit / delete transactions via Firefly API; balances refresh after mutations",
+    "FR-7: Record income, expense, and transfer by dragging an account onto another account",
+    "FR-8: Edit mode reorders accounts inside a block, including onto another page",
+    "FR-9: History lists all transactions with search, filters, sort, and scroll pagination; updates immediately after Budget mutations",
+    "FR-10: Analytics donut (expense breakdown) and line chart (income vs expenses) with month/year and tag filters",
+    "FR-11: Parameters bar and analytics totals convert into the wallet primary currency using Firefly exchange rates",
+    "FR-12: On reopen, show the last persisted query cache for this device, then refetch from Firefly"
+  ],
+  "Resolved Questions": [
+    "Icon, color, and account order are not Firefly account fields. Store them in Firefly preferences: moneta.accountAppearance.<accountId> and moneta.accountOrder.<block>.",
+    "Editing a current-account balance uses PATCH account (current_balance / opening balance), not a reconciliation transaction.",
+    "Debt maps to Firefly liability accounts and is rendered inside the Expenses block. Expense type stays Firefly expense. Type is not editable after create.",
+    "Cross-device sync is Firefly itself. Local cache is per device. Use TanStack Query + persist (localStorage or IndexedDB): paint last data immediately, refetch in the background. Do not refetch from scratch on every tab visit.",
+    "Hide account: PATCH active=false. Restore only in the Firefly UI, as the PRD says.",
+    "V1 UI copy is English. All user-visible strings go through i18n keys so a second locale can be added later.",
+    "Multi-currency totals convert with Firefly exchange rates into the wallet primary currency.",
+    "Budget pagination is a paged CSS grid, not a carousel library. Income/Current: one row. Expenses: as many equal-height 1fr rows as fit above the footer and dots.",
+    "Stack already chosen: Vite, React, Mantine (core/hooks/form/dates/charts), @dnd-kit, Phosphor, React Router, vite-plugin-pwa, generated @hey-api client in src/api.",
+    "Follow the existing src layout. Do not invent a parallel tree. Feature screens live in src/modules/<name>/ with components, constants, helpers, hooks, types, tests (see src/modules/budget). Shared UI goes in src/components. Cross-cutting helpers and types go in src/helpers and src/types. Routes are declared in src/constants/router.ts and src/router/AppRouter.tsx. Imports use @/. App already mounts BrowserRouter + AppRouter; Budget exists as a placeholder at /monetta/budget. Empty module folders for login, history, analytics, settings are already created. Extend them. Generated src/api is read-only except a non-generated configure file outside it (src/helpers).",
+    "Style with CSS modules colocated with the component: ComponentName.tsx + ComponentName.module.css in the same folder. Do not add a global styles folder per module and do not put component styles in a shared CSS dump.",
+    "Vitest tests for a module go in that module's tests/ folder (src/modules/budget/tests, etc.). Shared helper tests go next to the helper or in src/helpers/tests."
+  ],
+  "Non-Goals (Out of Scope for V1)": [
+    "OAuth login; only personal access token + URL",
+    "Offline writes or a mutation queue when Firefly is unreachable",
+    "Syncing the local query cache between phone and PC (Firefly is the sync)",
+    "Bills, piggy banks, rules, recurrences, webhooks, attachments, export",
+    "Russian (or any second) locale strings in V1",
+    "Redux, a second UI kit, a carousel library, Chart.js/Nivo",
+    "Native iOS/Android apps or device-only verification",
+    "Unhiding accounts from inside Monetta"
+  ],
+  "description": "Monetta V1 — Firefly III personal-finance PWA with Budget, History, Analytics, and Settings",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Add Vitest and i18n English catalog",
+      "description": "As a developer, I need a test runner and an English message catalog so later stories can add tests and keep all UI copy behind keys.",
+      "changes": [
+        "Add Vitest with a npm test script that runs in the Vite/React project; do not replace the existing App/router/Budget placeholder",
+        "Add an i18n helper (src/helpers or src/i18n) and en catalog; every new user-visible string in this and later stories must use a key",
+        "Keep Mantine dark theme, BrowserRouter, AppRouter, and the /monetta/budget placeholder working",
+        "Add or update automated tests",
+        "Tests pass",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-002",
+      "title": "Configure Firefly client from stored token and URL",
+      "description": "As a developer, I need the generated client to send requests to the user's Firefly instance with the stored bearer token.",
+      "changes": [
+        "Add localStorage helpers in src/helpers for the personal access token and backend URL; normalize the URL (trim, strip trailing slash, append /api if missing) before save and before client.baseUrl",
+        "Add configureApiClient in src/helpers that sets the generated client baseUrl, Authorization Bearer, and Accept application/json; do not edit generated files under src/api",
+        "Add or update automated tests",
+        "Tests pass",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-003",
+      "title": "Build login screen",
+      "description": "As a user, I want to enter my Firefly token and API URL so that I can open my wallet.",
+      "changes": [
+        "Add src/modules/login screen and a login path on ROUTE + AppRouter with required Token and Backend URL fields (Mantine inputs)",
+        "Submit saves both to localStorage, configures the client, and navigates into the app",
+        "Empty fields block submit and show validation errors",
+        "Submit probes Firefly (e.g. getAbout or getCurrentUser): 401/403 shows an invalid-token error; network, CORS, or non-API response shows an invalid-backend-URL error; do not navigate on failure",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 3,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-004",
+      "title": "Add auth gate and footer tabs",
+      "description": "As a user, I want four tabs after sign-in and to be sent back to login when I am not signed in.",
+      "changes": [
+        "RequireAuth redirects to login when token or URL is missing (shared component under src/components or src/modules/login)",
+        "Extend existing ROUTE and AppRouter: add History, Analytics, Settings next to the current Budget route; default signed-in route stays /monetta/budget",
+        "Put page entry files in the existing empty modules: src/modules/history, analytics, settings (same folder shape as budget)",
+        "Signed-in shell has footer tabs: Budget, History, Analytics, Settings (shared chrome in src/components)",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 4,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-005",
+      "title": "Add TanStack Query with persisted cache",
+      "description": "As a user, I want the last loaded data on this device to appear immediately on reopen, then refresh from Firefly.",
+      "changes": [
+        "Install TanStack Query and wrap the signed-in app in QueryClientProvider",
+        "Persist the query cache to localStorage or IndexedDB and restore it on startup",
+        "Document that cache is per device; Firefly remains the source of truth between phone and PC",
+        "Add or update automated tests",
+        "Tests pass",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-006",
+      "title": "Load primary currency and convert with Firefly rates",
+      "description": "As a user, I want totals in my wallet's main currency even when accounts use other currencies.",
+      "changes": [
+        "Read Firefly primary currency and exchange rates through the generated client from src/helpers",
+        "Add a converter helper in src/helpers: amount + fromCode → primary currency using Firefly rates",
+        "Add or update automated tests",
+        "Tests pass",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-007",
+      "title": "Map Firefly accounts and preferences to board items",
+      "description": "As a developer, I need one board model so Budget can render income, current, expense, and debt accounts with icon, color, and order.",
+      "changes": [
+        "Define AccountType INCOME | CURRENT | EXPENSE and a debt flag in src/modules/budget/types (and src/types only if shared outside Budget)",
+        "Map Firefly revenue → income, asset → current, expense → expense, liability → expense+debt in src/modules/budget/helpers; skip active=false",
+        "Read/write moneta.accountAppearance.<id> and moneta.accountOrder.<block> preferences from src/modules/budget/helpers",
+        "Add or update automated tests",
+        "Tests pass",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-008",
+      "title": "Fetch Budget board data with Query",
+      "description": "As a user, I want Budget to load my accounts from cache first, then from Firefly.",
+      "changes": [
+        "Add useBudgetBoard in src/modules/budget/hooks that returns ordered board items for income, current, and expense (including debt)",
+        "Opening Budget shows persisted cache if present, then updates after refetch",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 8,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-009",
+      "title": "Build Budget page chrome",
+      "description": "As a user, I want the Budget layout: parameters bar, three account blocks, and footer tabs.",
+      "changes": [
+        "Fill the existing src/modules/budget/Budget.tsx placeholder: full-height column with parameters bar, income block, current block, expense block (flex 1), footer reserved; block UI in src/modules/budget/components",
+        "Each block has a title area and a slot for a future grid; expense block has min-height 0 so it can be measured later",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 9,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-010",
+      "title": "Render account cards",
+      "description": "As a user, I want each account to show name, icon, color, balance, and currency.",
+      "changes": [
+        "Account card in src/modules/budget/components shows truncated name, Phosphor icon, color, balance, currency",
+        "Debt cards show debt amount in red and paid amount in green instead of a single balance",
+        "Add account slot uses the same cell size as a card",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 10,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-011",
+      "title": "Paginate Income and Current blocks",
+      "description": "As a user, I want one row of accounts I can swipe on mobile and page with arrows on desktop.",
+      "changes": [
+        "Mobile (<961px): 4 cards per page, one row, swipe changes page, dots under the row",
+        "Desktop (>=961px): one row, as many cards as fit the width, previous/next arrows",
+        "Add account is the last slot in the item list and can sit on its own last page",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 11,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-012",
+      "title": "Paginate Expense block by remaining height",
+      "description": "As a user, I want the expense block to fill the space above the footer with equal-height rows.",
+      "changes": [
+        "Measure the expense grid area (space above dots, before footer) with ResizeObserver / useElementSize",
+        "Mobile: 4 columns; rows = max(1, floor(availableHeight / minCardHeight)); desktop: columns and rows from available width and height",
+        "Grid uses equal 1fr rows so every row is the same height; page size includes the Add slot",
+        "Swipe / arrows / dots work like the other blocks",
+        "Add or update automated tests",
+        "Tests pass",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 12,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-013",
+      "title": "Add month picker to the parameters bar",
+      "description": "As a user, I want to pick a month and year for Budget, without choosing a future month.",
+      "changes": [
+        "Parameters bar Month control uses Mantine MonthPickerInput (month + year in one control)",
+        "maxDate is the current month; future months are disabled",
+        "Selected month is shared with later Budget queries and transaction default dates",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 13,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-014",
+      "title": "Show Income, Expenses, and Balance for the selected month",
+      "description": "As a user, I want the parameters bar to show month totals in the wallet primary currency.",
+      "changes": [
+        "Income, Expenses, and Balance fields are read-only and use the selected month range",
+        "Amounts convert into the primary currency with the US-006 helper",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 14,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-015",
+      "title": "Build shared account icon picker",
+      "description": "As a user, I want to pick an icon from a grid when creating or editing an account.",
+      "changes": [
+        "Icon button shows the current or default Phosphor icon and opens a modal of all available account icons",
+        "Clicking an icon selects it and closes the modal; click outside closes without changing the previous icon",
+        "Selected icon is highlighted",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 15,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-016",
+      "title": "Build shared create-account modal",
+      "description": "As a user, I want one create modal whose fields depend on AccountType.",
+      "changes": [
+        "One Create account modal; fields switch on AccountType INCOME | CURRENT | EXPENSE",
+        "Income: name, icon, color. Current: name, initial balance (default 0), currency (default primary), color, icon. Expense: type Expense|Debt, name, color, icon; Debt also shows initial balance (default 0) and currency (default primary)",
+        "Add account in each block opens this modal with the matching AccountType",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 16,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-017",
+      "title": "Save new accounts to Firefly",
+      "description": "As a user, I want Save on create to add the account to Firefly and show it on the board with icon and color.",
+      "changes": [
+        "Submit calls storeAccount: revenue / asset / expense / liability from the form; Debt uses liability",
+        "After create, write appearance preference and invalidate the board query so the new card appears",
+        "Required field validation blocks submit",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 17,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-018",
+      "title": "Open shared account details modal",
+      "description": "As a user, I want to tap an account card and see details I can close.",
+      "changes": [
+        "Clicking a card opens one Account details modal switched by AccountType",
+        "Header shows short account info and a pencil edit button; Close and click-outside dismiss the modal",
+        "Delete, Hide, search, and transaction list have placeholders ready for the next stories",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 18,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-019",
+      "title": "List and search account transactions in details",
+      "description": "As a user, I want to see this account's transactions grouped by date and filter them by search.",
+      "changes": [
+        "Details modal loads transactions for the account via Query and groups cards by date",
+        "Empty state text is No transactions found for this account",
+        "Search filters by description, from/to names, currency, and other visible transaction fields",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 19,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-020",
+      "title": "Edit account and discard changes",
+      "description": "As a user, I want to change name, icon, color, and (for current accounts) balance, or throw the draft away.",
+      "changes": [
+        "Shared Edit account modal; fields follow 1.2.4 / 1.3.4 / 1.4.4 (current balance is PATCH account; expense/debt type is not editable)",
+        "Discard restores the last saved values without writing to Firefly",
+        "Save updates Firefly + appearance preference and refreshes the board",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 20,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-021",
+      "title": "Delete account with confirmation",
+      "description": "As a user, I want to delete an account only after confirming I cannot undo it.",
+      "changes": [
+        "Delete shows: Do you want to delete the {name} account? This action cannot be undone.",
+        "Confirm calls deleteAccount, closes details, and removes the card from the board",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 21,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-022",
+      "title": "Hide account via Firefly active=false",
+      "description": "As a user, I want to hide an account from Monetta and be told I can restore it only in Firefly.",
+      "changes": [
+        "Hide shows: Do you want to hide the {name} account? You can get the selected account back through the Firefly interface.",
+        "Confirm PATCHes active=false and the account disappears from all pickers and boards",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 22,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-023",
+      "title": "Add shared tags field with suggestions",
+      "description": "As a user, I want to type a tag, see up to 10 matching existing tags, and create a new one.",
+      "changes": [
+        "Reusable tags field in src/components: search/create input plus up to 10 filtered suggestion badges from Firefly tags",
+        "Used by the upcoming transaction modals",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 23,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-024",
+      "title": "Record income by dragging income onto current",
+      "description": "As a user, I want to drop an income account on a current account and save a deposit.",
+      "changes": [
+        "Drop income → current opens Record income with those accounts preselected; hidden accounts are omitted",
+        "Form: amount in current currency (currency read-only), date (today, or first day of the selected Budget month), optional description and tags",
+        "Save calls storeTransaction (deposit), updates balances, invalidates board and history queries",
+        "Cancel and click-outside close without saving",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 24,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-025",
+      "title": "Record expense by dragging current onto expense",
+      "description": "As a user, I want to drop a current account on an expense or debt account and save a withdrawal.",
+      "changes": [
+        "Drop current → expense/debt opens Record expense with those accounts preselected",
+        "Same amount/date/tags pattern as income; amount currency is the current account",
+        "Save stores a withdrawal and invalidates board and history queries",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 25,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-026",
+      "title": "Record transfer by dragging current onto current",
+      "description": "As a user, I want to drop one current account on another and save a transfer, including different currencies.",
+      "changes": [
+        "Drop current → current opens Record transfer with From/To preselected",
+        "Same currency: one amount. Different currencies: Amount debited and Amount credited, each with its currency",
+        "Save stores a transfer and invalidates board and history queries",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 26,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-027",
+      "title": "Reorder accounts in edit mode",
+      "description": "As a user, I want Edit on the parameters bar so I can drag accounts to a new position in the same block.",
+      "changes": [
+        "Edit toggles @dnd-kit sortable inside each block; swipe pagination is disabled while dragging",
+        "Dropping on a new index updates moneta.accountOrder.<block> and the grid order",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 27,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-028",
+      "title": "Move an account to another page while dragging",
+      "description": "As a user, I want to hold a card at the left or right edge so the block turns the page and I can drop there.",
+      "changes": [
+        "In edit mode, holding a drag at the left or right edge of the block changes page once",
+        "The dragged account stays in hand and can be dropped on the new page; order preference updates",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 28,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-029",
+      "title": "Edit or delete a transaction from details",
+      "description": "As a user, I want to tap a transaction card and change or delete it.",
+      "changes": [
+        "Shared Edit transaction modal from account details: original from-to, From/To pickers limited by transaction type, amount or debited/credited, date, description, tags",
+        "Delete asks Delete this transaction? This action cannot be undone. then deletes and updates balances",
+        "Save and delete invalidate board and history queries and close the modal",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 29,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-030",
+      "title": "Show History list with scroll pagination",
+      "description": "As a user, I want all wallet transactions grouped by date, loaded as I scroll.",
+      "changes": [
+        "History page in src/modules/history lists transactions grouped by date with from, to, amount, description, tags, type",
+        "Different currencies show − debited (red) and + credited (green)",
+        "List uses scroll/infinite pagination via Query",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 30,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-031",
+      "title": "Search History",
+      "description": "As a user, I want to search the history list together with the active filters and sort.",
+      "changes": [
+        "Search field filters the loaded/query results by description, account names, currency, and other visible fields",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 31,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-032",
+      "title": "Filter History by scope, type, and tag",
+      "description": "As a user, I want a filters modal and a badge for how many filters are on.",
+      "changes": [
+        "Filter button opens a modal; badge shows the count of non-default filters",
+        "Scope: All history | Month (MonthPickerInput) | Date range (two DatePickerInput). Type: All types, Deposit, Withdrawal, Transfer, Reconciliation, Opening Balance. Tag: one existing tag",
+        "Reset returns defaults; Close dismisses the modal; applied filters change the list",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 32,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-033",
+      "title": "Toggle History sort order",
+      "description": "As a user, I want newest-first by default and to flip to oldest-first.",
+      "changes": [
+        "Sort icon button toggles desc (newest first, default) and asc (oldest first)",
+        "List order updates immediately",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 33,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-034",
+      "title": "Open edit transaction from History",
+      "description": "As a user, I want the same edit modal from a History card, and the list to update after save or delete.",
+      "changes": [
+        "Clicking a History card opens the shared Edit transaction modal from US-029",
+        "After save or delete the History list and Budget board both refresh without a manual reload",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 34,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-035",
+      "title": "Add Analytics view switch and period filters",
+      "description": "As a user, I want to switch Diagram/Chart and set From, To, and tag.",
+      "changes": [
+        "Analytics page in src/modules/analytics has Diagram | Chart (Diagram default) and Expenses | Incomes (Expenses default)",
+        "From/To are separate year and month fields; From cannot be after To; future months disabled",
+        "Diagram defaults From=To=current month; Chart defaults From=January of this year, To=current month; tag default is All tags",
+        "Period label above filters uses the format Jan - Aug 2026",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 35,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-036",
+      "title": "Render expense donut and ranked lists",
+      "description": "As a user, I want an expense breakdown donut with a center total, a legend, and ranked expense/income lists.",
+      "changes": [
+        "Mantine DonutChart (Recharts) of expenses for the selected period; center shows total in primary currency; percentages on or in segments; legend to the right with name, amount, color",
+        "Expenses list and Incomes list: name, percent, amount, highest first; switching to Incomes does not change the donut",
+        "Title is Expense breakdown plus the period label",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 36,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-037",
+      "title": "Swipe months on the diagram when filters are the current month",
+      "description": "As a user, I want to swipe the donut to the previous or next month when I have not set a custom range.",
+      "changes": [
+        "When From and To are the same current-style month window, swipe left/right changes the month and updates From/To",
+        "Dots: previous, current, and next if next exists; no future month; two dots if next month has not started",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 37,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-038",
+      "title": "Render incomes vs expenses line chart",
+      "description": "As a user, I want a month-by-month line chart with a hover tooltip.",
+      "changes": [
+        "Mantine LineChart: green Income, red Expenses, X = months, Y = money in primary currency, dashed grid",
+        "Hover tooltip shows that month's income and expense values",
+        "Title Incomes vs Expenses with a green/red legend and the period label; Expenses/Incomes lists reuse US-036 and do not change the chart",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 38,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-039",
+      "title": "Log out from Settings",
+      "description": "As a user, I want a logout button that clears my token and returns me to login.",
+      "changes": [
+        "Settings page in src/modules/settings shows a Log out button",
+        "Clicking it removes token (and backend URL) from localStorage, clears the persisted query cache, and redirects to login",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 39,
+      "passes": false,
+      "designReference": []
+    }
+  ]
+}

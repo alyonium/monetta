@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "skills": {
+    "feature-json-create-step-plan": {
+      "source": "Dimabytes/feature-json",
+      "sourceType": "github",
+      "skillPath": "skills/feature-json-create-step-plan/SKILL.md",
+      "computedHash": "73ae69882a4f03128d104ba5ab454e9d2dd62a672edc0935dcf7b4ff331e80e3"
+    },
+    "feature-json-implement-step": {
+      "source": "Dimabytes/feature-json",
+      "sourceType": "github",
+      "skillPath": "skills/feature-json-implement-step/SKILL.md",
+      "computedHash": "147cbba10c82b129daac4dac9f0fc4bcdec81c0d7a09a21824fe6cd6d40bf1fb"
+    },
+    "feature-json-init": {
+      "source": "Dimabytes/feature-json",
+      "sourceType": "github",
+      "skillPath": "skills/feature-json-create/SKILL.md",
+      "computedHash": "ffc7ad8e629be2b9db7837c0eda283ebc0a2c9481026df638c11f981f28edbb6"
+    },
+    "feature-json-orchestrate": {
+      "source": "Dimabytes/feature-json",
+      "sourceType": "github",
+      "skillPath": "skills/feature-json-orchestrate/SKILL.md",
+      "computedHash": "a698e83419ae86167351f5a991dfa8aa14bb0e0118dfa49b563faadfb93b308b"
+    },
+    "feature-json-step-review": {
+      "source": "Dimabytes/feature-json",
+      "sourceType": "github",
+      "skillPath": "skills/feature-json-step-review/SKILL.md",
+      "computedHash": "ac49abf6b6be3d19b3fcd9d1145e330f4cc507f9ec7f99d56533602456dc11f7"
+    }
+  }
+}
