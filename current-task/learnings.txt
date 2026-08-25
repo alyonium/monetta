@@ -1,0 +1,5 @@
+# Learnings
+
+- i18n: `src/i18n/en.ts` nested catalog, init in `src/i18n/index.ts`, typed keys via `src/i18n/i18next.d.ts`. Use `t()` in helpers/tests and `useTranslation()` in components. Interpolation: `{{name}}`.
+- Tests: `npm test` runs `vitest run`. Config is `vitest.config.ts` (`environment: 'node'`, alias `@` → `src`). Do not put tests in `vite.config.ts` (PWA plugin).
+- Typecheck: `tsconfig.app.json` maps `@/*` via `paths` to `./src/*`. Do not add `baseUrl`.

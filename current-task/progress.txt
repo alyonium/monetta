@@ -1,0 +1,7 @@
+## 2026-08-25 20:57 - US-001
+- Added Vitest (`npm test` = `vitest run`) and English i18next catalog. App, router, and Budget stub unchanged.
+- **Learnings for future iterations:**
+    - Patterns discovered: tests live in `src/**/*.test.ts`; import `describe`/`it`/`expect` from `vitest` (no globals). i18n instance and `t` are in `src/i18n`; later UI uses `useTranslation()`.
+    - Gotchas encountered: separate `vitest.config.ts` so tests do not load `vite-plugin-pwa`. Unknown i18n keys fail typecheck; tests use `@ts-expect-error`. Do not use `baseUrl` in `tsconfig.app.json`; map `@/*` to `./src/*` in `paths`.
+    - Useful context: interpolation is `{{name}}`. Seed keys are `app.name` and `app.hello`. Add new user-facing strings to `src/i18n/en.ts`.
+---
