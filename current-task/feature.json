@@ -9,53 +9,54 @@
     "src/constants/router.ts"
   ],
   "Functional Requirements Summary": [
-    "FR-1: Sign in with Firefly III personal access token and API base URL (must include /api); persist both in localStorage",
-    "FR-2: Four footer tabs after sign-in: Budget, History, Analytics, Settings",
-    "FR-3: Budget shows Income, Current, and Expense blocks; Expense block includes Firefly liabilities as Debt",
-    "FR-4: Account icon, color, and block order persist in Firefly preferences (moneta.accountAppearance.*, moneta.accountOrder.*)",
-    "FR-5: Hidden accounts use Firefly active=false and disappear from the app",
-    "FR-6: Create / edit / delete accounts and create / edit / delete transactions via Firefly API; balances refresh after mutations",
-    "FR-7: Record income, expense, and transfer by dragging an account onto another account",
-    "FR-8: Edit mode reorders accounts inside a block, including onto another page",
-    "FR-9: History lists all transactions with search, filters, sort, and scroll pagination; updates immediately after Budget mutations",
-    "FR-10: Analytics donut (expense breakdown) and line chart (income vs expenses) with month/year and tag filters",
-    "FR-11: Parameters bar and analytics totals convert into the wallet primary currency using Firefly exchange rates",
-    "FR-12: On reopen, show the last persisted query cache for this device, then refetch from Firefly"
+    "FR-1: Вход по personal access token Firefly III и URL API; оба значения в localStorage. URL нормализуется до корня API (…/api)",
+    "FR-2: После входа четыре вкладки в футере: Budget, History, Analytics, Settings",
+    "FR-3: На Budget три блока: Income, Current, Expense; в Expense также liability Firefly как Debt",
+    "FR-4: Иконка, цвет и порядок счетов хранятся в preferences Firefly: moneta.accountAppearance.*, moneta.accountOrder.*",
+    "FR-5: Скрытые счета — active=false в Firefly, в приложении их нет",
+    "FR-6: Создание, правка и удаление счетов и транзакций через API Firefly; балансы обновляются после мутаций",
+    "FR-7: Доход, расход и перевод создаются перетаскиванием счёта на другой счёт",
+    "FR-8: В режиме Edit счета в блоке можно переставить, в том числе на другую страницу",
+    "FR-9: History показывает все транзакции с поиском, фильтрами, сортировкой и подгрузкой по скроллу (первая страница 10 штук, далее по 10); после мутаций на Budget список обновляется сразу",
+    "FR-10: Analytics: DonutChart разбивки расходов и линейный график доходов/расходов с фильтрами месяц/год и тег",
+    "FR-11: Итоги в parameters bar и в аналитике переводятся в основную валюту кошелька курсами Firefly",
+    "FR-12: При повторном открытии на этом устройстве сразу показывается последний кеш Query, затем refetch из Firefly"
   ],
   "Resolved Questions": [
-    "Icon, color, and account order are not Firefly account fields. Store them in Firefly preferences: moneta.accountAppearance.<accountId> and moneta.accountOrder.<block>.",
-    "Editing a current-account balance uses PATCH account (current_balance / opening balance), not a reconciliation transaction.",
-    "Debt maps to Firefly liability accounts and is rendered inside the Expenses block. Expense type stays Firefly expense. Type is not editable after create.",
-    "Cross-device sync is Firefly itself. Local cache is per device. Use TanStack Query + persist (localStorage or IndexedDB): paint last data immediately, refetch in the background. Do not refetch from scratch on every tab visit.",
-    "Hide account: PATCH active=false. Restore only in the Firefly UI, as the PRD says.",
-    "V1 UI copy is English. All user-visible strings go through i18n keys so a second locale can be added later.",
-    "Multi-currency totals convert with Firefly exchange rates into the wallet primary currency.",
-    "Budget pagination is a paged CSS grid, not a carousel library. Income/Current: one row. Expenses: as many equal-height 1fr rows as fit above the footer and dots.",
-    "Stack already chosen: Vite, React, Mantine (core/hooks/form/dates/charts), @dnd-kit, Phosphor, React Router, vite-plugin-pwa, generated @hey-api client in src/api.",
-    "Follow the existing src layout. Do not invent a parallel tree. Feature screens live in src/modules/<name>/ with components, constants, helpers, hooks, types, tests (see src/modules/budget). Shared UI goes in src/components. Cross-cutting helpers and types go in src/helpers and src/types. Routes are declared in src/constants/router.ts and src/router/AppRouter.tsx. Imports use @/. App already mounts BrowserRouter + AppRouter; Budget exists as a placeholder at /monetta/budget. Empty module folders for login, history, analytics, settings are already created. Extend them. Generated src/api is read-only except a non-generated configure file outside it (src/helpers).",
-    "Style with CSS modules colocated with the component: ComponentName.tsx + ComponentName.module.css in the same folder. Do not add a global styles folder per module and do not put component styles in a shared CSS dump.",
-    "Vitest tests for a module go in that module's tests/ folder (src/modules/budget/tests, etc.). Shared helper tests go next to the helper or in src/helpers/tests."
+    "Иконки, цвета и порядка счетов в полях счёта Firefly нет. Пишем в preferences: moneta.accountAppearance.<accountId> и moneta.accountOrder.<block>.",
+    "Правка баланса current-счёта — PATCH счёта (current_balance / opening balance), не reconciliation-транзакция.",
+    "Debt мапится на liability Firefly и рисуется в блоке Expenses. Обычный расход остаётся expense. Тип после создания не меняется.",
+    "Синк телефона и ПК — это Firefly. Локальный кеш свой на каждом устройстве. TanStack Query + persist в IndexedDB: сразу рисуем последний ответ, в фоне refetch. Не качать всё заново при каждом заходе на вкладку. Токен и backend URL по-прежнему в localStorage.",
+    "Скрыть счёт: PATCH active=false. Вернуть можно только в интерфейсе Firefly, как в ТЗ.",
+    "Тексты на экране в V1 на английском. Все пользовательские строки идут через ключи i18n, чтобы потом добавить второй язык.",
+    "Мультивалютные итоги конвертируем курсами Firefly в основную валюту кошелька.",
+    "Пагинация Budget — paged CSS grid, не карусель. Income и Current: один ряд. Expenses: столько равных рядов 1fr, сколько влезает над футером и точками. Точки под рядом на мобилке и десктопе: число страниц, текущая подсвечена. Свайп с последней страницы справа налево переходит на первую.",
+    "Стек уже выбран: Vite, React, Mantine (core/hooks/form/dates/charts), @dnd-kit, Phosphor, React Router, vite-plugin-pwa, сгенерированный клиент @hey-api в src/api.",
+    "Держаться существующей раскладки src, второе дерево не плодить. Экраны живут в src/modules/<name>/ с components, constants, helpers, hooks, types, tests (образец — src/modules/budget). Общий UI — src/components. Общие helpers и типы — src/helpers и src/types. Маршруты — src/constants/router.ts и src/router/AppRouter.tsx. Импорты через @/. App уже монтирует BrowserRouter и AppRouter; Budget — заглушка на /monetta/budget. Пустые модули login, history, analytics, settings уже созданы, их расширяем. Сгенерированный src/api не править; configure-файл класть в src/helpers.",
+    "Стили — CSS modules рядом с компонентом: ComponentName.tsx и ComponentName.module.css в одной папке. Не заводить общую папку стилей на модуль и не сваливать стили компонентов в один CSS.",
+    "Тесты Vitest модуля — в его tests/ (например src/modules/budget/tests). Тесты общих helpers — рядом с функцией или в src/helpers/tests.",
+    "Analytics: From/To свои у Diagram и у Chart (старт Diagram — текущий месяц, старт Chart — январь–текущий месяц). Тег и блок Expenses | Incomes общие. Свайп месяцев только у Diagram, когда её From=To."
   ],
   "Non-Goals (Out of Scope for V1)": [
-    "OAuth login; only personal access token + URL",
-    "Offline writes or a mutation queue when Firefly is unreachable",
-    "Syncing the local query cache between phone and PC (Firefly is the sync)",
-    "Bills, piggy banks, rules, recurrences, webhooks, attachments, export",
-    "Russian (or any second) locale strings in V1",
-    "Redux, a second UI kit, a carousel library, Chart.js/Nivo",
-    "Native iOS/Android apps or device-only verification",
-    "Unhiding accounts from inside Monetta"
+    "OAuth; только personal access token и URL",
+    "Офлайн-запись и очередь мутаций, если Firefly недоступен",
+    "Синхронизация локального кеша Query между телефоном и ПК (синк — Firefly)",
+    "Счета bills, копилки, правила, повторяющиеся платежи, вебхуки, вложения, экспорт",
+    "Русские (и любые вторые) строки интерфейса в V1",
+    "Redux, вторая UI-библиотека, карусель, Chart.js/Nivo",
+    "Нативные iOS/Android приложения и проверка на устройстве",
+    "Показ скрытых счетов из Monetta"
   ],
-  "description": "Monetta V1 — Firefly III personal-finance PWA with Budget, History, Analytics, and Settings",
+  "description": "Monetta V1 — PWA личных финансов на Firefly III: Budget, History, Analytics, Settings",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Add Vitest and i18n English catalog",
-      "description": "As a developer, I need a test runner and an English message catalog so later stories can add tests and keep all UI copy behind keys.",
+      "title": "Подключить Vitest и английский каталог i18n",
+      "description": "Как разработчик, мне нужен раннер тестов и английский каталог строк, чтобы следующие истории писали тесты и не хардкодили тексты.",
       "changes": [
-        "Add Vitest with a npm test script that runs in the Vite/React project; do not replace the existing App/router/Budget placeholder",
-        "Add an i18n helper (src/helpers or src/i18n) and en catalog; every new user-visible string in this and later stories must use a key",
-        "Keep Mantine dark theme, BrowserRouter, AppRouter, and the /monetta/budget placeholder working",
+        "Добавить Vitest и npm-скрипт test в текущий Vite/React проект; не переписывать существующие App, роутер и заглушку Budget",
+        "Добавить i18n-helper (src/helpers или src/i18n) и каталог en; каждая новая пользовательская строка в этой и следующих историях идёт через ключ",
+        "Сохранить тёмную тему Mantine, BrowserRouter, AppRouter и заглушку /monetta/budget",
         "Add or update automated tests",
         "Tests pass",
         "Typecheck passes"
@@ -66,11 +67,11 @@
     },
     {
       "id": "US-002",
-      "title": "Configure Firefly client from stored token and URL",
-      "description": "As a developer, I need the generated client to send requests to the user's Firefly instance with the stored bearer token.",
+      "title": "Настроить клиент Firefly из сохранённых токена и URL",
+      "description": "Как разработчик, я хочу, чтобы сгенерированный клиент ходил на сервер Firefly пользователя с Bearer-токеном.",
       "changes": [
-        "Add localStorage helpers in src/helpers for the personal access token and backend URL; normalize the URL (trim, strip trailing slash, append /api if missing) before save and before client.baseUrl",
-        "Add configureApiClient in src/helpers that sets the generated client baseUrl, Authorization Bearer, and Accept application/json; do not edit generated files under src/api",
+        "Helpers localStorage в src/helpers для токена и backend URL; перед сохранением и перед client.baseUrl нормализовать URL: trim, убрать хвостовой слэш, дописать /api если его нет",
+        "configureApiClient в src/helpers задаёт baseUrl сгенерированного клиента, Authorization Bearer и Accept application/json; файлы в src/api не править",
         "Add or update automated tests",
         "Tests pass",
         "Typecheck passes"
@@ -81,13 +82,13 @@
     },
     {
       "id": "US-003",
-      "title": "Build login screen",
-      "description": "As a user, I want to enter my Firefly token and API URL so that I can open my wallet.",
+      "title": "Собрать экран логина",
+      "description": "Как пользователь, я хочу ввести токен Firefly и URL API, чтобы открыть кошелёк.",
       "changes": [
-        "Add src/modules/login screen and a login path on ROUTE + AppRouter with required Token and Backend URL fields (Mantine inputs)",
-        "Submit saves both to localStorage, configures the client, and navigates into the app",
-        "Empty fields block submit and show validation errors",
-        "Submit probes Firefly (e.g. getAbout or getCurrentUser): 401/403 shows an invalid-token error; network, CORS, or non-API response shows an invalid-backend-URL error; do not navigate on failure",
+        "Экран в src/modules/login и путь login в ROUTE + AppRouter; обязательные поля Token и Backend URL на инпутах Mantine",
+        "Отправка формы сохраняет оба значения в localStorage, настраивает клиент и уходит в приложение",
+        "Пустые поля блокируют отправку и показывают ошибки валидации",
+        "Отправка проверяет Firefly (getAbout или getCurrentUser): 401/403 — ошибка неверного токена; сеть, CORS или не-API ответ — ошибка неверного backend URL; при ошибке никуда не переходить",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -97,13 +98,13 @@
     },
     {
       "id": "US-004",
-      "title": "Add auth gate and footer tabs",
-      "description": "As a user, I want four tabs after sign-in and to be sent back to login when I am not signed in.",
+      "title": "Добавить гард авторизации и вкладки в футере",
+      "description": "Как пользователь, я хочу четыре вкладки после входа и возврат на логин, если я не авторизован.",
       "changes": [
-        "RequireAuth redirects to login when token or URL is missing (shared component under src/components or src/modules/login)",
-        "Extend existing ROUTE and AppRouter: add History, Analytics, Settings next to the current Budget route; default signed-in route stays /monetta/budget",
-        "Put page entry files in the existing empty modules: src/modules/history, analytics, settings (same folder shape as budget)",
-        "Signed-in shell has footer tabs: Budget, History, Analytics, Settings (shared chrome in src/components)",
+        "RequireAuth перенаправляет на логин, если нет токена или URL (общий компонент в src/components или src/modules/login)",
+        "Расширить существующие ROUTE и AppRouter: History, Analytics, Settings рядом с текущим Budget; дефолтный маршрут после входа — /monetta/budget",
+        "Точки входа страниц положить в уже созданные модули src/modules/history, analytics, settings (та же форма папок, что у budget)",
+        "У авторизованной оболочки футер с вкладками Budget, History, Analytics, Settings (общий chrome в src/components)",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -113,12 +114,12 @@
     },
     {
       "id": "US-005",
-      "title": "Add TanStack Query with persisted cache",
-      "description": "As a user, I want the last loaded data on this device to appear immediately on reopen, then refresh from Firefly.",
+      "title": "Подключить TanStack Query с persist кеша",
+      "description": "Как пользователь, я хочу при повторном открытии сразу видеть последние данные с этого устройства, а потом обновление из Firefly.",
       "changes": [
-        "Install TanStack Query and wrap the signed-in app in QueryClientProvider",
-        "Persist the query cache to localStorage or IndexedDB and restore it on startup",
-        "Document that cache is per device; Firefly remains the source of truth between phone and PC",
+        "Поставить TanStack Query и обернуть авторизованное приложение в QueryClientProvider",
+        "Persist кеша Query в IndexedDB и восстановление при старте",
+        "В коде или коротком комментарии зафиксировать: кеш на устройство, источник правды между телефоном и ПК — Firefly",
         "Add or update automated tests",
         "Tests pass",
         "Typecheck passes"
@@ -129,11 +130,11 @@
     },
     {
       "id": "US-006",
-      "title": "Load primary currency and convert with Firefly rates",
-      "description": "As a user, I want totals in my wallet's main currency even when accounts use other currencies.",
+      "title": "Загружать основную валюту и конвертировать курсами Firefly",
+      "description": "Как пользователь, я хочу итоги в основной валюте кошелька, даже если счета в разных валютах.",
       "changes": [
-        "Read Firefly primary currency and exchange rates through the generated client from src/helpers",
-        "Add a converter helper in src/helpers: amount + fromCode → primary currency using Firefly rates",
+        "Читать основную валюту и курсы Firefly через сгенерированный клиент из src/helpers",
+        "Конвертер в src/helpers: сумма + fromCode → основная валюта по курсам Firefly",
         "Add or update automated tests",
         "Tests pass",
         "Typecheck passes"
@@ -144,12 +145,12 @@
     },
     {
       "id": "US-007",
-      "title": "Map Firefly accounts and preferences to board items",
-      "description": "As a developer, I need one board model so Budget can render income, current, expense, and debt accounts with icon, color, and order.",
+      "title": "Задать модель счёта Budget и сопоставить её с Firefly",
+      "description": "Как разработчик, мне нужен один тип счёта Budget (income / current / expense, флаг долга, иконка, цвет, порядок) из ответа Firefly и preferences, без UI.",
       "changes": [
-        "Define AccountType INCOME | CURRENT | EXPENSE and a debt flag in src/modules/budget/types (and src/types only if shared outside Budget)",
-        "Map Firefly revenue → income, asset → current, expense → expense, liability → expense+debt in src/modules/budget/helpers; skip active=false",
-        "Read/write moneta.accountAppearance.<id> and moneta.accountOrder.<block> preferences from src/modules/budget/helpers",
+        "Задать AccountType INCOME | CURRENT | EXPENSE и флаг долга в src/modules/budget/types (в src/types — только если тип нужен вне Budget)",
+        "Сопоставление в src/modules/budget/helpers: revenue → income, asset → current, expense → expense, liability → expense+debt; active=false пропускать",
+        "Чтение и запись preferences moneta.accountAppearance.<id> и moneta.accountOrder.<block> из src/modules/budget/helpers",
         "Add or update automated tests",
         "Tests pass",
         "Typecheck passes"
@@ -160,11 +161,11 @@
     },
     {
       "id": "US-008",
-      "title": "Fetch Budget board data with Query",
-      "description": "As a user, I want Budget to load my accounts from cache first, then from Firefly.",
+      "title": "Загружать счета Budget через Query",
+      "description": "Как пользователь, я хочу, чтобы Budget сначала брал счета из кеша, потом из Firefly.",
       "changes": [
-        "Add useBudgetBoard in src/modules/budget/hooks that returns ordered board items for income, current, and expense (including debt)",
-        "Opening Budget shows persisted cache if present, then updates after refetch",
+        "Hook useBudgetAccounts в src/modules/budget/hooks возвращает упорядоченные счета income, current и expense (включая debt)",
+        "При открытии Budget показывается сохранённый кеш, если он есть, затем данные обновляются после refetch",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -174,11 +175,11 @@
     },
     {
       "id": "US-009",
-      "title": "Build Budget page chrome",
-      "description": "As a user, I want the Budget layout: parameters bar, three account blocks, and footer tabs.",
+      "title": "Собрать каркас страницы Budget",
+      "description": "Как пользователь, я хочу раскладку Budget: parameters bar, три блока счетов и футер.",
       "changes": [
-        "Fill the existing src/modules/budget/Budget.tsx placeholder: full-height column with parameters bar, income block, current block, expense block (flex 1), footer reserved; block UI in src/modules/budget/components",
-        "Each block has a title area and a slot for a future grid; expense block has min-height 0 so it can be measured later",
+        "Заполнить существующую заглушку src/modules/budget/Budget.tsx: колонка на всю высоту, parameters bar, блоки income, current, expense (flex 1), место под футер; UI блоков в src/modules/budget/components",
+        "У каждого блока заголовок и слот под будущую сетку; у expense min-height 0, чтобы потом мерить высоту",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -188,12 +189,12 @@
     },
     {
       "id": "US-010",
-      "title": "Render account cards",
-      "description": "As a user, I want each account to show name, icon, color, balance, and currency.",
+      "title": "Нарисовать карточки счетов",
+      "description": "Как пользователь, я хочу на карточке имя, иконку, цвет, баланс и валюту.",
       "changes": [
-        "Account card in src/modules/budget/components shows truncated name, Phosphor icon, color, balance, currency",
-        "Debt cards show debt amount in red and paid amount in green instead of a single balance",
-        "Add account slot uses the same cell size as a card",
+        "AccountItem в src/modules/budget/components: обрезанное имя, иконка Phosphor, цвет, баланс, валюта",
+        "У долга вместо одного баланса: сумма долга красным и оплачено зелёным — из‑за этой строки карточка в Expense выше, чем в Income и Current",
+        "Слот Add account той же высоты, что карточки своего блока (в Expense — как у Debt)",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -203,12 +204,14 @@
     },
     {
       "id": "US-011",
-      "title": "Paginate Income and Current blocks",
-      "description": "As a user, I want one row of accounts I can swipe on mobile and page with arrows on desktop.",
+      "title": "Пагинировать блоки Income и Current",
+      "description": "Как пользователь, я хочу один ряд счетов: свайп, точки и на десктопе ещё стрелки.",
       "changes": [
-        "Mobile (<961px): 4 cards per page, one row, swipe changes page, dots under the row",
-        "Desktop (>=961px): one row, as many cards as fit the width, previous/next arrows",
-        "Add account is the last slot in the item list and can sit on its own last page",
+        "Мобилка (<961px): 4 карточки на страницу, один ряд, свайп листает",
+        "Десктоп (>=961px): один ряд, столько карточек, сколько влезает по ширине, стрелки назад/вперёд и свайп",
+        "Точки под рядом на мобилке и десктопе: по одной на страницу, текущая подсвечена",
+        "Свайп справа налево с последней страницы открывает первую",
+        "Add account — последний слот списка, может оказаться на своей последней странице",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -218,13 +221,13 @@
     },
     {
       "id": "US-012",
-      "title": "Paginate Expense block by remaining height",
-      "description": "As a user, I want the expense block to fill the space above the footer with equal-height rows.",
+      "title": "Пагинировать блок Expense по оставшейся высоте",
+      "description": "Как пользователь, я хочу, чтобы блок расходов заполнял место над футером рядами одной высоты.",
       "changes": [
-        "Measure the expense grid area (space above dots, before footer) with ResizeObserver / useElementSize",
-        "Mobile: 4 columns; rows = max(1, floor(availableHeight / minCardHeight)); desktop: columns and rows from available width and height",
-        "Grid uses equal 1fr rows so every row is the same height; page size includes the Add slot",
-        "Swipe / arrows / dots work like the other blocks",
+        "Мерить область сетки expense (над точками, до футера) через ResizeObserver / useElementSize",
+        "Мобилка: 4 колонки; ряды = max(1, floor(availableHeight / minCardHeight)); minCardHeight — высота карточки Debt; десктоп: колонки и ряды из ширины и высоты",
+        "Грид с равными рядами 1fr; размер страницы включает слот Add",
+        "Свайп, стрелки и точки как в других блоках",
         "Add or update automated tests",
         "Tests pass",
         "Typecheck passes",
@@ -236,12 +239,12 @@
     },
     {
       "id": "US-013",
-      "title": "Add month picker to the parameters bar",
-      "description": "As a user, I want to pick a month and year for Budget, without choosing a future month.",
+      "title": "Добавить выбор месяца в parameters bar",
+      "description": "Как пользователь, я хочу выбрать месяц и год для Budget, но не будущий месяц.",
       "changes": [
-        "Parameters bar Month control uses Mantine MonthPickerInput (month + year in one control)",
-        "maxDate is the current month; future months are disabled",
-        "Selected month is shared with later Budget queries and transaction default dates",
+        "Контрол Month в parameters bar — Mantine MonthPickerInput (месяц и год в одном месте)",
+        "maxDate — текущий месяц; будущие месяцы выключены",
+        "Выбранный месяц используется в запросах Budget и как дата по умолчанию у транзакций",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -251,11 +254,11 @@
     },
     {
       "id": "US-014",
-      "title": "Show Income, Expenses, and Balance for the selected month",
-      "description": "As a user, I want the parameters bar to show month totals in the wallet primary currency.",
+      "title": "Показать Income, Expenses и Balance за выбранный месяц",
+      "description": "Как пользователь, я хочу в parameters bar итоги месяца в основной валюте кошелька.",
       "changes": [
-        "Income, Expenses, and Balance fields are read-only and use the selected month range",
-        "Amounts convert into the primary currency with the US-006 helper",
+        "Поля Income, Expenses и Balance только для чтения и считаются по диапазону выбранного месяца",
+        "Суммы конвертируются в основную валюту конвертером из US-006",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -265,12 +268,12 @@
     },
     {
       "id": "US-015",
-      "title": "Build shared account icon picker",
-      "description": "As a user, I want to pick an icon from a grid when creating or editing an account.",
+      "title": "Собрать общий пикер иконки счёта",
+      "description": "Как пользователь, я хочу выбрать иконку из сетки при создании или правке счёта.",
       "changes": [
-        "Icon button shows the current or default Phosphor icon and opens a modal of all available account icons",
-        "Clicking an icon selects it and closes the modal; click outside closes without changing the previous icon",
-        "Selected icon is highlighted",
+        "Кнопка-иконка показывает текущую или дефолтную иконку Phosphor и открывает модалку со всеми иконками счетов",
+        "Клик по иконке выбирает её и закрывает модалку; клик снаружи закрывает без смены предыдущей иконки",
+        "Выбранная иконка подсвечена",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -280,12 +283,12 @@
     },
     {
       "id": "US-016",
-      "title": "Build shared create-account modal",
-      "description": "As a user, I want one create modal whose fields depend on AccountType.",
+      "title": "Собрать общую модалку создания счёта",
+      "description": "Как пользователь, я хочу одну модалку создания, набор полей зависит от AccountType.",
       "changes": [
-        "One Create account modal; fields switch on AccountType INCOME | CURRENT | EXPENSE",
-        "Income: name, icon, color. Current: name, initial balance (default 0), currency (default primary), color, icon. Expense: type Expense|Debt, name, color, icon; Debt also shows initial balance (default 0) and currency (default primary)",
-        "Add account in each block opens this modal with the matching AccountType",
+        "Одна модалка Create account в src/modules/budget/components; поля переключаются по AccountType INCOME | CURRENT | EXPENSE",
+        "Income: имя, иконка, цвет. Current: имя, начальный баланс (по умолчанию 0), валюта (по умолчанию основная), цвет, иконка. Expense: тип Expense|Debt, имя, цвет, иконка; у Debt ещё начальный баланс (0) и валюта (основная)",
+        "Add account в каждом блоке открывает эту модалку с нужным AccountType",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -295,12 +298,13 @@
     },
     {
       "id": "US-017",
-      "title": "Save new accounts to Firefly",
-      "description": "As a user, I want Save on create to add the account to Firefly and show it on the board with icon and color.",
+      "title": "Сохранять новые счета в Firefly",
+      "description": "Как пользователь, я хочу, чтобы Save при создании добавлял счёт в Firefly и показывал карточку с иконкой и цветом.",
       "changes": [
-        "Submit calls storeAccount: revenue / asset / expense / liability from the form; Debt uses liability",
-        "After create, write appearance preference and invalidate the board query so the new card appears",
-        "Required field validation blocks submit",
+        "Отправка формы вызывает storeAccount: revenue / asset / expense / liability по форме; Debt идёт как liability",
+        "После создания записать appearance preference (в конец порядка блока) и инвалидировать query счетов Budget, чтобы карточка появилась последней среди счетов",
+        "Add account всегда последний слот: если он занимал последнее место на странице (на мобилке 4-й), после создания уезжает на новую последнюю страницу; остаёмся на странице с новым счётом (предпоследней)",
+        "Пустые обязательные поля блокируют отправку",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -310,12 +314,12 @@
     },
     {
       "id": "US-018",
-      "title": "Open shared account details modal",
-      "description": "As a user, I want to tap an account card and see details I can close.",
+      "title": "Открывать общую модалку деталей счёта",
+      "description": "Как пользователь, я хочу нажать на карточку и увидеть детали, которые можно закрыть.",
       "changes": [
-        "Clicking a card opens one Account details modal switched by AccountType",
-        "Header shows short account info and a pencil edit button; Close and click-outside dismiss the modal",
-        "Delete, Hide, search, and transaction list have placeholders ready for the next stories",
+        "Клик по карточке открывает AccountDetailsModal в src/modules/budget/components, вид зависит от AccountType",
+        "В шапке краткая информация и кнопка-карандаш; Close и клик снаружи закрывают модалку",
+        "Для Delete, Hide, поиска и списка транзакций — плейсхолдеры под следующие истории",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -325,12 +329,12 @@
     },
     {
       "id": "US-019",
-      "title": "List and search account transactions in details",
-      "description": "As a user, I want to see this account's transactions grouped by date and filter them by search.",
+      "title": "Показать и искать транзакции счёта в AccountDetailsModal",
+      "description": "Как пользователь, я хочу транзакции этого счёта, сгруппированные по дате, и поиск по ним.",
       "changes": [
-        "Details modal loads transactions for the account via Query and groups cards by date",
-        "Empty state text is No transactions found for this account",
-        "Search filters by description, from/to names, currency, and other visible transaction fields",
+        "AccountDetailsModal грузит транзакции счёта через Query и группирует карточки по дате",
+        "Пустое состояние: No transactions found for this account",
+        "Поиск фильтрует по описанию, именам from/to, валюте и другим видимым полям транзакции",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -340,12 +344,12 @@
     },
     {
       "id": "US-020",
-      "title": "Edit account and discard changes",
-      "description": "As a user, I want to change name, icon, color, and (for current accounts) balance, or throw the draft away.",
+      "title": "Редактировать счёт и откатывать несохранённые правки",
+      "description": "Как пользователь, я хочу менять имя, иконку, цвет и (у current) баланс либо вернуть поля к последнему сохранённому виду.",
       "changes": [
-        "Shared Edit account modal; fields follow 1.2.4 / 1.3.4 / 1.4.4 (current balance is PATCH account; expense/debt type is not editable)",
-        "Discard restores the last saved values without writing to Firefly",
-        "Save updates Firefly + appearance preference and refreshes the board",
+        "EditAccountModal в src/modules/budget/components; Income: имя, иконка, цвет; Current: имя, баланс, иконка, цвет; Expense: имя, иконка, цвет; тип expense/debt не редактируется; баланс current — PATCH счёта",
+        "Discard возвращает поля к последним сохранённым значениям и не пишет в Firefly",
+        "Save обновляет Firefly и appearance preference и обновляет счета на Budget",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -355,11 +359,11 @@
     },
     {
       "id": "US-021",
-      "title": "Delete account with confirmation",
-      "description": "As a user, I want to delete an account only after confirming I cannot undo it.",
+      "title": "Удалять счёт с подтверждением",
+      "description": "Как пользователь, я хочу удалить счёт только после подтверждения, что это нельзя отменить.",
       "changes": [
-        "Delete shows: Do you want to delete the {name} account? This action cannot be undone.",
-        "Confirm calls deleteAccount, closes details, and removes the card from the board",
+        "Delete показывает: Do you want to delete the {name} account? This action cannot be undone.",
+        "Подтверждение вызывает deleteAccount, закрывает детали и убирает карточку со страницы Budget",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -369,11 +373,11 @@
     },
     {
       "id": "US-022",
-      "title": "Hide account via Firefly active=false",
-      "description": "As a user, I want to hide an account from Monetta and be told I can restore it only in Firefly.",
+      "title": "Скрывать счёт через active=false в Firefly",
+      "description": "Как пользователь, я хочу спрятать счёт из Monetta и увидеть, что вернуть его можно только в Firefly.",
       "changes": [
-        "Hide shows: Do you want to hide the {name} account? You can get the selected account back through the Firefly interface.",
-        "Confirm PATCHes active=false and the account disappears from all pickers and boards",
+        "Hide показывает: Do you want to hide the {name} account? You can get the selected account back through the Firefly interface.",
+        "Подтверждение делает PATCH active=false, счёт пропадает со страницы Budget и из селектов",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -383,11 +387,11 @@
     },
     {
       "id": "US-023",
-      "title": "Add shared tags field with suggestions",
-      "description": "As a user, I want to type a tag, see up to 10 matching existing tags, and create a new one.",
+      "title": "Добавить общее поле тегов с подсказками",
+      "description": "Как пользователь, я хочу ввести тег, увидеть до 10 совпадений и создать новый.",
       "changes": [
-        "Reusable tags field in src/components: search/create input plus up to 10 filtered suggestion badges from Firefly tags",
-        "Used by the upcoming transaction modals",
+        "Переиспользуемое поле тегов в src/components: ввод поиска/создания и до 10 отфильтрованных бейджей из тегов Firefly",
+        "Поле используется следующими модалками транзакций",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -397,13 +401,13 @@
     },
     {
       "id": "US-024",
-      "title": "Record income by dragging income onto current",
-      "description": "As a user, I want to drop an income account on a current account and save a deposit.",
+      "title": "Записать доход перетаскиванием income на current",
+      "description": "Как пользователь, я хочу бросить income-счёт на current и сохранить доход.",
       "changes": [
-        "Drop income → current opens Record income with those accounts preselected; hidden accounts are omitted",
-        "Form: amount in current currency (currency read-only), date (today, or first day of the selected Budget month), optional description and tags",
-        "Save calls storeTransaction (deposit), updates balances, invalidates board and history queries",
-        "Cancel and click-outside close without saving",
+        "Дроп income → current открывает RecordIncomeModal в src/modules/budget/components",
+        "Поля: Income account (select всех income кроме скрытых, по умолчанию откуда начался drag), Current account (select всех current кроме скрытых, по умолчанию куда бросили), Amount (число, валюта current, обязательное), Currency (текст только чтение рядом с Amount, валюта current), Date (обязательная; сегодня, если выбран текущий месяц Budget, иначе первый день выбранного месяца), Description (текст, необязательное), Tags (поле из US-023, необязательное)",
+        "Save вызывает storeTransaction как Record income (в Firefly — deposit), обновляет балансы, инвалидирует query счетов Budget и History",
+        "Cancel и клик снаружи закрывают без сохранения",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -413,12 +417,13 @@
     },
     {
       "id": "US-025",
-      "title": "Record expense by dragging current onto expense",
-      "description": "As a user, I want to drop a current account on an expense or debt account and save a withdrawal.",
+      "title": "Записать расход перетаскиванием current на expense",
+      "description": "Как пользователь, я хочу бросить current на expense или debt и сохранить расход.",
       "changes": [
-        "Drop current → expense/debt opens Record expense with those accounts preselected",
-        "Same amount/date/tags pattern as income; amount currency is the current account",
-        "Save stores a withdrawal and invalidates board and history queries",
+        "Дроп current → expense/debt открывает RecordExpenseModal в src/modules/budget/components",
+        "Поля: Current account (select всех current кроме скрытых, по умолчанию откуда начался drag), Expense account (select всех expense и debt кроме скрытых, по умолчанию куда бросили), Amount (число, валюта current, обязательное), Currency (текст только чтение рядом с Amount, валюта current), Date (как в RecordIncomeModal), Description (необязательное), Tags (поле из US-023, необязательное)",
+        "Save вызывает storeTransaction как Record expense (в Firefly — withdrawal), инвалидирует query счетов Budget и History",
+        "Cancel и клик снаружи закрывают без сохранения",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -428,12 +433,14 @@
     },
     {
       "id": "US-026",
-      "title": "Record transfer by dragging current onto current",
-      "description": "As a user, I want to drop one current account on another and save a transfer, including different currencies.",
+      "title": "Записать перевод перетаскиванием current на current",
+      "description": "Как пользователь, я хочу бросить один current на другой и сохранить перевод, в том числе между валютами.",
       "changes": [
-        "Drop current → current opens Record transfer with From/To preselected",
-        "Same currency: one amount. Different currencies: Amount debited and Amount credited, each with its currency",
-        "Save stores a transfer and invalidates board and history queries",
+        "Дроп current → current открывает RecordTransferModal в src/modules/budget/components",
+        "Поля: From (select всех current кроме скрытых, по умолчанию откуда начался drag), To (select всех current кроме скрытых, по умолчанию куда бросили), Date (как в RecordIncomeModal), Description (необязательное), Tags (поле из US-023, необязательное)",
+        "Одинаковая валюта From/To: одно обязательное Amount и Currency только чтение. Разная валюта: обязательные Amount debited (валюта From) и Amount credited (валюта To), у каждого своя Currency только чтение",
+        "Save вызывает storeTransaction как Record transfer (в Firefly — transfer), инвалидирует query счетов Budget и History",
+        "Cancel и клик снаружи закрывают без сохранения",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -443,11 +450,13 @@
     },
     {
       "id": "US-027",
-      "title": "Reorder accounts in edit mode",
-      "description": "As a user, I want Edit on the parameters bar so I can drag accounts to a new position in the same block.",
+      "title": "Менять порядок счетов в режиме Edit",
+      "description": "Как пользователь, я хочу кнопку Edit в parameters bar, чтобы любой income, current и expense переставить внутри своего блока.",
       "changes": [
-        "Edit toggles @dnd-kit sortable inside each block; swipe pagination is disabled while dragging",
-        "Dropping on a new index updates moneta.accountOrder.<block> and the grid order",
+        "Кнопка Edit в parameters bar включает режим: любой счёт блока можно перетащить на новое место в этом же блоке (@dnd-kit sortable; income только с income, current только с current, expense/debt только с expense/debt)",
+        "В Edit дроп счёта на счёт не открывает RecordIncomeModal, RecordExpenseModal и RecordTransferModal",
+        "Дроп на новый индекс в том же блоке пишет moneta.accountOrder.<block> и обновляет сетку; слот Add account не сортируется и остаётся последним",
+        "Свайп страниц во время драга выключен; перенос на другую страницу того же блока — US-028",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -457,11 +466,11 @@
     },
     {
       "id": "US-028",
-      "title": "Move an account to another page while dragging",
-      "description": "As a user, I want to hold a card at the left or right edge so the block turns the page and I can drop there.",
+      "title": "Переносить счёт на другую страницу во время драга",
+      "description": "Как пользователь, я хочу удержать карточку у левого или правого края, чтобы блок перелистнулся и я могла туда бросить.",
       "changes": [
-        "In edit mode, holding a drag at the left or right edge of the block changes page once",
-        "The dragged account stays in hand and can be dropped on the new page; order preference updates",
+        "В Edit удержание драга у левого или правого края блока один раз меняет страницу",
+        "Карточка остаётся в руке и её можно бросить на новой странице; preference порядка обновляется",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -471,12 +480,12 @@
     },
     {
       "id": "US-029",
-      "title": "Edit or delete a transaction from details",
-      "description": "As a user, I want to tap a transaction card and change or delete it.",
+      "title": "Редактировать или удалять транзакцию из AccountDetailsModal",
+      "description": "Как пользователь, я хочу нажать карточку транзакции и изменить или удалить её.",
       "changes": [
-        "Shared Edit transaction modal from account details: original from-to, From/To pickers limited by transaction type, amount or debited/credited, date, description, tags",
-        "Delete asks Delete this transaction? This action cannot be undone. then deletes and updates balances",
-        "Save and delete invalidate board and history queries and close the modal",
+        "EditTransactionModal в src/components, открывается из AccountDetailsModal: исходные from-to, селекты From/To ограничены типом транзакции, сумма или debited/credited, дата, описание, теги",
+        "Delete спрашивает Delete this transaction? This action cannot be undone. затем удаляет и обновляет балансы",
+        "Save и delete инвалидируют query счетов Budget и History и закрывают модалку",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -486,12 +495,12 @@
     },
     {
       "id": "US-030",
-      "title": "Show History list with scroll pagination",
-      "description": "As a user, I want all wallet transactions grouped by date, loaded as I scroll.",
+      "title": "Показать список History с подгрузкой по скроллу",
+      "description": "Как пользователь, я хочу все транзакции кошелька, сгруппированные по дате, с подгрузкой при скролле.",
       "changes": [
-        "History page in src/modules/history lists transactions grouped by date with from, to, amount, description, tags, type",
-        "Different currencies show − debited (red) and + credited (green)",
-        "List uses scroll/infinite pagination via Query",
+        "Страница History в src/modules/history: транзакции по датам, from, to, сумма, описание, теги, тип",
+        "Разные валюты: − debited красным и + credited зелёным",
+        "Первая загрузка — 10 транзакций; при скролле к концу списка подгружать следующие по 10 через Query",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -501,10 +510,10 @@
     },
     {
       "id": "US-031",
-      "title": "Search History",
-      "description": "As a user, I want to search the history list together with the active filters and sort.",
+      "title": "Искать по History",
+      "description": "Как пользователь, я хочу искать по списку вместе с активными фильтрами и сортировкой.",
       "changes": [
-        "Search field filters the loaded/query results by description, account names, currency, and other visible fields",
+        "Поле поиска фильтрует загруженные/query-результаты по описанию, именам счетов, валюте и другим видимым полям",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -514,12 +523,12 @@
     },
     {
       "id": "US-032",
-      "title": "Filter History by scope, type, and tag",
-      "description": "As a user, I want a filters modal and a badge for how many filters are on.",
+      "title": "Фильтровать History по периоду, типу и тегу",
+      "description": "Как пользователь, я хочу модалку фильтров и бейдж с числом включённых фильтров.",
       "changes": [
-        "Filter button opens a modal; badge shows the count of non-default filters",
-        "Scope: All history | Month (MonthPickerInput) | Date range (two DatePickerInput). Type: All types, Deposit, Withdrawal, Transfer, Reconciliation, Opening Balance. Tag: one existing tag",
-        "Reset returns defaults; Close dismisses the modal; applied filters change the list",
+        "Кнопка Filter открывает модалку; бейдж показывает число фильтров не по умолчанию",
+        "Scope: All history | Month (MonthPickerInput) | Date range (два DatePickerInput). Type: All types, Deposit, Withdrawal, Transfer, Reconciliation, Opening Balance. Tag: один существующий тег",
+        "Reset возвращает дефолты; Close закрывает модалку; применённые фильтры меняют список",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -529,11 +538,11 @@
     },
     {
       "id": "US-033",
-      "title": "Toggle History sort order",
-      "description": "As a user, I want newest-first by default and to flip to oldest-first.",
+      "title": "Переключать сортировку History",
+      "description": "Как пользователь, я хочу, чтобы список History по умолчанию шёл от новых к старым, и чтобы порядок можно было переключить на от старых к новым.",
       "changes": [
-        "Sort icon button toggles desc (newest first, default) and asc (oldest first)",
-        "List order updates immediately",
+        "Кнопка Sort переключает desc (сначала новые, дефолт) и asc (сначала старые); иконка меняется с нисходящей на восходящую и обратно",
+        "Порядок списка меняется сразу",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -543,11 +552,11 @@
     },
     {
       "id": "US-034",
-      "title": "Open edit transaction from History",
-      "description": "As a user, I want the same edit modal from a History card, and the list to update after save or delete.",
+      "title": "Открывать правку транзакции из History",
+      "description": "Как пользователь, я хочу открыть EditTransactionModal с карточки History и увидеть обновлённый список после save или delete.",
       "changes": [
-        "Clicking a History card opens the shared Edit transaction modal from US-029",
-        "After save or delete the History list and Budget board both refresh without a manual reload",
+        "Клик по карточке History открывает тот же EditTransactionModal, что в US-029",
+        "После save или delete список History и счета на Budget обновляются без ручной перезагрузки",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -557,13 +566,13 @@
     },
     {
       "id": "US-035",
-      "title": "Add Analytics view switch and period filters",
-      "description": "As a user, I want to switch Diagram/Chart and set From, To, and tag.",
+      "title": "Собрать каркас страницы Analytics",
+      "description": "Как пользователь, я хочу страницу Analytics с главным переключателем Diagram/Chart и фильтрами периода.",
       "changes": [
-        "Analytics page in src/modules/analytics has Diagram | Chart (Diagram default) and Expenses | Incomes (Expenses default)",
-        "From/To are separate year and month fields; From cannot be after To; future months disabled",
-        "Diagram defaults From=To=current month; Chart defaults From=January of this year, To=current month; tag default is All tags",
-        "Period label above filters uses the format Jan - Aug 2026",
+        "Страница Analytics в src/modules/analytics: сверху главный переключатель Diagram | Chart (по умолчанию Diagram); под ним фильтры активного вида и слот визуализации; ниже визуализации отдельный блок Expenses | Incomes за период этого вида (по умолчанию Expenses)",
+        "From/To свои у Diagram и у Chart, при переключении вида восстанавливаются; тег и Expenses | Incomes общие. From/To — отдельные поля года и месяца; From не позже To; будущие месяцы выключены",
+        "Старт Diagram: From=To=текущий месяц. Старт Chart: From=январь этого года, To=текущий месяц. Тег по умолчанию All tags",
+        "Над фильтрами подпись периода активного вида в формате Jan - Aug 2026",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -573,12 +582,12 @@
     },
     {
       "id": "US-036",
-      "title": "Render expense donut and ranked lists",
-      "description": "As a user, I want an expense breakdown donut with a center total, a legend, and ranked expense/income lists.",
+      "title": "Нарисовать DonutChart расходов и рейтинговые списки",
+      "description": "Как пользователь, я хочу DonutChart разбивки расходов с суммой в центре, легендой и списками расходов/доходов.",
       "changes": [
-        "Mantine DonutChart (Recharts) of expenses for the selected period; center shows total in primary currency; percentages on or in segments; legend to the right with name, amount, color",
-        "Expenses list and Incomes list: name, percent, amount, highest first; switching to Incomes does not change the donut",
-        "Title is Expense breakdown plus the period label",
+        "Mantine DonutChart (Recharts) по расходам выбранного периода; в центре итог в основной валюте; проценты на сегментах; справа легенда: имя, процент, сумма, цвет",
+        "В нижнем блоке страницы списки Expenses и Incomes: имя, процент, сумма, по убыванию; переключение на Incomes DonutChart не меняет",
+        "Заголовок Expense breakdown плюс подпись периода",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -588,11 +597,12 @@
     },
     {
       "id": "US-037",
-      "title": "Swipe months on the diagram when filters are the current month",
-      "description": "As a user, I want to swipe the donut to the previous or next month when I have not set a custom range.",
+      "title": "Листать месяцы на диаграмме свайпом",
+      "description": "Как пользователь, я хочу свайпать DonutChart на прошлый или следующий месяц, если не задан свой диапазон.",
       "changes": [
-        "When From and To are the same current-style month window, swipe left/right changes the month and updates From/To",
-        "Dots: previous, current, and next if next exists; no future month; two dots if next month has not started",
+        "Свайп только у Diagram и только по From/To диаграммы; у Chart свайпа нет. Если у Diagram From и To — один месяц, свайп влево/вправо меняет этот месяц и пишет его в From/To диаграммы; в прошлое — без лимита, будущий месяц нельзя",
+        "Точки только если у Diagram From=To: предыдущий, текущий и следующий, если следующий уже начался; две точки, если следующий месяц ещё не наступил",
+        "Если после свайпа меняют From/To диаграммы: период больше месяца — точки скрыть и свайп выключить; период ровно один месяц — показать этот месяц и точки вокруг него",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -602,12 +612,12 @@
     },
     {
       "id": "US-038",
-      "title": "Render incomes vs expenses line chart",
-      "description": "As a user, I want a month-by-month line chart with a hover tooltip.",
+      "title": "Нарисовать график доходов и расходов",
+      "description": "Как пользователь, я хочу помесячный линейный график с тултипом по наведению.",
       "changes": [
-        "Mantine LineChart: green Income, red Expenses, X = months, Y = money in primary currency, dashed grid",
-        "Hover tooltip shows that month's income and expense values",
-        "Title Incomes vs Expenses with a green/red legend and the period label; Expenses/Incomes lists reuse US-036 and do not change the chart",
+        "Mantine LineChart: зелёный Income, красный Expenses, X — месяцы, Y — деньги в основной валюте, пунктирная сетка",
+        "Тултип по ховеру показывает доход и расход этого месяца",
+        "Заголовок Incomes vs Expenses, зелёно-красная легенда и подпись периода Chart; свои From/To графика, общий тег и общий блок Expenses/Incomes; свайпа месяцев нет",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
@@ -617,11 +627,11 @@
     },
     {
       "id": "US-039",
-      "title": "Log out from Settings",
-      "description": "As a user, I want a logout button that clears my token and returns me to login.",
+      "title": "Выйти из аккаунта в Settings",
+      "description": "Как пользователь, я хочу кнопку выхода, которая стирает токен и возвращает на логин.",
       "changes": [
-        "Settings page in src/modules/settings shows a Log out button",
-        "Clicking it removes token (and backend URL) from localStorage, clears the persisted query cache, and redirects to login",
+        "Страница Settings в src/modules/settings с кнопкой Log out",
+        "Клик удаляет токен и backend URL из localStorage, чистит сохранённый кеш Query и перенаправляет на логин",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
