@@ -1,5 +1,6 @@
 # Learnings
 
 - i18n: `src/i18n/en.ts` nested catalog, init in `src/i18n/index.ts`, typed keys via `src/i18n/i18next.d.ts`. Use `t()` in helpers/tests and `useTranslation()` in components. Interpolation: `{{name}}`.
-- Tests: `npm test` runs `vitest run`. Config is `vitest.config.ts` (`environment: 'node'`, alias `@` → `src`). Do not put tests in `vite.config.ts` (PWA plugin).
+- Tests: `npm test` runs `vitest run`. Config is `vitest.config.ts` (`environment: 'node'`, alias `@` → `src`). Do not put tests in `vite.config.ts` (PWA plugin). Shared `localStorage` stub: `src/helpers/tests/stubLocalStorage.ts` (not a `*.test.ts`, so Vitest does not run it).
 - Typecheck: `tsconfig.app.json` maps `@/*` via `paths` to `./src/*`. Do not add `baseUrl`.
+- Firefly client: do not edit `src/api`. Configure the singleton from `src/helpers/configureApiClient.ts`. Storage keys: `monetta.token`, `monetta.backendUrl`. Normalize URL with `normalizeBackendUrl` (trim, trailing slash, strip `/v1`, ensure `/api`). `setConfig` merges; pass `null` header values to delete. Stub `localStorage` in tests via `vi.stubGlobal`.

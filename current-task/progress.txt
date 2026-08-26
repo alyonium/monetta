@@ -5,3 +5,11 @@
     - Gotchas encountered: separate `vitest.config.ts` so tests do not load `vite-plugin-pwa`. Unknown i18n keys fail typecheck; tests use `@ts-expect-error`. Do not use `baseUrl` in `tsconfig.app.json`; map `@/*` to `./src/*` in `paths`.
     - Useful context: interpolation is `{{name}}`. Seed keys are `app.name` and `app.hello`. Add new user-facing strings to `src/i18n/en.ts`.
 ---
+
+## 2026-08-26 18:00 - US-002
+- Added `normalizeBackendUrl`, localStorage helpers for token/URL, and `configureApiClient` (called from `main.tsx`). Generated `src/api` left untouched.
+- **Learnings for future iterations:**
+    - Patterns discovered: generated `client` is a singleton in `src/api/client.gen.ts`; configure it from `src/helpers` via `setConfig`. SDK paths are `/v1/...`, so baseUrl must be `…/api` not `…/api/v1`.
+    - Gotchas encountered: Vitest `environment: 'node'` has no `localStorage` — stub with `vi.stubGlobal`. `setConfig` merges headers; restore tests with `Authorization`/`Accept` set to `null`. Strip trailing `/v1` or requests become `/api/v1/v1/...`.
+    - Useful context: storage keys are `monetta.token` and `monetta.backendUrl`. `clearAuth*` belongs to US-039. Login UI is US-003.
+---
