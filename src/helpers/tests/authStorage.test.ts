@@ -28,15 +28,9 @@ describe('authStorage', () => {
   });
 
   it('normalizes the backend URL before writing', () => {
-    setBackendUrl('https://x.com/');
+    setBackendUrl('https://x.com/firefly');
 
     expect(localStorage.getItem(BACKEND_URL_KEY)).toBe('https://x.com/api');
     expect(getBackendUrl()).toBe('https://x.com/api');
-  });
-
-  it('normalizes a stored URL that is missing /api', () => {
-    localStorage.setItem(BACKEND_URL_KEY, 'http://127.0.0.1');
-
-    expect(getBackendUrl()).toBe('http://127.0.0.1/api');
   });
 });

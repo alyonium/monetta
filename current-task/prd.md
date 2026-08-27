@@ -18,7 +18,7 @@ Two text fields:
 To authorize, you need:
 
 Firefly III Personal Access Token: create it in Firefly III → Options → Profile → OAuth / Personal Access Tokens. 
-Backend URL - the root URL of the Firefly III API, including /api, e.g. [https://firefly.example.com/api](https://firefly.example.com/api) or [http://127.0.0.1/api](http://127.0.0.1/api).
+Backend URL - the host of the Firefly III instance (scheme, host, port). Path, `/api`, and `/v1` in the input are ignored. The app normalizes to `{origin}/api`, e.g. [https://firefly.example.com](https://firefly.example.com), [https://firefly.example.com/api](https://firefly.example.com/api), or [http://127.0.0.1](http://127.0.0.1).
 
 The token and Backend URL are required to sign in.
 

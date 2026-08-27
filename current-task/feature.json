@@ -9,7 +9,7 @@
     "src/constants/router.ts"
   ],
   "Functional Requirements Summary": [
-    "FR-1: Вход по personal access token Firefly III и URL API; оба значения в localStorage. URL нормализуется до корня API (…/api)",
+    "FR-1: Вход по personal access token Firefly III и URL инстанса; оба значения в localStorage. URL обрезается до origin, затем baseUrl = {origin}/api; /v1 добавляет клиент",
     "FR-2: После входа четыре вкладки в футере: Budget, History, Analytics, Settings",
     "FR-3: На Budget три блока: Income, Current, Expense; в Expense также liability Firefly как Debt",
     "FR-4: Иконка, цвет и порядок счетов хранятся в preferences Firefly: moneta.accountAppearance.*, moneta.accountOrder.*",
@@ -35,7 +35,8 @@
     "Держаться существующей раскладки src, второе дерево не плодить. Экраны живут в src/modules/<name>/ с components, constants, helpers, hooks, types, tests (образец — src/modules/budget). Общий UI — src/components. Общие helpers и типы — src/helpers и src/types. Маршруты — src/constants/router.ts и src/router/AppRouter.tsx. Импорты через @/. App уже монтирует BrowserRouter и AppRouter; Budget — заглушка на /monetta/budget. Пустые модули login, history, analytics, settings уже созданы, их расширяем. Сгенерированный src/api не править; configure-файл класть в src/helpers.",
     "Стили — CSS modules рядом с компонентом: ComponentName.tsx и ComponentName.module.css в одной папке. Не заводить общую папку стилей на модуль и не сваливать стили компонентов в один CSS.",
     "Тесты Vitest модуля — в его tests/ (например src/modules/budget/tests). Тесты общих helpers — рядом с функцией или в src/helpers/tests.",
-    "Analytics: From/To свои у Diagram и у Chart (старт Diagram — текущий месяц, старт Chart — январь–текущий месяц). Тег и блок Expenses | Incomes общие. Свайп месяцев только у Diagram, когда её From=To."
+    "Analytics: From/To свои у Diagram и у Chart (старт Diagram — текущий месяц, старт Chart — январь–текущий месяц). Тег и блок Expenses | Incomes общие. Свайп месяцев только у Diagram, когда её From=To.",
+    "Backend URL: обрезаем ввод до origin (схема, хост, порт); путь, /api и /v1 игнорируем. baseUrl клиента — {origin}/api. Сегмент /v1 клеит сгенерированный SDK, не helper. Инстанс в подпути в V1 не поддерживаем."
   ],
   "Non-Goals (Out of Scope for V1)": [
     "OAuth; только personal access token и URL",
@@ -70,7 +71,7 @@
       "title": "Настроить клиент Firefly из сохранённых токена и URL",
       "description": "Как разработчик, я хочу, чтобы сгенерированный клиент ходил на сервер Firefly пользователя с Bearer-токеном.",
       "changes": [
-        "Helpers localStorage в src/helpers для токена и backend URL; перед сохранением и перед client.baseUrl нормализовать URL: trim, убрать хвостовой слэш, дописать /api если его нет",
+        "Helpers localStorage в src/helpers для токена и backend URL; перед сохранением нормализовать URL: trim, origin (scheme + host + port), baseUrl = {origin}/api",
         "configureApiClient в src/helpers задаёт baseUrl сгенерированного клиента, Authorization Bearer и Accept application/json; файлы в src/api не править",
         "Add or update automated tests",
         "Tests pass",
@@ -83,7 +84,7 @@
     {
       "id": "US-003",
       "title": "Собрать экран логина",
-      "description": "Как пользователь, я хочу ввести токен Firefly и URL API, чтобы открыть кошелёк.",
+      "description": "Как пользователь, я хочу ввести токен Firefly и URL инстанса, чтобы открыть кошелёк.",
       "changes": [
         "Экран в src/modules/login и путь login в ROUTE + AppRouter; обязательные поля Token и Backend URL на инпутах Mantine",
         "Отправка формы сохраняет оба значения в localStorage, настраивает клиент и уходит в приложение",

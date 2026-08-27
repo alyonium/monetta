@@ -10,15 +10,8 @@ export const setAccessToken = (token: string): void => {
   localStorage.setItem(ACCESS_TOKEN_KEY, token);
 };
 
-export const getBackendUrl = (): string | null => {
-  const stored = localStorage.getItem(BACKEND_URL_KEY);
-
-  if (stored === null) {
-    return null;
-  }
-
-  return normalizeBackendUrl(stored);
-};
+export const getBackendUrl = (): string | null =>
+  localStorage.getItem(BACKEND_URL_KEY);
 
 export const setBackendUrl = (url: string): void => {
   localStorage.setItem(BACKEND_URL_KEY, normalizeBackendUrl(url));
