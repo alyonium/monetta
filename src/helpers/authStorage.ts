@@ -16,3 +16,10 @@ export const getBackendUrl = (): string | null =>
 export const setBackendUrl = (url: string): void => {
   localStorage.setItem(BACKEND_URL_KEY, normalizeBackendUrl(url));
 };
+
+export const hasAuthCredentials = (): boolean => {
+  const token = getAccessToken()?.trim();
+  const backendUrl = getBackendUrl()?.trim();
+
+  return Boolean(token && backendUrl);
+};

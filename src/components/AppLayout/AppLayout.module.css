@@ -1,0 +1,40 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.footer {
+  flex-shrink: 0;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid var(--mantine-color-default-border);
+  background: var(--mantine-color-body);
+}
+
+.nav {
+  display: flex;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--mantine-spacing-xs) / 2);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-xs);
+  text-decoration: none;
+}
+
+.active {
+  color: var(--mantine-color-indigo-4);
+}

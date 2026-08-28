@@ -23,6 +23,7 @@
     "@mantine/form": "^9.5.2",
     "@mantine/hooks": "^9.5.2",
     "@phosphor-icons/react": "^2.1.10",
+    "clsx": "^2.1.1",
     "dayjs": "^1.11.23",
     "i18next": "^26.4.0",
     "react": "^19.2.8",

@@ -21,3 +21,11 @@
     - Gotchas encountered: verify with `getCurrentUser` (`/v1/about/user`), not `getAbout`. Keep `throwOnError` false; wrap in try/catch because HTML-as-JSON still throws. Persist only after success so failed login does not wipe saved creds. Vitest is `*.test.ts` + `environment: 'node'` — no component tests. Dev server may be on 5174 if 5173 is taken.
     - Useful context: `ROUTE.LOGIN` is `/monetta/login`. Auth guard and footer tabs are US-004. Logout/clear is US-039. Successful live login needs a Firefly instance that allows the app origin (CORS from localhost often looks like an invalid backend URL).
 ---
+
+## 2026-08-28 13:50 - US-004
+- Auth guard (`RequireAuth` + `hasAuthCredentials`) and footer tabs Budget / History / Analytics / Settings. Login stays without footer. Default path after auth is `/monetta/budget`.
+- **Learnings for future iterations:**
+    - Patterns discovered: shared chrome lives in `src/components` (`RequireAuth`, `AppLayout`). Page stubs stay one default-export file in `src/modules/<name>/`. Footer tabs are `FOOTER_TABS` in `src/components/constants.ts`, not in the router. Labels go through `nav.*` in `en.ts`.
+    - Gotchas encountered: both token and backend URL must be non-empty after trim; empty `localStorage` strings are logged out. Nested routes: `RequireAuth` → `AppLayout` (`Outlet` + footer) → pages. Login is a sibling, not inside the layout. Do not bounce login to Budget if already signed in. Vitest is still `*.test.ts` + `node`, so no component tests for the guard.
+    - Useful context: `AppLayout` is a `100dvh` column; `main` is `flex: 1; min-height: 0` so US-009 can fill the space above the footer. Phosphor icons: Wallet, ClockCounterClockwise, ChartPieSlice, Gear. Logout/clear is still US-039. Query provider (US-005) should wrap the authenticated tree, not login.
+---

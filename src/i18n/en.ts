@@ -20,6 +20,12 @@ export const en = {
       unexpected: 'Unexpected error',
     },
   },
+  nav: {
+    budget: 'Budget',
+    history: 'History',
+    analytics: 'Analytics',
+    settings: 'Settings',
+  },
 } as const;
 
 export type EnTranslation = typeof en;
