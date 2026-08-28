@@ -12,6 +12,7 @@ dist
 dev-dist
 dist-ssr
 *.local
+browser-data
 
 # Editor directories and files
 .vscode/*

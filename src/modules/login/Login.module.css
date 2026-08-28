@@ -1,0 +1,83 @@
+.page {
+  --login-error-line: calc((var(--mantine-font-size-sm) - 0.125rem) * 1.2);
+  --login-error-space: calc(
+    var(--mantine-spacing-xs) / 2 + var(--login-error-line)
+  );
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--mantine-spacing-sm) * 2) var(--mantine-spacing-md);
+  overflow: hidden;
+}
+
+.spotWrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.spot {
+  position: absolute;
+  right: 0;
+  bottom: calc(var(--mantine-spacing-xl) * -3);
+  width: var(--mantine-breakpoint-lg);
+  height: auto;
+  transform: translate(30%, 35%);
+  user-select: none;
+}
+
+@media (min-width: 62em) {
+  .spot {
+    right: auto;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+  width: 100%;
+  max-width: 24rem;
+  margin-inline: auto;
+  padding: calc(var(--mantine-spacing-sm) * 2);
+  border-radius: var(--mantine-radius-md);
+  background: color-mix(in srgb, var(--mantine-color-body) 65%, transparent);
+}
+
+.field {
+  display: grid;
+  grid-template-rows: auto auto var(--login-error-space);
+}
+
+.fieldLabel {
+  margin-bottom: calc(var(--mantine-spacing-xs) / 2);
+}
+
+.inputBox {
+  margin-bottom: 0 !important;
+}
+
+.fieldError {
+  align-self: start;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--mantine-spacing-xs) / 2);
+  text-align: center;
+}
+
+.footer {
+  text-align: center;
+}

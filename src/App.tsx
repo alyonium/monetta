@@ -9,7 +9,12 @@ import AppRouter from '@/router/AppRouter.tsx';
 
 function App() {
   return (
-    <MantineProvider defaultColorScheme='dark'>
+    <MantineProvider
+      defaultColorScheme='dark'
+      theme={{
+        primaryColor: 'indigo',
+      }}
+    >
       <DatesProvider settings={{}}>
         <BrowserRouter>
           <AppRouter />
