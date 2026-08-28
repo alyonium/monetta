@@ -13,6 +13,9 @@ dev-dist
 dist-ssr
 *.local
 browser-data
+.env
+.env.*
+!.env.example
 
 # Editor directories and files
 .vscode/*

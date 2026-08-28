@@ -3,11 +3,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import '@mantine/charts/styles.css';
 import '@mantine/core/styles.css';
-import '@mantine/dates/styles.css';
 
 import { MantineProvider } from '@mantine/core';
-import { DatesProvider } from '@mantine/dates';
-import { BrowserRouter } from 'react-router';
+import { HashRouter } from 'react-router';
 import AppRouter from '@/router/AppRouter.tsx';
 
 function App() {
@@ -19,11 +17,9 @@ function App() {
         fontFamily: 'Roboto',
       }}
     >
-      <DatesProvider settings={{}}>
-        <BrowserRouter>
-          <AppRouter />
-        </BrowserRouter>
-      </DatesProvider>
+      <HashRouter>
+        <AppRouter />
+      </HashRouter>
     </MantineProvider>
   );
 }

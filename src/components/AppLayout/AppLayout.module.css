@@ -1,8 +1,10 @@
 .shell {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  height: 100%;
   overflow: hidden;
+  padding-top: env(safe-area-inset-top);
+  background: var(--mantine-color-body);
 }
 
 .main {
