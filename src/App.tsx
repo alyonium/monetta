@@ -1,3 +1,6 @@
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import '@mantine/charts/styles.css';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
@@ -13,6 +16,7 @@ function App() {
       defaultColorScheme='dark'
       theme={{
         primaryColor: 'indigo',
+        fontFamily: 'Roboto',
       }}
     >
       <DatesProvider settings={{}}>
