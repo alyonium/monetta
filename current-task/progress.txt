@@ -29,3 +29,11 @@
     - Gotchas encountered: both token and backend URL must be non-empty after trim; empty `localStorage` strings are logged out. Nested routes: `RequireAuth` → `AppLayout` (`Outlet` + footer) → pages. Login is a sibling, not inside the layout. Do not bounce login to Budget if already signed in. Vitest is still `*.test.ts` + `node`, so no component tests for the guard.
     - Useful context: `AppLayout` is a `100dvh` column; `main` is `flex: 1; min-height: 0` so US-009 can fill the space above the footer. Phosphor icons: Wallet, ClockCounterClockwise, ChartPieSlice, Gear. Logout/clear is still US-039. Query provider (US-005) should wrap the authenticated tree, not login.
 ---
+
+## 2026-08-31 20:47 - US-005
+- TanStack Query + IndexedDB persist on the authenticated tree. Login stays outside the provider. Factories, persister key `monetta.queryCache`, restore then `invalidateQueries`.
+- **Learnings for future iterations:**
+    - Patterns discovered: Query provider is a route layout (`QueryPersistenceProvider` + `Outlet`) under `RequireAuth`, not around `App`. Client via `useState(() => createQueryClient())`. Persist uses custom `idb-keyval` persister, not localStorage.
+    - Gotchas encountered: `gcTime` must be ≥ persist `maxAge` (both 24h) or hydration drops the snapshot. Persist only writes on cache added/removed/updated — empty cache does not create the `monetta.queryCache` key yet; `keyval-store` still opens on restore `get()`. Mock `idb-keyval` in node tests. Vite is on 5175 (`strictPort`).
+    - Useful context: `QUERY_CACHE_KEY` / `createQueryPersister` are the same helpers US-039 should call on logout with `queryClient.clear()`. First `useQuery` is US-006 / US-008. Token and backend URL stay in localStorage.
+---
