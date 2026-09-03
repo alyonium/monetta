@@ -45,3 +45,19 @@
     - Gotchas encountered: `primaryCurrency` is a POST; read with `getPrimaryCurrency`. `result.data` is possibly undefined after `result.data?.data` — assign `payload` before reading `meta`. Rate is a string. Empty `data: []` is valid; missing `data` throws.
     - Useful context: US-014 wraps these fetchers in Query for parameters-bar totals. Do not round in the converter. Account cards stay in their own currency (US-010).
 ---
+
+## 2026-09-03 14:42 - US-007
+- Added Budget account model, Firefly mapping, and preference read/write helpers. No UI and no `useQuery`.
+- **Learnings for future iterations:**
+    - Patterns discovered: Budget types live in `src/modules/budget/types`; mapping and preferences in `src/modules/budget/helpers`; tests in `src/modules/budget/tests`. Same SDK mock as currency fetchers.
+    - Gotchas encountered: `PolymorphicProperty` is `boolean | string | string[]`, not an object — appearance is a JSON string, order is a string array. PUT `updatePreference` overwrites and creates missing keys. Broken appearance JSON is skipped, missing `data` on list throws. Do not write appearance during mapping. `icon`/`color` stay `null` without a preference — no Wallet/`#4C6EF5` in the data layer.
+    - Useful context: US-008 wraps `listAccount` + these helpers in `useBudgetAccounts`. Cards stay in account currency. UI fallback for missing appearance is US-010 / US-016. First appearance write is create/edit (US-017 / US-020). Reorder writes `monetta.accountOrder.<type.toLowerCase()>` (US-027).
+---
+
+## 2026-09-03 15:14 - US-007 review
+- Mapper takes `Pick<AccountRead, 'id' | 'attributes'>`. One `AccountType`; order keys lowercased only on the Firefly wire. Appearance is `string | null`, not a Mantine default.
+- **Learnings for future iterations:**
+    - Patterns discovered: bucket with `grouped[mapped.type]`. Preference name `accountOrderPreferenceName(type)`.
+    - Gotchas encountered: do not invent a looser Firefly account type for tests. Do not bake UI tokens into the model.
+    - Useful context: shared Firefly page-loop waits for US-008 `listAccount`.
+---

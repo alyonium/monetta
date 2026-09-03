@@ -12,7 +12,7 @@
     "FR-1: Вход по personal access token Firefly III и URL инстанса; оба значения в localStorage. URL обрезается до origin, затем baseUrl = {origin}/api; /v1 добавляет клиент",
     "FR-2: После входа четыре вкладки в футере: Budget, History, Analytics, Settings",
     "FR-3: На Budget три блока: Income, Current, Expense; в Expense также liability Firefly как Debt",
-    "FR-4: Иконка, цвет и порядок счетов хранятся в preferences Firefly: moneta.accountAppearance.*, moneta.accountOrder.*",
+    "FR-4: Иконка, цвет и порядок счетов хранятся в preferences Firefly: monetta.accountAppearance.*, monetta.accountOrder.*",
     "FR-5: Скрытые счета — active=false в Firefly, в приложении их нет",
     "FR-6: Создание, правка и удаление счетов и транзакций через API Firefly; балансы обновляются после мутаций",
     "FR-7: Доход, расход и перевод создаются перетаскиванием счёта на другой счёт",
@@ -23,7 +23,7 @@
     "FR-12: При повторном открытии на этом устройстве сразу показывается последний кеш Query, затем refetch из Firefly"
   ],
   "Resolved Questions": [
-    "Иконки, цвета и порядка счетов в полях счёта Firefly нет. Пишем в preferences: moneta.accountAppearance.<accountId> и moneta.accountOrder.<block>.",
+    "Иконки, цвета и порядка счетов в полях счёта Firefly нет. Пишем в preferences: monetta.accountAppearance.<accountId> и monetta.accountOrder.<block>.",
     "Правка баланса current-счёта — PATCH счёта (current_balance / opening balance), не reconciliation-транзакция.",
     "Debt мапится на liability Firefly и рисуется в блоке Expenses. Обычный расход остаётся expense. Тип после создания не меняется.",
     "Синк телефона и ПК — это Firefly. Локальный кеш свой на каждом устройстве. TanStack Query + persist в IndexedDB: сразу рисуем последний ответ, в фоне refetch. Не качать всё заново при каждом заходе на вкладку. Токен и backend URL по-прежнему в localStorage.",
@@ -151,13 +151,13 @@
       "changes": [
         "Задать AccountType INCOME | CURRENT | EXPENSE и флаг долга в src/modules/budget/types (в src/types — только если тип нужен вне Budget)",
         "Сопоставление в src/modules/budget/helpers: revenue → income, asset → current, expense → expense, liability → expense+debt; active=false пропускать",
-        "Чтение и запись preferences moneta.accountAppearance.<id> и moneta.accountOrder.<block> из src/modules/budget/helpers",
+        "Чтение и запись preferences monetta.accountAppearance.<id> и monetta.accountOrder.<block> из src/modules/budget/helpers",
         "Add or update automated tests",
         "Tests pass",
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "designReference": []
     },
     {
@@ -456,7 +456,7 @@
       "changes": [
         "Кнопка Edit в parameters bar включает режим: любой счёт блока можно перетащить на новое место в этом же блоке (@dnd-kit sortable; income только с income, current только с current, expense/debt только с expense/debt)",
         "В Edit дроп счёта на счёт не открывает RecordIncomeModal, RecordExpenseModal и RecordTransferModal",
-        "Дроп на новый индекс в том же блоке пишет moneta.accountOrder.<block> и обновляет сетку; слот Add account не сортируется и остаётся последним",
+        "Дроп на новый индекс в том же блоке пишет monetta.accountOrder.<block> и обновляет сетку; слот Add account не сортируется и остаётся последним",
         "Свайп страниц во время драга выключен; перенос на другую страницу того же блока — US-028",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
