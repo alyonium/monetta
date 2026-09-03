@@ -37,3 +37,11 @@
     - Gotchas encountered: `gcTime` must be ≥ persist `maxAge` (both 24h) or hydration drops the snapshot. Persist only writes on cache added/removed/updated — empty cache does not create the `monetta.queryCache` key yet; `keyval-store` still opens on restore `get()`. Mock `idb-keyval` in node tests. Vite is on 5175 (`strictPort`).
     - Useful context: `QUERY_CACHE_KEY` / `createQueryPersister` are the same helpers US-039 should call on logout with `queryClient.clear()`. First `useQuery` is US-006 / US-008. Token and backend URL stay in localStorage.
 ---
+
+## 2026-09-03 12:40 - US-006
+- Added wallet currency helpers: `fetchPrimaryCurrency`, `fetchExchangeRates` (paged, latest per pair), and `convertToPrimary`. No UI and no `useQuery`.
+- **Learnings for future iterations:**
+    - Patterns discovered: shared currency types live in `src/helpers/currency/types.ts`; later Budget/Analytics import from `@/helpers/currency/...`. Fetchers mock `@/api/sdk.gen.ts` like login. Tests stay in `src/helpers/tests/`.
+    - Gotchas encountered: `primaryCurrency` is a POST; read with `getPrimaryCurrency`. `result.data` is possibly undefined after `result.data?.data` — assign `payload` before reading `meta`. Rate is a string. Empty `data: []` is valid; missing `data` throws.
+    - Useful context: US-014 wraps these fetchers in Query for parameters-bar totals. Do not round in the converter. Account cards stay in their own currency (US-010).
+---
