@@ -61,3 +61,19 @@
     - Gotchas encountered: do not invent a looser Firefly account type for tests. Do not bake UI tokens into the model.
     - Useful context: shared Firefly page-loop waits for US-008 `listAccount`.
 ---
+
+## 2026-09-04 16:45 - US-008
+- Budget loads accounts via Query: shared `collectFireflyPages`, `fetchBudgetAccounts`, `useBudgetAccounts`, names on Budget. No layout chrome.
+- **Learnings for future iterations:**
+    - Patterns discovered: `collectFireflyPages` next to `configureApiClient`. First `useQuery` is `useBudgetAccounts` with key `['budget', 'accounts']`. `emptyAccountsByType` exported from `toBudgetAccounts`.
+    - Gotchas encountered: do not pass `type`/`date` to `listAccount`. Do not set `placeholderData`. Page limits stay separate 50s. Without a Firefly PAT the UI shows `budget.errors.loadFailed`.
+    - Useful context: US-009 reuses `budget.income` / `budget.current` / `budget.expense`. US-013 may add month to the query key. Mutations invalidate this key from US-017.
+---
+
+## 2026-09-04 17:18 - US-008 review
+- Hook is a thin `useQuery`. Budget uses `data !== undefined`, not list lengths. `emptyAccountsByType` is private again.
+- **Learnings for future iterations:**
+    - Patterns discovered: keep `BudgetAccountsByBlock` keys (`INCOME` / `CURRENT` / `EXPENSE`) through Query to the page.
+    - Gotchas encountered: `data ?? empty` hides persist cache vs cold start. Empty arrays plus refetch error must still show the cache.
+    - Useful context: US-009+ should read `data[ACCOUNT_TYPE.*]`, not a renamed hook shape.
+---

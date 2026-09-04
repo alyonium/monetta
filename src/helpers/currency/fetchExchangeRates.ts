@@ -1,5 +1,6 @@
 import { listCurrencyExchangeRates } from '@/api/sdk.gen.ts';
 import type { CurrencyExchangeProperties } from '@/api/types.gen.ts';
+import { collectFireflyPages } from '@/helpers/collectFireflyPages.ts';
 import {
   EXCHANGE_RATES_MISSING_ERROR,
   EXCHANGE_RATES_PAGE_LIMIT,
@@ -54,38 +55,23 @@ const keepLatestByPair = (
 };
 
 export const fetchExchangeRates = async (): Promise<ExchangeRate[]> => {
-  try {
-    const ratesByPair = new Map<string, ExchangeRate>();
-    let page = 1;
-    let totalPages = 1;
-
-    while (page <= totalPages) {
-      const result = await listCurrencyExchangeRates({
+  const items = await collectFireflyPages(
+    (page) =>
+      listCurrencyExchangeRates({
         query: { page, limit: EXCHANGE_RATES_PAGE_LIMIT },
-      });
-      const payload = result.data;
-      const items = payload?.data;
+      }),
+    EXCHANGE_RATES_MISSING_ERROR,
+  );
 
-      if (!payload || !items) {
-        throw new Error(EXCHANGE_RATES_MISSING_ERROR);
-      }
+  const ratesByPair = new Map<string, ExchangeRate>();
 
-      items.forEach((item) => {
-        const mapped = mapExchangeRate(item.attributes);
+  items.forEach((item) => {
+    const mapped = mapExchangeRate(item.attributes);
 
-        if (mapped) {
-          keepLatestByPair(ratesByPair, mapped);
-        }
-      });
-
-      totalPages = payload.meta.pagination?.total_pages ?? page;
-      page += 1;
+    if (mapped) {
+      keepLatestByPair(ratesByPair, mapped);
     }
+  });
 
-    return [...ratesByPair.values()];
-  } catch (error) {
-    throw error instanceof Error
-      ? error
-      : new Error(EXCHANGE_RATES_MISSING_ERROR);
-  }
+  return [...ratesByPair.values()];
 };

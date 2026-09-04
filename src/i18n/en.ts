@@ -26,6 +26,15 @@ export const en = {
     analytics: 'Analytics',
     settings: 'Settings',
   },
+  budget: {
+    income: 'Income',
+    current: 'Current',
+    expense: 'Expense',
+    loading: 'Loading accounts',
+    errors: {
+      loadFailed: 'Failed to load accounts',
+    },
+  },
 } as const;
 
 export type EnTranslation = typeof en;
