@@ -31,6 +31,13 @@ export const en = {
     current: 'Current',
     expense: 'Expense',
     loading: 'Loading accounts',
+    parameters: {
+      income: 'Income',
+      expenses: 'Expenses',
+      balance: 'Balance',
+      month: 'Month',
+      edit: 'Edit',
+    },
     errors: {
       loadFailed: 'Failed to load accounts',
     },

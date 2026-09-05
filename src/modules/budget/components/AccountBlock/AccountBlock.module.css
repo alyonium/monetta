@@ -1,0 +1,24 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.title {
+  flex-shrink: 0;
+  margin: 0 0 var(--mantine-spacing-xs);
+  font-size: var(--mantine-font-size-md);
+  font-weight: 500;
+}
+
+.slot {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.names {
+  margin: 0;
+  padding-left: var(--mantine-spacing-md);
+}

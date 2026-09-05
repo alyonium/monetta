@@ -77,3 +77,19 @@
     - Gotchas encountered: `data ?? empty` hides persist cache vs cold start. Empty arrays plus refetch error must still show the cache.
     - Useful context: US-009+ should read `data[ACCOUNT_TYPE.*]`, not a renamed hook shape.
 ---
+
+## 2026-09-04 19:15 - US-009
+- Budget page shell: column fills `main`, ParametersBar stub, three AccountBlocks (`flex: 1`). Account names stay in the grid slot. `AccountNameList` removed.
+- **Learnings for future iterations:**
+    - Patterns discovered: CSS modules next to each Budget component. `AppLayout` `main` is `overflow: hidden`; the page column is `height: 100%`.
+    - Gotchas encountered: keep `!data` for loading/error. Bar `expenses` vs block `expense`. Do not add MonthPicker, totals, or cards here.
+    - Useful context: US-010 replaces names in the AccountBlock slot. US-013/014/027 fill ParametersBar.
+---
+
+## 2026-09-04 22:28 - US-009 review
+- Dropped the no-op Expense `clsx` class (`.block` already has `min-height: 0`). Block titles use `ACCOUNT_BLOCK_TITLE_KEY` instead of a `toLowerCase` cast. Refresh loader: `gcTime` 90d overflowed `setTimeout` to 1ms and GC'd the restore; `gcTime` is `Infinity`, persist `maxAge` stays 90d. `QueryPersistenceProvider` stays a route `Outlet` under `RequireAuth`. Persist stays always on; logout/IndexedDB wipe is US-039.
+- **Learnings for future iterations:**
+    - Patterns discovered: every flex AccountBlock gets `min-height: 0`; do not special-case Expense in JS until its CSS actually differs. Map `AccountType` → i18n key instead of stringly `toLowerCase`. Query provider is still `RequireAuth` → provider + `Outlet` → `AppLayout`, not around `App`.
+    - Gotchas encountered: `.expense { min-height: 0 }` duplicated `.block`. Do not wrap `App`, add KeepAlive, RestoreGate, or restore-before-render for the loader — the fix is `gcTime: Infinity`. `setTimeout` max is ~24.8d.
+    - Useful context: ParametersBar stub slots stay explicit copies until US-014; keep `!data` as a separate tree without the bar. US-012 can add Expense-only styles when the grid actually differs.
+---

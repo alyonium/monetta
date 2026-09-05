@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import AccountNameList from '@/modules/budget/components/AccountNameList/AccountNameList.tsx';
+import AccountBlock from '@/modules/budget/components/AccountBlock/AccountBlock.tsx';
+import ParametersBar from '@/modules/budget/components/ParametersBar/ParametersBar.tsx';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
 import { useBudgetAccounts } from '@/modules/budget/hooks/useBudgetAccounts.ts';
+import styles from './Budget.module.css';
 
 const Budget = () => {
   const { t } = useTranslation();
@@ -9,14 +11,20 @@ const Budget = () => {
 
   if (!data) {
     return (
-      <p>{isError ? t('budget.errors.loadFailed') : t('budget.loading')}</p>
+      <div className={styles.page}>
+        <p className={styles.status}>
+          {isError ? t('budget.errors.loadFailed') : t('budget.loading')}
+        </p>
+      </div>
     );
   }
 
   return (
-    <div>
+    <div className={styles.page}>
+      <ParametersBar />
+
       {Object.values(ACCOUNT_TYPE).map((type) => (
-        <AccountNameList key={type} type={type} accounts={data[type]} />
+        <AccountBlock key={type} type={type} accounts={data[type]} />
       ))}
     </div>
   );
