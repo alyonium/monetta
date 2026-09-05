@@ -1,0 +1,17 @@
+.badge {
+  --account-icon-color: var(--mantine-color-indigo-6);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: var(--mantine-color-white);
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--account-icon-color) 86%, white) 0%,
+    var(--account-icon-color) 48%,
+    color-mix(in srgb, var(--account-icon-color) 82%, black) 100%
+  );
+}

@@ -30,6 +30,8 @@ export const en = {
     income: 'Income',
     current: 'Current',
     expense: 'Expense',
+    addAccount: 'Add account',
+    paid: 'Paid {{amount}}',
     loading: 'Loading accounts',
     parameters: {
       income: 'Income',

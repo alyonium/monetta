@@ -24,3 +24,7 @@ export const ACCOUNT_PREFERENCES_MISSING_ERROR =
 export const ACCOUNT_PREFERENCE_WRITE_ERROR =
   'Account preference could not be saved';
 export const ACCOUNTS_MISSING_ERROR = 'Budget accounts are missing';
+
+export const DEFAULT_ACCOUNT_ICON = 'Wallet';
+export const DEFAULT_ACCOUNT_COLOR = '#4C6EF5';
+export const ACCOUNT_ICON_SIZE = 24;

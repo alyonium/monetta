@@ -93,3 +93,19 @@
     - Gotchas encountered: `.expense { min-height: 0 }` duplicated `.block`. Do not wrap `App`, add KeepAlive, RestoreGate, or restore-before-render for the loader — the fix is `gcTime: Infinity`. `setTimeout` max is ~24.8d.
     - Useful context: ParametersBar stub slots stay explicit copies until US-014; keep `!data` as a separate tree without the bar. US-012 can add Expense-only styles when the grid actually differs.
 ---
+
+## 2026-09-05 23:59 - US-010
+- Account cards in each Budget block: truncated name, Phosphor icon, color, balance+currency. Debt shows debtAmount red and paidAmount green (taller card). Add account slot last, same height as the block's cards (Expense matches Debt).
+- **Learnings for future iterations:**
+    - Patterns discovered: UI appearance fallbacks live in `constants.ts` (`Wallet`, `#4C6EF5`); `resolveAccountIcon` sits next to components, not in data helpers. Amounts stay in account currency via `formatAccountAmount`.
+    - Gotchas encountered: `react-hooks/static-components` forbids `<Icon />` when the component is resolved during render — use `createElement`. Expense Add `min-height` must equal the Debt card (`7.5rem`), not the regular expense card. Do not round mapper float artifacts here.
+    - Useful context: 4-column CSS grid, extra rows wrap, slot `overflow: auto` until US-011/012. Cards are not buttons (US-018). Add has no `onClick` (US-016). Icon picker catalog is US-015.
+---
+
+## 2026-09-06 00:43 - US-010 review
+- Expense tile height is a grid token (`--account-card-min-height` on `.expense`), not an AddAccountButton `type` check. Add has no props until US-016. Merged `resolveAccountIcon` into `accountIcons.ts`; dropped the extra module and the Debt-only min-height class on AccountItem.
+- **Learnings for future iterations:**
+    - Patterns discovered: layout differences between blocks live on the AccountBlock grid, not on child tiles. `AddAccountButton` stays prop-less until the create modal needs `AccountType`. Icon catalog + resolve stay in one file; US-015 grows `ACCOUNT_ICONS`, not a second resolver.
+    - Gotchas encountered: a `type === EXPENSE` branch on Add was only there to copy Debt height — the same token on the expense grid covers cards and Add. Do not reintroduce `--account-card-debt-min-height` on AccountItem.
+    - Useful context: all Expense tiles are 7.5rem (US-012 equalizes rows anyway). Income/Current stay 6rem. `debtAmount ?? 0` still papers over a non-discriminated `isDebt` type; tighten that when the model is next touched.
+---
