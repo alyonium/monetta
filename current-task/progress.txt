@@ -109,3 +109,19 @@
     - Gotchas encountered: a `type === EXPENSE` branch on Add was only there to copy Debt height — the same token on the expense grid covers cards and Add. Do not reintroduce `--account-card-debt-min-height` on AccountItem.
     - Useful context: all Expense tiles are 7.5rem (US-012 equalizes rows anyway). Income/Current stay 6rem. `debtAmount ?? 0` still papers over a non-discriminated `isDebt` type; tighten that when the model is next touched.
 ---
+
+## 2026-09-06 11:25 - US-011
+- Income and Current paginate as one paged CSS grid row. Mobile: 4 cards, swipe, dots. Desktop ≥961px: as many columns as fit, arrows + swipe + dots. Add stays last (can sit alone on the last page). Expense still wraps without paging.
+- **Learnings for future iterations:**
+    - Patterns discovered: slice the accounts+Add list and set `repeat(N, minmax(0, 1fr))` so a lone Add stays one cell. `useElementSize` on the viewport; `useMediaQuery` with `961px`, not Mantine `md`.
+    - Gotchas encountered: measure width 0 as 4 columns or desktop flashes 1 column. Wrap prev from page 0 to the last page (same loop as last→first). Pointer swipe needs `setPointerCapture` in try/catch for synthetic events.
+    - Useful context: US-012 should reuse `accountBlockPaging` with `pageSize = columns * rows`. Keep Expense `overflow: auto` until then. DnD must not fight swipe until US-027.
+---
+
+## 2026-09-06 14:05 - US-011 review
+- Nested the 3-slide carousel under `AccountBlock/AccountBlockPager`. Paging hook is only columns, accounts+Add, `pageIndex`, next/prev/jump. Viewport animates, then commits the page (`AccountBlockViewportHandle` in `types/`). Expense uses the same `AccountPageGrid` (4 columns, `ACCOUNT_CARD_MIN_HEIGHT_EXPENSE`, slot `overflow: auto`) without a pager. `AccountPageItem` is `type: 'add' | 'account'` in `types/accountPageItem.ts`; `toAccountPageItems` stays next to `AccountBlock`. Swipe tokens (`PAGE_SWIPE_*`) live in module `constants.ts`; `PageSwipeDirection` in `types/pageSwipeDirection.ts`; `resolvePageSwipe` / `rubberBandDragX` / `usePageSwipe` stay in the viewport folder. Tests: 200px → 2 columns, 890px → 10; four accounts plus Add, last page `['add']`; wrap both ways; rubber-band only when `canLoop` is false (`pageSwipe.test.ts` next to the viewport).
+- **Learnings for future iterations:**
+    - Patterns discovered: pager API is `columns` + items + `pageIndex` + next/prev/jump (derived clamp). Arrows and dots call the viewport handle; the hook does not own pointer/transform. One `AccountPageGrid` for all blocks; height is `--account-card-min-height`. Crossing a folder uses `@/` imports; `./` stays for same-folder CSS and hooks.
+    - Gotchas encountered: do not `setPageIndex` during render to clamp — derive from list length. Do not put `usePageSwipe` next to `useBudgetAccounts`. Do not discriminant on `key === 'add'` (an account id could collide). Rubber-band XOR `canPrev`/`canNext` is dead: both flags are `canLoop`. `pageCount(0)` is not the UI — Add is always in the list. `map(() => ({ ... }))` is a JS object, not JSX.
+    - Useful context: US-012 should wrap the same grid in the pager with `pageSize = columns * rows`, not a third markup. Loop first↔last is the product. US-027 disables swipe in the viewport. US-028 can keep a card in-hand at the edge without touching Query hooks. No Embla / Mantine Carousel.
+---

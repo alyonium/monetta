@@ -1,12 +1,16 @@
-import { clsx } from 'clsx';
 import { useTranslation } from 'react-i18next';
-import AccountItem from '@/modules/budget/components/AccountItem/AccountItem.tsx';
-import AddAccountButton from '@/modules/budget/components/AddAccountButton/AddAccountButton.tsx';
-import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import {
+  ACCOUNT_BLOCK_MOBILE_COLUMNS,
+  ACCOUNT_CARD_MIN_HEIGHT_EXPENSE,
+  ACCOUNT_TYPE,
+} from '@/modules/budget/constants.ts';
 import type {
   AccountType,
   BudgetAccount,
 } from '@/modules/budget/types/budgetAccount.ts';
+import { toAccountPageItems } from './accountPageItem.ts';
+import AccountBlockPager from './AccountBlockPager/AccountBlockPager.tsx';
+import AccountPageGrid from './AccountPageGrid/AccountPageGrid.tsx';
 import styles from './AccountBlock.module.css';
 
 const ACCOUNT_BLOCK_TITLE_KEY = {
@@ -30,24 +34,17 @@ const AccountBlock = ({ type, accounts }: AccountBlockProps) => {
     <section className={styles.block}>
       <h2 className={styles.title}>{t(ACCOUNT_BLOCK_TITLE_KEY[type])}</h2>
 
-      <div className={styles.slot}>
-        <ul
-          className={clsx(
-            styles.grid,
-            type === ACCOUNT_TYPE.EXPENSE && styles.expense,
-          )}
-        >
-          {accounts.map((account) => (
-            <li key={account.id} className={styles.cell}>
-              <AccountItem account={account} />
-            </li>
-          ))}
-
-          <li className={styles.cell}>
-            <AddAccountButton />
-          </li>
-        </ul>
-      </div>
+      {type === ACCOUNT_TYPE.EXPENSE ? (
+        <div className={styles.slot}>
+          <AccountPageGrid
+            items={toAccountPageItems(accounts)}
+            columns={ACCOUNT_BLOCK_MOBILE_COLUMNS}
+            minHeight={ACCOUNT_CARD_MIN_HEIGHT_EXPENSE}
+          />
+        </div>
+      ) : (
+        <AccountBlockPager accounts={accounts} />
+      )}
     </section>
   );
 };

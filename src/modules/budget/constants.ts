@@ -28,3 +28,20 @@ export const ACCOUNTS_MISSING_ERROR = 'Budget accounts are missing';
 export const DEFAULT_ACCOUNT_ICON = 'Wallet';
 export const DEFAULT_ACCOUNT_COLOR = '#4C6EF5';
 export const ACCOUNT_ICON_SIZE = 24;
+
+export const ACCOUNT_BLOCK_DESKTOP_MIN_PX = 961;
+export const ACCOUNT_BLOCK_MOBILE_COLUMNS = 4;
+export const ACCOUNT_CARD_MIN_WIDTH_PX = 80;
+export const ACCOUNT_GRID_GAP_PX = 10;
+export const ACCOUNT_CARD_MIN_HEIGHT = '6rem';
+export const ACCOUNT_CARD_MIN_HEIGHT_EXPENSE = '7.5rem';
+
+export const PAGE_SWIPE_DIRECTION = {
+  NEXT: 'next',
+  PREV: 'prev',
+} as const;
+
+export const PAGE_SWIPE_PX = 48;
+export const PAGE_SWIPE_MS = 280;
+export const PAGE_SWIPE_AXIS_LOCK_PX = 8;
+export const PAGE_SWIPE_RUBBER_BAND = 0.35;

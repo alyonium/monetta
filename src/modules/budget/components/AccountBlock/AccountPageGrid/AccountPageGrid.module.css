@@ -1,0 +1,14 @@
+.grid {
+  --account-card-min-height: 6rem;
+  display: grid;
+  grid-template-rows: auto;
+  gap: var(--mantine-spacing-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  display: flex;
+  min-width: 0;
+}

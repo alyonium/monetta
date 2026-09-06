@@ -17,22 +17,3 @@
   min-height: 0;
   overflow: auto;
 }
-
-.grid {
-  --account-card-min-height: 6rem;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--mantine-spacing-xs);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.expense {
-  --account-card-min-height: 7.5rem;
-}
-
-.cell {
-  display: flex;
-  min-width: 0;
-}

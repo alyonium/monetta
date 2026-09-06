@@ -1,0 +1,22 @@
+.dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-xs);
+}
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--mantine-color-dimmed);
+  cursor: pointer;
+}
+
+.dotCurrent {
+  background: var(--mantine-color-indigo-4);
+}

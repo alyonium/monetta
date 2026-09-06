@@ -1,0 +1,19 @@
+.viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+
+.track {
+  display: flex;
+  width: 100%;
+  transform: translate3d(-100%, 0, 0);
+  will-change: transform;
+}
+
+.slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
