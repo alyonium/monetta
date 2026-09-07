@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import AccountItem from '@/modules/budget/components/AccountItem/AccountItem.tsx';
 import AddAccountButton from '@/modules/budget/components/AddAccountButton/AddAccountButton.tsx';
-import { ACCOUNT_CARD_MIN_HEIGHT } from '@/modules/budget/constants.ts';
+import { ACCOUNT_CARD_MIN_HEIGHT_DEFAULT } from '@/modules/budget/constants.ts';
 import type { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
 import styles from './AccountPageGrid.module.css';
 
@@ -14,7 +14,7 @@ type AccountPageGridProps = {
 const AccountPageGrid = ({
   items,
   columns,
-  minHeight = ACCOUNT_CARD_MIN_HEIGHT,
+  minHeight = ACCOUNT_CARD_MIN_HEIGHT_DEFAULT,
 }: AccountPageGridProps) => (
   <ul
     className={styles.grid}

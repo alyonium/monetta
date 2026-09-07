@@ -11,11 +11,11 @@ import { fetchAccountPreferences } from '@/modules/budget/helpers/fetchAccountPr
 import {
   sampleAccountAppearance,
   sampleAccountAppearanceJson,
-} from '@/modules/budget/tests/accountAppearanceFixture.ts';
+} from './accountAppearanceFixture.ts';
 import {
   appearancePreferenceKey,
   orderPreferenceKey,
-} from '@/modules/budget/tests/preferenceKeyFixture.ts';
+} from './preferenceKeyFixture.ts';
 
 vi.mock('@/api/sdk.gen.ts', () => ({
   listPreference: vi.fn(),

@@ -125,3 +125,19 @@
     - Gotchas encountered: do not `setPageIndex` during render to clamp — derive from list length. Do not put `usePageSwipe` next to `useBudgetAccounts`. Do not discriminant on `key === 'add'` (an account id could collide). Rubber-band XOR `canPrev`/`canNext` is dead: both flags are `canLoop`. `pageCount(0)` is not the UI — Add is always in the list. `map(() => ({ ... }))` is a JS object, not JSX.
     - Useful context: US-012 should wrap the same grid in the pager with `pageSize = columns * rows`, not a third markup. Loop first↔last is the product. US-027 disables swipe in the viewport. US-028 can keep a card in-hand at the edge without touching Query hooks. No Embla / Mantine Carousel.
 ---
+
+## 2026-09-07 16:20 - US-012
+- Expense uses the same pager as Income/Current. Rows come from leftover viewport height (`rowCount`); cards stay compact (`grid-template-rows: auto`, not `1fr`). No visible block titles (`aria-label` via `budget.income` / `budget.current` / `budget.expense`). Income/Current `flex-shrink: 0`, Expense `flex: 1`. Layout table `ACCOUNT_BLOCK_PAGER` (`fillHeight`, CSS `minHeight`, `minCardHeightPx`) is spread into the pager. Hook returns `pageSize` / `totalPages` once. Column gap 10px, row gap 0; page gap between Budget blocks is 16px.
+- **Learnings for future iterations:**
+    - Patterns discovered: `fillHeight` means measure leftover height and allow N rows, not `type === EXPENSE`. Spread `ACCOUNT_BLOCK_PAGER[type]` into the pager — the hook does not know `AccountType`. Viewport slices by `pageSize`, loops by `totalPages`. `rowCount` default is `ACCOUNT_GRID_ROW_GAP_PX` (0); `columnCount` stays on `ACCOUNT_GRID_GAP_PX`. Visual space between Expense rows comes from card padding, not grid `row-gap`.
+    - Gotchas encountered: `1fr` on Expense rows stretched cards and looked like huge gaps — product wants compact min-height rows. Keep `rowCount` gap in sync with CSS `row-gap`, not with card padding. Do not mix page `gap` (16px) with `ACCOUNT_GRID_GAP_PX` / `--mantine-spacing-xs` (10). `Record<AccountType, …>` on the pager table would cycle `constants` ↔ `types` (`AccountType` is derived from `ACCOUNT_TYPE`).
+    - Useful context: swipe/dots/arrows/wrap first↔last stay as US-011. Do not restore visible headings or equal `1fr` rows. US-027 can turn off swipe in the viewport.
+---
+
+## 2026-09-07 17:57 - US-012 review
+- Helper tests moved to `src/modules/budget/helpers/tests/` (`testHelpers.ts` for SDK fixtures). `accountIcons.test.ts` sits next to `accountIcons.ts`. Dropped tautological `rowCount` cases (250px gap, default-gap identity, columns×rows). `AccountBlockPagerLayout` lives in `types/`; `ACCOUNT_BLOCK_PAGER` still `satisfies Record<(typeof ACCOUNT_TYPE)[keyof typeof ACCOUNT_TYPE], AccountBlockPagerLayout>`. `gridForPage` is a same-file helper in the viewport.
+- **Learnings for future iterations:**
+    - Patterns discovered: module helper tests go in `helpers/tests/`, not a top-level `src/modules/<name>/tests`. Non-helper tests stay next to the source (`pageSwipe.test.ts`, `accountIcons.test.ts`). Layout shape is a type; the `Record` keys stay next to `ACCOUNT_TYPE`.
+    - Gotchas encountered: renaming `tests/helpers.ts` to `testHelpers.ts` avoids a `helpers.ts` inside `helpers/tests/`. Do not import `AccountType` into `constants.ts` to type the pager table.
+    - Useful context: login still has `src/modules/login/tests/` until that module is aligned. `pageCount(0)` and `nextPageIndex` on one page are still untested branches.
+---

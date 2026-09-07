@@ -17,3 +17,10 @@
   flex: 0 0 100%;
   min-width: 0;
 }
+
+.fillHeight,
+.fillHeight .track,
+.fillHeight .slide {
+  height: 100%;
+  min-height: 0;
+}

@@ -2,6 +2,7 @@ import {
   ACCOUNT_BLOCK_MOBILE_COLUMNS,
   ACCOUNT_CARD_MIN_WIDTH_PX,
   ACCOUNT_GRID_GAP_PX,
+  ACCOUNT_GRID_ROW_GAP_PX,
 } from '@/modules/budget/constants.ts';
 
 type PageCursor = {
@@ -60,6 +61,24 @@ export const columnCount = ({
   }
 
   return atLeastOne(Math.floor((containerWidth + gap) / (minCardWidth + gap)));
+};
+
+export const rowCount = ({
+  availableHeight,
+  minCardHeight,
+  gap = ACCOUNT_GRID_ROW_GAP_PX,
+}: {
+  availableHeight: number;
+  minCardHeight: number;
+  gap?: number;
+}): number => {
+  if (availableHeight <= 0) {
+    return 1;
+  }
+
+  return atLeastOne(
+    Math.floor((availableHeight + gap) / (minCardHeight + gap)),
+  );
 };
 
 export const nextPageIndex = ({ page, totalPages }: PageCursor): number => {

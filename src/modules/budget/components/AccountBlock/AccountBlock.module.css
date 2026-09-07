@@ -1,19 +1,10 @@
 .block {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  min-height: 0;
-}
-
-.title {
   flex-shrink: 0;
-  margin: 0 0 var(--mantine-spacing-xs);
-  font-size: var(--mantine-font-size-md);
-  font-weight: 500;
+  min-height: 0;
 }
 
-.slot {
+.fill {
   flex: 1;
-  min-height: 0;
-  overflow: auto;
 }

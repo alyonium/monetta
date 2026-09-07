@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { ACCOUNT_BLOCK_MOBILE_COLUMNS } from '@/modules/budget/constants.ts';
+import {
+  ACCOUNT_BLOCK_MOBILE_COLUMNS,
+  ACCOUNT_GRID_ROW_GAP_PX,
+} from '@/modules/budget/constants.ts';
 import {
   clampPageIndex,
   columnCount,
   nextPageIndex,
   pageCount,
   prevPageIndex,
+  rowCount,
   slicePage,
 } from '@/modules/budget/helpers/accountBlockPaging.ts';
 
@@ -20,6 +24,14 @@ describe('pageCount', () => {
 
   it('puts Add alone on the second page when there are four accounts', () => {
     expect(pageCount(5, 4)).toBe(2);
+  });
+
+  it('fits seven accounts plus Add on one page of eight', () => {
+    expect(pageCount(8, 8)).toBe(1);
+  });
+
+  it('puts Add alone on the second page when there are eight accounts', () => {
+    expect(pageCount(9, 8)).toBe(2);
   });
 
   it('clamps a page size below 1', () => {
@@ -40,6 +52,22 @@ describe('slicePage', () => {
 
   it('returns only Add on the last page of four accounts plus Add', () => {
     expect(slicePage(['a', 'b', 'c', 'd', 'add'], 1, 4)).toEqual(['add']);
+  });
+
+  it('returns the first eight, then only Add, at page size 8', () => {
+    const items = ['1', '2', '3', '4', '5', '6', '7', '8', 'add'];
+
+    expect(slicePage(items, 0, 8)).toEqual([
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+    ]);
+    expect(slicePage(items, 1, 8)).toEqual(['add']);
   });
 
   it('returns the last page when the index is past the end', () => {
@@ -67,6 +95,29 @@ describe('columnCount', () => {
 
   it('does not return zero columns for a narrow desktop container', () => {
     expect(columnCount({ isDesktop: true, containerWidth: 1 })).toBe(1);
+  });
+});
+
+describe('rowCount', () => {
+  it('uses one row when height is not measured yet', () => {
+    expect(rowCount({ availableHeight: 0, minCardHeight: 120 })).toBe(1);
+  });
+
+  it('uses one row when there is not enough space for a card', () => {
+    expect(rowCount({ availableHeight: 50, minCardHeight: 120 })).toBe(1);
+  });
+
+  it('can fit an extra row when the row gap is 0 instead of 10px', () => {
+    expect(
+      rowCount({ availableHeight: 370, minCardHeight: 120, gap: 10 }),
+    ).toBe(2);
+    expect(
+      rowCount({
+        availableHeight: 370,
+        minCardHeight: 120,
+        gap: ACCOUNT_GRID_ROW_GAP_PX,
+      }),
+    ).toBe(3);
   });
 });
 

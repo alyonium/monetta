@@ -16,8 +16,8 @@ import {
   createPreference,
   createPreferencePageResult,
   createRequest,
-} from '@/modules/budget/tests/helpers.ts';
-import { orderPreferenceKey } from '@/modules/budget/tests/preferenceKeyFixture.ts';
+} from './testHelpers.ts';
+import { orderPreferenceKey } from './preferenceKeyFixture.ts';
 
 vi.mock('@/api/sdk.gen.ts', () => ({
   listAccount: vi.fn(),

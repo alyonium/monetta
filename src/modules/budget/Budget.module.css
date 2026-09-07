@@ -5,7 +5,7 @@
   min-height: 0;
   overflow: hidden;
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
-  gap: var(--mantine-spacing-sm);
+  gap: 16px;
 }
 
 .status {

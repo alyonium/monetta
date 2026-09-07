@@ -1,8 +1,8 @@
 import { type Ref, useImperativeHandle } from 'react';
+import { clsx } from 'clsx';
 import AccountPageGrid from '@/modules/budget/components/AccountBlock/AccountPageGrid/AccountPageGrid.tsx';
 import {
   nextPageIndex,
-  pageCount,
   prevPageIndex,
   slicePage,
 } from '@/modules/budget/helpers/accountBlockPaging.ts';
@@ -11,11 +11,37 @@ import type { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts'
 import styles from './AccountBlockViewport.module.css';
 import { usePageSwipe } from './usePageSwipe.ts';
 
+type GridForPageArgs = {
+  items: AccountPageItem[];
+  page: number;
+  pageSize: number;
+  columns: number;
+  minHeight: string;
+};
+
+const gridForPage = ({
+  items,
+  page,
+  pageSize,
+  columns,
+  minHeight,
+}: GridForPageArgs) => (
+  <AccountPageGrid
+    items={slicePage(items, page, pageSize)}
+    columns={columns}
+    minHeight={minHeight}
+  />
+);
+
 type AccountBlockViewportProps = {
   carouselRef: Ref<AccountBlockViewportHandle>;
   sizeRef: Ref<HTMLDivElement>;
   items: AccountPageItem[];
   columns: number;
+  pageSize: number;
+  totalPages: number;
+  minHeight: string;
+  fillHeight: boolean;
   pageIndex: number;
   onNext: () => void;
   onPrev: () => void;
@@ -27,12 +53,15 @@ const AccountBlockViewport = ({
   sizeRef,
   items,
   columns,
+  pageSize,
+  totalPages,
+  minHeight,
+  fillHeight,
   pageIndex,
   onNext,
   onPrev,
   onJump,
 }: AccountBlockViewportProps) => {
-  const totalPages = pageCount(items.length, columns);
   const canLoop = totalPages > 1;
   const previousPage = prevPageIndex({ page: pageIndex, totalPages });
   const nextPage = nextPageIndex({ page: pageIndex, totalPages });
@@ -75,10 +104,13 @@ const AccountBlockViewport = ({
     },
   }));
 
+  const pageGrid = (page: number) =>
+    gridForPage({ items, page, pageSize, columns, minHeight });
+
   return (
     <div
       ref={sizeRef}
-      className={styles.viewport}
+      className={clsx(styles.viewport, fillHeight && styles.fillHeight)}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -87,28 +119,13 @@ const AccountBlockViewport = ({
     >
       <div ref={trackRef} className={styles.track}>
         <div className={styles.slide} aria-hidden inert>
-          {canLoop && (
-            <AccountPageGrid
-              items={slicePage(items, previousPage, columns)}
-              columns={columns}
-            />
-          )}
+          {canLoop && pageGrid(previousPage)}
         </div>
 
-        <div className={styles.slide}>
-          <AccountPageGrid
-            items={slicePage(items, pageIndex, columns)}
-            columns={columns}
-          />
-        </div>
+        <div className={styles.slide}>{pageGrid(pageIndex)}</div>
 
         <div className={styles.slide} aria-hidden inert>
-          {canLoop && (
-            <AccountPageGrid
-              items={slicePage(items, nextPage, columns)}
-              columns={columns}
-            />
-          )}
+          {canLoop && pageGrid(nextPage)}
         </div>
       </div>
     </div>

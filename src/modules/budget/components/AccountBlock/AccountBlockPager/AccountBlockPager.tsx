@@ -1,7 +1,9 @@
 import { useRef } from 'react';
 import { CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react';
+import { clsx } from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { ACCOUNT_ICON_SIZE } from '@/modules/budget/constants.ts';
+import type { AccountBlockPagerLayout } from '@/modules/budget/types/accountBlockPagerLayout.ts';
 import type { AccountBlockViewportHandle } from '@/modules/budget/types/accountBlockViewportHandle.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import AccountBlockDots from './AccountBlockDots/AccountBlockDots.tsx';
@@ -11,26 +13,32 @@ import styles from './AccountBlockPager.module.css';
 
 type AccountBlockPagerProps = {
   accounts: BudgetAccount[];
-};
+} & AccountBlockPagerLayout;
 
-const AccountBlockPager = ({ accounts }: AccountBlockPagerProps) => {
+const AccountBlockPager = ({
+  accounts,
+  minHeight,
+  fillHeight,
+  minCardHeightPx,
+}: AccountBlockPagerProps) => {
   const { t } = useTranslation();
   const carouselRef = useRef<AccountBlockViewportHandle>(null);
   const {
     viewportRef,
     items,
     columns,
+    pageSize,
     currentPage,
     totalPages,
     showArrows,
     goNext,
     goPrev,
     goToPage,
-  } = useAccountBlockPager(accounts);
+  } = useAccountBlockPager({ accounts, fillHeight, minCardHeightPx });
 
   return (
     <div className={styles.pager}>
-      <div className={styles.row}>
+      <div className={clsx(styles.row, fillHeight && styles.rowFill)}>
         {showArrows && (
           <button
             type='button'
@@ -47,6 +55,10 @@ const AccountBlockPager = ({ accounts }: AccountBlockPagerProps) => {
           sizeRef={viewportRef}
           items={items}
           columns={columns}
+          pageSize={pageSize}
+          totalPages={totalPages}
+          minHeight={minHeight}
+          fillHeight={fillHeight}
           pageIndex={currentPage}
           onNext={goNext}
           onPrev={goPrev}

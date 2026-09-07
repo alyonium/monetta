@@ -252,7 +252,7 @@ In edit mode, accounts can be moved to other positions within the block using dr
 
 ### 1.2 Income accounts (revenue)
 
-The block displays 4 accounts per page. Navigation between pages is done by swiping. Below the accounts, page indicator dots should be displayed, with the active page highlighted. On desktop, pagination works by clicking arrow buttons, and the page displays as many accounts as can fit in one row. The desktop layout applies at widths of 961 px and above. The last element - the “Add account” button - takes up the same amount of space as any other account.
+The block displays 4 accounts per page. There is no visible section title. Navigation between pages is done by swiping. Below the accounts, page indicator dots should be displayed, with the active page highlighted. On desktop, pagination works by clicking arrow buttons, and the page displays as many accounts as can fit in one row. The desktop layout applies at widths of 961 px and above. The last element - the “Add account” button - takes up the same amount of space as any other account.
 
 #### 1.2.1 Account item
 
@@ -372,7 +372,7 @@ Discards all changes and restores the previously saved account values.
 
 ### 1.3 Current accounts (asset)
 
-The block displays 4 accounts per page. Navigation between pages is done by swiping. Below the accounts, page indicator dots should be displayed, with the active page highlighted. On the desktop version, pagination works by clicking arrow buttons, and the page displays as many accounts as can fit on it in one row (the desktop version works up to and including 961 px). The last element - the “Add account” button - takes up the same amount of space as any other account.
+The block displays 4 accounts per page. There is no visible section title. Navigation between pages is done by swiping. Below the accounts, page indicator dots should be displayed, with the active page highlighted. On the desktop version, pagination works by clicking arrow buttons, and the page displays as many accounts as can fit on it in one row (the desktop version works up to and including 961 px). The last element - the “Add account” button - takes up the same amount of space as any other account.
 
 #### 1.3.1 Account item
 
@@ -504,7 +504,7 @@ Discards all changes and restores the previously saved account values.
 
 ### 1.4 Expense account
 
-The block displays as many rows of accounts as can fit before the footer, with space reserved below for the page indicator dots. Each row contains 4 accounts. Navigation between pages is done by swiping.
+The block displays as many compact rows of accounts as can fit before the footer, with space reserved below for the page indicator dots. There is no visible section title. Rows stay at the Debt card min-height; there is no extra gap between rows beyond the card padding. Leftover height is not stretched across rows. Each row contains 4 accounts. Navigation between pages is done by swiping.
 
 Below the accounts, page indicator dots should be displayed, with the active page highlighted. On desktop, pagination works by clicking arrow buttons, and each page displays as many accounts as can fit in the available space. The desktop layout applies at widths of 961 px and above. The last element - the “Add account” button - takes up the same amount of space as any other account.
 
