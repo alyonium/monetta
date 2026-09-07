@@ -141,3 +141,19 @@
     - Gotchas encountered: renaming `tests/helpers.ts` to `testHelpers.ts` avoids a `helpers.ts` inside `helpers/tests/`. Do not import `AccountType` into `constants.ts` to type the pager table.
     - Useful context: login still has `src/modules/login/tests/` until that module is aligned. `pageCount(0)` and `nextPageIndex` on one page are still untested branches.
 ---
+
+## 2026-09-07 19:35 - US-013
+- Month picker in ParametersBar (`MonthPickerInput`, `MMM YYYY`, no future months). Budget keeps the bar while accounts load. `listAccount` gets `date` from `fireflyBalanceDate`; query key is `['budget', 'accounts', date]`. `defaultTransactionDate` is exported for US-024.
+- **Learnings for future iterations:**
+    - Patterns discovered: Mantine 9 dates use `YYYY-MM-DD` strings. Import `@mantine/dates/styles.css` after core. Month state lives in `Budget`, not a context. Helper tests take `today` as an argument.
+    - Gotchas encountered: do not hide ParametersBar on `!data` or a month change drops the picker. Still omit `type` on `listAccount`. Current month uses today as the Firefly as-of date, not the 1st.
+    - Useful context: US-014 reads the same `month` for totals. US-024 uses `defaultTransactionDate`. Mutations should invalidate `BUDGET_ACCOUNTS_QUERY_KEY` (prefix), not a single date key.
+---
+
+## 2026-09-07 22:43 - US-013 review
+- Dropped identity helpers. Clock is `todayIso()`; React no longer imports dayjs. One `MonthToday` relation (`past | current | future`) feeds Firefly and transaction dates. Picker `onChange` is `startOfMonth(value)`.
+- **Learnings for future iterations:**
+    - Patterns discovered: do not alias `startOfMonth`. Formulas stay pure on `MonthToday`; only `todayIso()` reads the clock.
+    - Gotchas encountered: Mantine 9 `onChange` is already `YYYY-MM-DD` — no dayjs roundtrip.
+    - Useful context: `monthRelation` stays private. Future month: Firefly uses today, transaction date uses the 1st.
+---

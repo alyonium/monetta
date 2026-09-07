@@ -1,11 +1,30 @@
-import { Button, Text } from '@mantine/core';
+import { ActionIcon, Text } from '@mantine/core';
+import { MonthPickerInput } from '@mantine/dates';
+import { PencilSimpleIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
+import {
+  startOfMonth,
+  todayIso,
+} from '@/modules/budget/helpers/budgetMonth.ts';
 import styles from './ParametersBar.module.css';
+
+type ParametersBarProps = {
+  month: string;
+  onMonthChange: (month: string) => void;
+};
 
 const AMOUNT_PLACEHOLDER = '—';
 
-const ParametersBar = () => {
+const ParametersBar = ({ month, onMonthChange }: ParametersBarProps) => {
   const { t } = useTranslation();
+
+  const onDateChange = (value: string | null) => {
+    if (value === null) {
+      return;
+    }
+
+    onMonthChange(startOfMonth(value));
+  };
 
   return (
     <header className={styles.bar}>
@@ -33,15 +52,30 @@ const ParametersBar = () => {
       </div>
 
       <div className={styles.controls}>
-        <div className={styles.slot}>
-          <Text size='xs' c='dimmed'>
-            {t('budget.parameters.month')}
-          </Text>
-        </div>
+        <MonthPickerInput
+          allowDeselect={false}
+          classNames={{
+            root: styles.monthPicker,
+            label: styles.monthLabel,
+            input: styles.monthInput,
+          }}
+          label={t('budget.parameters.month')}
+          maxDate={todayIso()}
+          onChange={onDateChange}
+          size='sm'
+          value={month}
+          valueFormat='MMM YYYY'
+        />
 
-        <Button type='button' variant='default' size='sm'>
-          {t('budget.parameters.edit')}
-        </Button>
+        <ActionIcon
+          aria-label={t('budget.parameters.edit')}
+          radius='md'
+          size='input-sm'
+          type='button'
+          variant='default'
+        >
+          <PencilSimpleIcon aria-hidden size={18} />
+        </ActionIcon>
       </div>
     </header>
   );

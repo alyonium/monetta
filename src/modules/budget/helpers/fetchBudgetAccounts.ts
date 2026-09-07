@@ -8,10 +8,13 @@ import { fetchAccountPreferences } from '@/modules/budget/helpers/fetchAccountPr
 import { toBudgetAccounts } from '@/modules/budget/helpers/toBudgetAccounts.ts';
 import type { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
 
-export const fetchBudgetAccounts = async (): Promise<BudgetAccountsByBlock> => {
+export const fetchBudgetAccounts = async (
+  date: string,
+): Promise<BudgetAccountsByBlock> => {
   const [items, prefs] = await Promise.all([
     collectFireflyPages(
-      (page) => listAccount({ query: { page, limit: ACCOUNTS_PAGE_LIMIT } }),
+      (page) =>
+        listAccount({ query: { page, limit: ACCOUNTS_PAGE_LIMIT, date } }),
       ACCOUNTS_MISSING_ERROR,
     ),
     fetchAccountPreferences(),

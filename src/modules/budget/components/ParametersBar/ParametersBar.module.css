@@ -1,7 +1,7 @@
 .bar {
   flex-shrink: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--mantine-spacing-sm);
@@ -10,13 +10,37 @@
 .metrics,
 .controls {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: flex-end;
-  gap: var(--mantine-spacing-md);
+}
+
+.metrics {
+  min-width: 0;
+  flex: 1;
+  gap: var(--mantine-spacing-sm);
+}
+
+.controls {
+  flex-shrink: 0;
+  gap: var(--mantine-spacing-xs);
 }
 
 .slot {
   display: flex;
   flex-direction: column;
   gap: calc(var(--mantine-spacing-xs) / 2);
+}
+
+.monthPicker {
+  flex-shrink: 0;
+  width: 8rem;
+}
+
+.monthLabel {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-dimmed);
+}
+
+.monthInput {
+  white-space: nowrap;
 }
