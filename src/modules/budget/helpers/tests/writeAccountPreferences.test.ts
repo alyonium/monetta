@@ -17,6 +17,7 @@ import {
   appearancePreferenceKey,
   orderPreferenceKey,
 } from './preferenceKeyFixture.ts';
+import { createRequest } from './testHelpers.ts';
 
 vi.mock('@/api/sdk.gen.ts', () => ({
   updatePreference: vi.fn(),
@@ -24,10 +25,7 @@ vi.mock('@/api/sdk.gen.ts', () => ({
 
 const updatePreferenceMock = vi.mocked(updatePreference);
 
-const mockRequest = () =>
-  new Request('https://demo.firefly-iii.org/api/v1/preferences/name');
-
-const mockSuccessResult = (name: string, data: string | string[]) => ({
+const createSuccessResult = (name: string, data: string | string[]) => ({
   data: {
     data: {
       type: 'preferences',
@@ -36,14 +34,14 @@ const mockSuccessResult = (name: string, data: string | string[]) => ({
     },
   },
   error: undefined,
-  request: mockRequest(),
+  request: createRequest('preferences/name'),
   response: new Response(null, { status: 200 }),
 });
 
-const mockMissingPayload = () => ({
+const createMissingPayload = () => ({
   data: undefined,
   error: { message: UNAUTHENTICATED_ERROR_MESSAGE },
-  request: mockRequest(),
+  request: createRequest('preferences/name'),
   response: new Response(null, { status: 401 }),
 });
 
@@ -54,7 +52,7 @@ describe('writeAccountPreferences', () => {
 
   it('PUTs appearance as a JSON string and returns the written value', async () => {
     updatePreferenceMock.mockResolvedValue(
-      mockSuccessResult(
+      createSuccessResult(
         appearancePreferenceKey('12'),
         sampleAccountAppearanceJson,
       ),
@@ -72,7 +70,7 @@ describe('writeAccountPreferences', () => {
   it('PUTs order as an array of ids and returns the written value', async () => {
     const ids = ['1', '5', '3'];
     updatePreferenceMock.mockResolvedValue(
-      mockSuccessResult(orderPreferenceKey(ACCOUNT_TYPE.EXPENSE), ids),
+      createSuccessResult(orderPreferenceKey(ACCOUNT_TYPE.EXPENSE), ids),
     );
 
     const result = await writeAccountOrder(ACCOUNT_TYPE.EXPENSE, ids);
@@ -99,7 +97,7 @@ describe('writeAccountPreferences', () => {
 
     expect(networkError).toEqual(new Error('network'));
 
-    updatePreferenceMock.mockResolvedValue(mockMissingPayload());
+    updatePreferenceMock.mockResolvedValue(createMissingPayload());
 
     let missingDataError: Error | undefined;
 

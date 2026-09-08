@@ -3,6 +3,7 @@ import {
   defaultTransactionDate,
   endOfMonth,
   fireflyBalanceDate,
+  monthRange,
   startOfMonth,
   todayIso,
 } from '@/modules/budget/helpers/budgetMonth.ts';
@@ -59,6 +60,22 @@ describe('fireflyBalanceDate', () => {
     expect(fireflyBalanceDate({ month: '2026-10-01', today: TODAY })).toBe(
       TODAY,
     );
+  });
+});
+
+describe('monthRange', () => {
+  it('uses the first day and today for the current month', () => {
+    expect(monthRange({ month: '2026-09-01', today: TODAY })).toEqual({
+      start: '2026-09-01',
+      end: TODAY,
+    });
+  });
+
+  it('uses the first and last day of a past month', () => {
+    expect(monthRange({ month: '2026-08-15', today: TODAY })).toEqual({
+      start: '2026-08-01',
+      end: '2026-08-31',
+    });
   });
 });
 

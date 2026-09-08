@@ -41,14 +41,14 @@ const restoreClient = () => {
   });
 };
 
-const mockRequest = () => new Request(USER_URL);
+const createRequest = () => new Request(USER_URL);
 
 const resolveCurrentUser = (
   result: Omit<CurrentUserMockResult, 'request'> &
     Partial<Pick<CurrentUserMockResult, 'request'>>,
 ) => {
   getCurrentUserMock.mockResolvedValue({
-    request: mockRequest(),
+    request: createRequest(),
     ...result,
   });
 };

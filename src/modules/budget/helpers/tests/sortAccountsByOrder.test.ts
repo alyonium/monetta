@@ -3,7 +3,7 @@ import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
 import { sortAccountsByOrder } from '@/modules/budget/helpers/sortAccountsByOrder.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
-const mockAccount = (id: string, name = id): BudgetAccount => ({
+const createAccount = (id: string, name = id): BudgetAccount => ({
   id,
   name,
   type: ACCOUNT_TYPE.CURRENT,
@@ -19,22 +19,22 @@ const mockAccount = (id: string, name = id): BudgetAccount => ({
 
 describe('sortAccountsByOrder', () => {
   it('orders known ids first and keeps the rest in original order', () => {
-    const accounts = [mockAccount('1'), mockAccount('2'), mockAccount('3'), mockAccount('4')];
+    const accounts = [createAccount('1'), createAccount('2'), createAccount('3'), createAccount('4')];
 
     expect(sortAccountsByOrder(accounts, ['3', '1'])).toEqual([
-      mockAccount('3'),
-      mockAccount('1'),
-      mockAccount('2'),
-      mockAccount('4'),
+      createAccount('3'),
+      createAccount('1'),
+      createAccount('2'),
+      createAccount('4'),
     ]);
   });
 
   it('ignores unknown ids and duplicate order entries', () => {
-    const accounts = [mockAccount('1'), mockAccount('2')];
+    const accounts = [createAccount('1'), createAccount('2')];
 
     expect(sortAccountsByOrder(accounts, ['9', '2', '2', '1'])).toEqual([
-      mockAccount('2'),
-      mockAccount('1'),
+      createAccount('2'),
+      createAccount('1'),
     ]);
   });
 });

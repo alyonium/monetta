@@ -1,7 +1,7 @@
 import type { ExchangeRate } from '@/helpers/currency/types.ts';
 
 const findRate = (
-  rates: readonly ExchangeRate[],
+  rates: ExchangeRate[],
   fromCode: string,
   toCode: string,
 ): ExchangeRate | undefined =>
@@ -20,8 +20,12 @@ export const convertToPrimary = ({
   amount: number;
   fromCode: string;
   primaryCurrencyCode: string;
-  rates: readonly ExchangeRate[];
+  rates: ExchangeRate[];
 }): number | null => {
+  if (!fromCode || !primaryCurrencyCode) {
+    return null;
+  }
+
   const from = fromCode.toUpperCase();
   const primary = primaryCurrencyCode.toUpperCase();
 

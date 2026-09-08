@@ -1,17 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { convertToPrimary } from '@/helpers/currency/convertToPrimary.ts';
-import type { ExchangeRate } from '@/helpers/currency/types.ts';
-
-const rate = (
-  fromCode: string,
-  toCode: string,
-  value: number,
-): ExchangeRate => ({
-  fromCode,
-  toCode,
-  rate: value,
-  date: '2026-01-01T00:00:00+00:00',
-});
+import { createExchangeRate } from '@/helpers/tests/helpers.ts';
 
 describe('convertToPrimary', () => {
   it('returns the amount when the currency is already primary', () => {
@@ -39,7 +28,7 @@ describe('convertToPrimary', () => {
         amount: 10,
         fromCode: 'EUR',
         primaryCurrencyCode: 'USD',
-        rates: [rate('EUR', 'USD', 1.1)],
+        rates: [createExchangeRate('EUR', 'USD', 1.1)],
       }),
     ).toBe(11);
   });
@@ -50,9 +39,28 @@ describe('convertToPrimary', () => {
         amount: 10,
         fromCode: 'EUR',
         primaryCurrencyCode: 'USD',
-        rates: [rate('USD', 'EUR', 0.5)],
+        rates: [createExchangeRate('USD', 'EUR', 0.5)],
       }),
     ).toBe(20);
+  });
+
+  it('returns null when a currency code is missing', () => {
+    expect(
+      convertToPrimary({
+        amount: 10,
+        fromCode: undefined as unknown as string,
+        primaryCurrencyCode: 'EUR',
+        rates: [],
+      }),
+    ).toBeNull();
+    expect(
+      convertToPrimary({
+        amount: 10,
+        fromCode: 'USD',
+        primaryCurrencyCode: undefined as unknown as string,
+        rates: [],
+      }),
+    ).toBeNull();
   });
 
   it('returns null when no matching pair exists', () => {
@@ -61,7 +69,7 @@ describe('convertToPrimary', () => {
         amount: 10,
         fromCode: 'EUR',
         primaryCurrencyCode: 'USD',
-        rates: [rate('GBP', 'JPY', 190)],
+        rates: [createExchangeRate('GBP', 'JPY', 190)],
       }),
     ).toBeNull();
   });
@@ -72,8 +80,9 @@ describe('convertToPrimary', () => {
         amount: 10,
         fromCode: 'eur',
         primaryCurrencyCode: 'usd',
-        rates: [rate('EUR', 'USD', 1.1)],
+        rates: [createExchangeRate('EUR', 'USD', 1.1)],
       }),
     ).toBe(11);
   });
 });
+

@@ -50,6 +50,14 @@ export const fireflyBalanceDate = ({ month, today }: MonthToday): string => {
   }
 };
 
+export const monthRange = ({
+  month,
+  today,
+}: MonthToday): { start: string; end: string } => ({
+  start: startOfMonth(month),
+  end: fireflyBalanceDate({ month, today }),
+});
+
 export const defaultTransactionDate = ({
   month,
   today,

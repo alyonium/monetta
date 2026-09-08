@@ -13,7 +13,7 @@ vi.mock('@/api/sdk.gen.ts', () => ({
 
 const getPrimaryCurrencyMock = vi.mocked(getPrimaryCurrency);
 
-const mockRequest = () =>
+const createRequest = () =>
   new Request('https://demo.firefly-iii.org/api/v1/currencies/primary');
 
 const primaryCurrencyResult = (attributes: CurrencyProperties) => ({
@@ -25,7 +25,7 @@ const primaryCurrencyResult = (attributes: CurrencyProperties) => ({
     },
   },
   error: undefined,
-  request: mockRequest(),
+  request: createRequest(),
   response: new Response(null, { status: 200 }),
 });
 
@@ -72,7 +72,7 @@ describe('fetchPrimaryCurrency', () => {
     getPrimaryCurrencyMock.mockResolvedValue({
       data: undefined,
       error: { message: UNAUTHENTICATED_ERROR_MESSAGE },
-      request: mockRequest(),
+      request: createRequest(),
       response: new Response(null, { status: 401 }),
     });
 

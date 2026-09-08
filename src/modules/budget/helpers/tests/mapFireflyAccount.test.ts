@@ -3,7 +3,7 @@ import type { AccountProperties, AccountRead } from '@/api/types.gen.ts';
 import { ACCOUNT_TYPE, FIREFLY_ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
 import { mapFireflyAccount } from '@/modules/budget/helpers/mapFireflyAccount.ts';
 
-const mockAccount = (
+const createAccount = (
   attributes: Partial<AccountProperties> & Pick<AccountProperties, 'type'>,
   id = '1',
 ): Pick<AccountRead, 'id' | 'attributes'> => ({
@@ -18,7 +18,7 @@ describe('mapFireflyAccount', () => {
   it('maps revenue to INCOME', () => {
     expect(
       mapFireflyAccount(
-        mockAccount({
+        createAccount({
           type: FIREFLY_ACCOUNT_TYPE.REVENUE,
           current_balance: '12.5',
           currency_code: 'eur',
@@ -41,11 +41,11 @@ describe('mapFireflyAccount', () => {
   });
 
   it('maps liability and liabilities to EXPENSE with debt', () => {
-    expect(mapFireflyAccount(mockAccount({ type: FIREFLY_ACCOUNT_TYPE.LIABILITY }))).toMatchObject({
+    expect(mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.LIABILITY }))).toMatchObject({
       type: ACCOUNT_TYPE.EXPENSE,
       isDebt: true,
     });
-    expect(mapFireflyAccount(mockAccount({ type: FIREFLY_ACCOUNT_TYPE.LIABILITIES }))).toMatchObject({
+    expect(mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.LIABILITIES }))).toMatchObject({
       type: ACCOUNT_TYPE.EXPENSE,
       isDebt: true,
     });
@@ -53,24 +53,24 @@ describe('mapFireflyAccount', () => {
 
   it('returns null when the account is inactive', () => {
     expect(
-      mapFireflyAccount(mockAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET, active: false })),
+      mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET, active: false })),
     ).toBeNull();
   });
 
   it('returns null for unmapped Firefly types', () => {
-    expect(mapFireflyAccount(mockAccount({ type: 'cash' }))).toBeNull();
+    expect(mapFireflyAccount(createAccount({ type: 'cash' }))).toBeNull();
   });
 
   it('returns null when id or name is empty', () => {
-    expect(mapFireflyAccount(mockAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET }, ''))).toBeNull();
+    expect(mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET }, ''))).toBeNull();
     expect(
-      mapFireflyAccount(mockAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET, name: '  ' })),
+      mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET, name: '  ' })),
     ).toBeNull();
   });
 
   it('uses appearance icon and color when provided', () => {
     expect(
-      mapFireflyAccount(mockAccount({ type: FIREFLY_ACCOUNT_TYPE.REVENUE }), {
+      mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.REVENUE }), {
         icon: 'PiggyBank',
         color: '#FA5252',
       }),
@@ -83,7 +83,7 @@ describe('mapFireflyAccount', () => {
   it('falls back to primary currency fields and zero for a bad balance', () => {
     expect(
       mapFireflyAccount(
-        mockAccount({
+        createAccount({
           type: FIREFLY_ACCOUNT_TYPE.ASSET,
           current_balance: 'n/a',
           primary_currency_code: 'usd',
@@ -100,7 +100,7 @@ describe('mapFireflyAccount', () => {
   it('computes debtAmount and paidAmount from debt_amount and opening_balance', () => {
     expect(
       mapFireflyAccount(
-        mockAccount({
+        createAccount({
           type: FIREFLY_ACCOUNT_TYPE.LIABILITY,
           current_balance: '-80',
           debt_amount: '80',
@@ -118,7 +118,7 @@ describe('mapFireflyAccount', () => {
   it('uses abs(balance) when debt_amount is not finite and paidAmount 0 without opening_balance', () => {
     expect(
       mapFireflyAccount(
-        mockAccount({
+        createAccount({
           type: FIREFLY_ACCOUNT_TYPE.LIABILITY,
           current_balance: '-50',
           debt_amount: 'oops',

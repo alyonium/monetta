@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import type { AccountRead, ShortAccountTypeProperty } from '@/api/types.gen.ts';
 import { ACCOUNT_TYPE, FIREFLY_ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
 import { toBudgetAccounts } from '@/modules/budget/helpers/toBudgetAccounts.ts';
 import type { AccountPreferences } from '@/modules/budget/types/budgetAccount.ts';
+import { createFireflyAccount } from './testHelpers.ts';
 
 const emptyPreferences = (): AccountPreferences => ({
   appearanceById: {},
@@ -13,24 +13,15 @@ const emptyPreferences = (): AccountPreferences => ({
   },
 });
 
-const mockItem = (
-  id: string,
-  type: ShortAccountTypeProperty,
-  name = id,
-): Pick<AccountRead, 'id' | 'attributes'> => ({
-  id,
-  attributes: { name, type },
-});
-
 describe('toBudgetAccounts', () => {
   it('splits Firefly accounts into income, current, and expense blocks', () => {
     const result = toBudgetAccounts(
       [
-        mockItem('1', FIREFLY_ACCOUNT_TYPE.REVENUE, 'Salary'),
-        mockItem('2', FIREFLY_ACCOUNT_TYPE.ASSET, 'Cash'),
-        mockItem('3', FIREFLY_ACCOUNT_TYPE.EXPENSE, 'Groceries'),
-        mockItem('4', FIREFLY_ACCOUNT_TYPE.LIABILITY, 'Loan'),
-        mockItem('5', 'cash', 'Skip'),
+        createFireflyAccount('1', FIREFLY_ACCOUNT_TYPE.REVENUE, 'Salary'),
+        createFireflyAccount('2', FIREFLY_ACCOUNT_TYPE.ASSET, 'Cash'),
+        createFireflyAccount('3', FIREFLY_ACCOUNT_TYPE.EXPENSE, 'Groceries'),
+        createFireflyAccount('4', FIREFLY_ACCOUNT_TYPE.LIABILITY, 'Loan'),
+        createFireflyAccount('5', 'cash', 'Skip'),
         {
           id: '6',
           attributes: {
@@ -55,10 +46,10 @@ describe('toBudgetAccounts', () => {
   it('reorders each block by preference and appends unordered accounts', () => {
     const result = toBudgetAccounts(
       [
-        mockItem('1', FIREFLY_ACCOUNT_TYPE.REVENUE),
-        mockItem('5', FIREFLY_ACCOUNT_TYPE.REVENUE),
-        mockItem('3', FIREFLY_ACCOUNT_TYPE.REVENUE),
-        mockItem('9', FIREFLY_ACCOUNT_TYPE.REVENUE),
+        createFireflyAccount('1', FIREFLY_ACCOUNT_TYPE.REVENUE),
+        createFireflyAccount('5', FIREFLY_ACCOUNT_TYPE.REVENUE),
+        createFireflyAccount('3', FIREFLY_ACCOUNT_TYPE.REVENUE),
+        createFireflyAccount('9', FIREFLY_ACCOUNT_TYPE.REVENUE),
       ],
       {
         appearanceById: {},

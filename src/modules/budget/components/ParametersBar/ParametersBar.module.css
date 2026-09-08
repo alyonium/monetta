@@ -2,22 +2,28 @@
   flex-shrink: 0;
   display: flex;
   flex-wrap: nowrap;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: var(--mantine-spacing-sm);
+  gap: var(--mantine-spacing-xs);
+  margin-bottom: var(--mantine-spacing-xs);
 }
 
 .metrics,
 .controls {
   display: flex;
   flex-wrap: nowrap;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .metrics {
   min-width: 0;
   flex: 1;
-  gap: var(--mantine-spacing-sm);
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  align-items: baseline;
+  column-gap: var(--mantine-spacing-xs);
+  row-gap: 0;
 }
 
 .controls {
@@ -26,21 +32,21 @@
 }
 
 .slot {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--mantine-spacing-xs) / 2);
+  display: contents;
+}
+
+.amount {
+  white-space: nowrap;
 }
 
 .monthPicker {
   flex-shrink: 0;
-  width: 8rem;
-}
-
-.monthLabel {
-  font-size: var(--mantine-font-size-xs);
-  color: var(--mantine-color-dimmed);
+  width: fit-content;
 }
 
 .monthInput {
+  width: auto;
+  min-width: 0;
+  padding-inline: calc(var(--mantine-spacing-xs) / 2);
   white-space: nowrap;
 }

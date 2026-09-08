@@ -259,13 +259,13 @@
       "title": "Показать Income, Expenses и Balance за выбранный месяц",
       "description": "Как пользователь, я хочу в parameters bar итоги месяца в основной валюте кошелька.",
       "changes": [
-        "Поля Income, Expenses и Balance только для чтения и считаются по диапазону выбранного месяца",
+        "Поля Income и Expenses только для чтения за диапазон выбранного месяца; Balance — сумма Current на конец месяца в основной валюте",
         "Суммы конвертируются в основную валюту конвертером из US-006",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
       "priority": 14,
-      "passes": false,
+      "passes": true,
       "designReference": []
     },
     {

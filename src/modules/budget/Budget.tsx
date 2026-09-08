@@ -8,16 +8,18 @@ import {
   todayIso,
 } from '@/modules/budget/helpers/budgetMonth.ts';
 import { useBudgetAccounts } from '@/modules/budget/hooks/useBudgetAccounts.ts';
+import { useBudgetMonthTotals } from '@/modules/budget/hooks/useBudgetMonthTotals.ts';
 import styles from './Budget.module.css';
 
 const Budget = () => {
   const { t } = useTranslation();
   const [month, setMonth] = useState(() => startOfMonth(todayIso()));
   const { data, isError } = useBudgetAccounts(month);
+  const totals = useBudgetMonthTotals(month, data?.[ACCOUNT_TYPE.CURRENT]);
 
   return (
     <div className={styles.page}>
-      <ParametersBar month={month} onMonthChange={setMonth} />
+      <ParametersBar month={month} onMonthChange={setMonth} totals={totals} />
 
       {data ? (
         Object.values(ACCOUNT_TYPE).map((type) => (

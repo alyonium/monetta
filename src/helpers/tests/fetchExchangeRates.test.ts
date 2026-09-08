@@ -14,7 +14,7 @@ vi.mock('@/api/sdk.gen.ts', () => ({
 
 const listCurrencyExchangeRatesMock = vi.mocked(listCurrencyExchangeRates);
 
-const mockRequest = () =>
+const createRequest = () =>
   new Request('https://demo.firefly-iii.org/api/v1/exchange-rates');
 
 const pageResult = (
@@ -27,7 +27,7 @@ const pageResult = (
     links: {},
   },
   error: undefined,
-  request: mockRequest(),
+  request: createRequest(),
   response: new Response(null, { status: 200 }),
 });
 
@@ -152,7 +152,7 @@ describe('fetchExchangeRates', () => {
     listCurrencyExchangeRatesMock.mockResolvedValue({
       data: undefined,
       error: { message: UNAUTHENTICATED_ERROR_MESSAGE },
-      request: mockRequest(),
+      request: createRequest(),
       response: new Response(null, { status: 401 }),
     });
 

@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { listPreference } from '@/api/sdk.gen.ts';
-import type { PreferenceRead } from '@/api/types.gen.ts';
 import {
   ACCOUNT_PREFERENCES_MISSING_ERROR,
   ACCOUNT_TYPE,
@@ -16,39 +15,17 @@ import {
   appearancePreferenceKey,
   orderPreferenceKey,
 } from './preferenceKeyFixture.ts';
+import {
+  createPreference,
+  createPreferencePageResult,
+  createRequest,
+} from './testHelpers.ts';
 
 vi.mock('@/api/sdk.gen.ts', () => ({
   listPreference: vi.fn(),
 }));
 
 const listPreferenceMock = vi.mocked(listPreference);
-
-const mockRequest = () =>
-  new Request('https://demo.firefly-iii.org/api/v1/preferences');
-
-const mockPreference = (
-  id: string,
-  name: string,
-  data: PreferenceRead['attributes']['data'],
-): PreferenceRead => ({
-  type: 'preferences',
-  id,
-  attributes: { name, data },
-});
-
-const pageResult = (
-  data: PreferenceRead[],
-  pagination: { current_page: number; total_pages: number },
-) => ({
-  data: {
-    data,
-    meta: { pagination },
-    links: {},
-  },
-  error: undefined,
-  request: mockRequest(),
-  response: new Response(null, { status: 200 }),
-});
 
 describe('fetchAccountPreferences', () => {
   beforeEach(() => {
@@ -58,15 +35,15 @@ describe('fetchAccountPreferences', () => {
   it('collects appearance and order from two pages and ignores other keys', async () => {
     listPreferenceMock
       .mockResolvedValueOnce(
-        pageResult(
+        createPreferencePageResult(
           [
-            mockPreference(
+            createPreference(
               '1',
               appearancePreferenceKey('12'),
               sampleAccountAppearanceJson,
             ),
-            mockPreference('2', 'language', 'en_US'),
-            mockPreference('3', orderPreferenceKey(ACCOUNT_TYPE.INCOME), [
+            createPreference('2', 'language', 'en_US'),
+            createPreference('3', orderPreferenceKey(ACCOUNT_TYPE.INCOME), [
               '1',
               '5',
             ]),
@@ -75,20 +52,20 @@ describe('fetchAccountPreferences', () => {
         ),
       )
       .mockResolvedValueOnce(
-        pageResult(
+        createPreferencePageResult(
           [
-            mockPreference('4', orderPreferenceKey(ACCOUNT_TYPE.CURRENT), ['2']),
-            mockPreference(
+            createPreference('4', orderPreferenceKey(ACCOUNT_TYPE.CURRENT), ['2']),
+            createPreference(
               '5',
               appearancePreferenceKey('3'),
               '{"icon":"Bank","color":"#12B886"}',
             ),
-            mockPreference(
+            createPreference(
               '6',
               appearancePreferenceKey('9'),
               '{not json',
             ),
-            mockPreference(
+            createPreference(
               '7',
               orderPreferenceKey(ACCOUNT_TYPE.EXPENSE),
               'not-an-array',
@@ -122,7 +99,7 @@ describe('fetchAccountPreferences', () => {
 
   it('returns empty maps when data is an empty list', () => {
     listPreferenceMock.mockResolvedValue(
-      pageResult([], { current_page: 1, total_pages: 1 }),
+      createPreferencePageResult([], { current_page: 1, total_pages: 1 }),
     );
 
     return expect(fetchAccountPreferences()).resolves.toEqual({
@@ -139,7 +116,7 @@ describe('fetchAccountPreferences', () => {
     listPreferenceMock.mockResolvedValue({
       data: undefined,
       error: { message: UNAUTHENTICATED_ERROR_MESSAGE },
-      request: mockRequest(),
+      request: createRequest('preferences'),
       response: new Response(null, { status: 401 }),
     });
 

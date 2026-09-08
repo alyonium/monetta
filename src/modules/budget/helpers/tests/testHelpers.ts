@@ -3,6 +3,8 @@ import type {
   PreferenceRead,
   ShortAccountTypeProperty,
 } from '@/api/types.gen.ts';
+import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 type PagePagination = { current_page: number; total_pages: number };
 
@@ -18,6 +20,24 @@ export const createFireflyAccount = (
   type: 'accounts',
   id,
   attributes: { name, type, ...extra },
+});
+
+export const createCurrentAccount = (
+  id: string,
+  balance: number,
+  currencyCode: string,
+): BudgetAccount => ({
+  id,
+  name: id,
+  type: ACCOUNT_TYPE.CURRENT,
+  isDebt: false,
+  icon: null,
+  color: null,
+  balance,
+  currencyCode,
+  currencySymbol: '',
+  debtAmount: null,
+  paidAmount: null,
 });
 
 export const createPreference = (

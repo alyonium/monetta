@@ -11,3 +11,8 @@ export type ExchangeRate = {
   rate: number;
   date: string;
 };
+
+export type AmountInCurrency = {
+  amount: number;
+  fromCode: string;
+};

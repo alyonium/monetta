@@ -157,3 +157,11 @@
     - Gotchas encountered: Mantine 9 `onChange` is already `YYYY-MM-DD` — no dayjs roundtrip.
     - Useful context: `monthRelation` stays private. Future month: Firefly uses today, transaction date uses the 1st.
 ---
+
+## 2026-09-07 23:58 - US-014
+- Parameters bar shows Income/Expenses for the selected month (`insight/* /total`) and Balance as the sum of Current accounts as of month end, all in the wallet primary currency via `convertToPrimary`.
+- **Learnings for future iterations:**
+    - Patterns discovered: insight endpoints return a raw array on `result.data`, not JSON:API. Currency Query keys live in `src/helpers/currency/constants.ts` for Analytics reuse. `useBudgetMonthTotals` reads Current from the same `useBudgetAccounts` cache as the cards.
+    - Gotchas encountered: Balance is wallet as-of `fireflyBalanceDate`, not Income − Expenses. Do not use `getBasicSummary` (Firefly converts server-side). Expense insight amounts may be negative — `Math.abs` before convert. Missing rate → `'—'`, not a partial total. Empty period is `0.00`, loading without cache is `'—'`.
+    - Useful context: Invalidate `BUDGET_INSIGHTS_QUERY_KEY` (prefix) together with accounts after transaction mutations (US-024+). `formatWalletAmount` is for bar/analytics; cards keep `formatAccountAmount`.
+---
