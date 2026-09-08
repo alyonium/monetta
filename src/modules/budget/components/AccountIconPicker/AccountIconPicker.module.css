@@ -1,0 +1,23 @@
+.content {
+  max-height: 80dvh;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  max-height: min(22rem, 60dvh);
+  overflow: hidden;
+  padding-bottom: var(--mantine-spacing-md);
+}
+
+.scroller {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(2.75rem, 1fr));
+  gap: var(--mantine-spacing-xs);
+}

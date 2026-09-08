@@ -1,0 +1,29 @@
+.cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--mantine-radius-sm);
+  margin: 0;
+  font: inherit;
+  color: var(--mantine-color-dimmed);
+  cursor: pointer;
+  background: transparent;
+}
+
+.cell:hover {
+  background: var(--mantine-color-default-hover);
+}
+
+.selected {
+  color: var(--mantine-color-indigo-6);
+  border-color: var(--mantine-color-indigo-6);
+  background: var(--mantine-color-indigo-light);
+}
+
+.selected:hover {
+  background: var(--mantine-color-indigo-light-hover);
+}

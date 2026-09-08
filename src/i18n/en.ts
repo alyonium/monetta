@@ -31,6 +31,10 @@ export const en = {
     current: 'Current',
     expense: 'Expense',
     addAccount: 'Add',
+    iconPicker: {
+      title: 'Select account icon',
+      open: 'Open icon picker',
+    },
     paid: 'Paid {{amount}}',
     pagination: {
       previous: 'Previous page',

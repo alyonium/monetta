@@ -1,21 +1,125 @@
-import { WalletIcon, type Icon } from '@phosphor-icons/react';
+import {
+  AirplaneIcon,
+  BabyIcon,
+  BankIcon,
+  BicycleIcon,
+  BookOpenIcon,
+  BriefcaseIcon,
+  BuildingsIcon,
+  BusIcon,
+  CalendarBlankIcon,
+  CarIcon,
+  ChartLineIcon,
+  ChartPieSliceIcon,
+  CoffeeIcon,
+  CoinsIcon,
+  CreditCardIcon,
+  CurrencyDollarIcon,
+  CurrencyEurIcon,
+  DeviceMobileIcon,
+  DropIcon,
+  EnvelopeIcon,
+  FilmSlateIcon,
+  FirstAidIcon,
+  ForkKnifeIcon,
+  GameControllerIcon,
+  GasPumpIcon,
+  GiftIcon,
+  GlobeIcon,
+  GraduationCapIcon,
+  HeartIcon,
+  HouseIcon,
+  LightningIcon,
+  LockIcon,
+  MoneyIcon,
+  MusicNotesIcon,
+  PawPrintIcon,
+  PhoneIcon,
+  PiggyBankIcon,
+  ReceiptIcon,
+  ShoppingBagIcon,
+  ShoppingCartIcon,
+  StarIcon,
+  StorefrontIcon,
+  TicketIcon,
+  TrainIcon,
+  TreeIcon,
+  TShirtIcon,
+  UsersIcon,
+  VaultIcon,
+  WalletIcon,
+  WrenchIcon,
+  type Icon,
+} from '@phosphor-icons/react';
 import { DEFAULT_ACCOUNT_ICON } from '@/modules/budget/constants.ts';
 
 export const ACCOUNT_ICONS = {
-  [DEFAULT_ACCOUNT_ICON]: WalletIcon,
+  Wallet: WalletIcon,
+  Bank: BankIcon,
+  PiggyBank: PiggyBankIcon,
+  CreditCard: CreditCardIcon,
+  Coins: CoinsIcon,
+  Money: MoneyIcon,
+  CurrencyDollar: CurrencyDollarIcon,
+  CurrencyEur: CurrencyEurIcon,
+  Vault: VaultIcon,
+  ChartLine: ChartLineIcon,
+  ChartPieSlice: ChartPieSliceIcon,
+  Receipt: ReceiptIcon,
+  House: HouseIcon,
+  Buildings: BuildingsIcon,
+  Storefront: StorefrontIcon,
+  ShoppingCart: ShoppingCartIcon,
+  ShoppingBag: ShoppingBagIcon,
+  ForkKnife: ForkKnifeIcon,
+  Coffee: CoffeeIcon,
+  Car: CarIcon,
+  GasPump: GasPumpIcon,
+  Bus: BusIcon,
+  Train: TrainIcon,
+  Airplane: AirplaneIcon,
+  Bicycle: BicycleIcon,
+  Heart: HeartIcon,
+  FirstAid: FirstAidIcon,
+  GraduationCap: GraduationCapIcon,
+  Briefcase: BriefcaseIcon,
+  DeviceMobile: DeviceMobileIcon,
+  GameController: GameControllerIcon,
+  Gift: GiftIcon,
+  PawPrint: PawPrintIcon,
+  Lightning: LightningIcon,
+  Drop: DropIcon,
+  Users: UsersIcon,
+  Globe: GlobeIcon,
+  MusicNotes: MusicNotesIcon,
+  TShirt: TShirtIcon,
+  Ticket: TicketIcon,
+  Wrench: WrenchIcon,
+  BookOpen: BookOpenIcon,
+  CalendarBlank: CalendarBlankIcon,
+  Star: StarIcon,
+  Lock: LockIcon,
+  Envelope: EnvelopeIcon,
+  Phone: PhoneIcon,
+  Baby: BabyIcon,
+  Tree: TreeIcon,
+  FilmSlate: FilmSlateIcon,
 } as const satisfies Record<string, Icon>;
 
 export type AccountIconName = keyof typeof ACCOUNT_ICONS;
 
-const isAccountIconName = (name: string): name is AccountIconName =>
+export const isAccountIconName = (name: string): name is AccountIconName =>
   name in ACCOUNT_ICONS;
 
-export const resolveAccountIcon = (name: string | null): Icon => {
+export const toAccountIconName = (name: string | null): AccountIconName => {
   const trimmed = name?.trim();
 
   if (trimmed && isAccountIconName(trimmed)) {
-    return ACCOUNT_ICONS[trimmed];
+    return trimmed;
   }
 
-  return ACCOUNT_ICONS[DEFAULT_ACCOUNT_ICON];
+  return DEFAULT_ACCOUNT_ICON;
 };
+
+export const resolveAccountIcon = (name: string | null): Icon =>
+  ACCOUNT_ICONS[toAccountIconName(name)];

@@ -124,7 +124,8 @@ export const usePageSwipe = ({
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (
       settling.current ||
-      (event.pointerType === 'mouse' && event.button !== 0)
+      (event.pointerType === 'mouse' && event.button !== 0) ||
+      (event.target instanceof Element && event.target.closest('button'))
     ) {
       return;
     }

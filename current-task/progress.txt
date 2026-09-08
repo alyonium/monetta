@@ -165,3 +165,19 @@
     - Gotchas encountered: Balance is wallet as-of `fireflyBalanceDate`, not Income − Expenses. Do not use `getBasicSummary` (Firefly converts server-side). Expense insight amounts may be negative — `Math.abs` before convert. Missing rate → `'—'`, not a partial total. Empty period is `0.00`, loading without cache is `'—'`.
     - Useful context: Invalidate `BUDGET_INSIGHTS_QUERY_KEY` (prefix) together with accounts after transaction mutations (US-024+). `formatWalletAmount` is for bar/analytics; cards keep `formatAccountAmount`.
 ---
+
+## 2026-09-08 13:55 - US-015
+- Closed Phosphor catalog in `accountIcons.ts` (50 names). `AccountIconPicker` modal on Add: pick commits and closes; overlay/Escape do not. Add badge shows the selected icon.
+- **Learnings for future iterations:**
+    - Patterns discovered: picker is controlled (`opened`/`onClose`/`value`/`onChange`); no trigger inside the picker. Grid cells use a static `icon` prop wrapper. First app Modal is Mantine 9 `centered`.
+    - Gotchas encountered: stop `pointerdown` on Add so pager swipe does not steal the click. Do not import the whole Phosphor package. Missing Phosphor names must be dropped, not aliased.
+    - Useful context: US-016 removes the picker from Add, restores Plus, opens Create account, and hosts the picker on the form icon-button. `color` is already an optional picker prop.
+---
+
+## 2026-09-08 14:05 - US-015 review
+- Narrowed picker to `value: AccountIconName`; dropped unused `color` and `highlightedName`. Catalog guard is `toAccountIconName`. Pager ignores `pointerdown` on `button`; Add no longer `stopPropagation`. Add accessible name is `Add` again.
+- **Learnings for future iterations:**
+    - Patterns discovered: swipe policy lives in `usePageSwipe` (`closest('button')`), not in children. `budget.iconPicker.open` is for the US-016 form trigger, not Add.
+    - Gotchas encountered: do not add `color` or `string | null` to the picker until Create/Edit actually pass them. Do not put `useTranslation` on each catalog cell.
+    - Useful context: Add still hosts the picker until US-016. Three closed Modals stay until then. Rip this host, restore Plus, one picker on the form.
+---

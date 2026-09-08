@@ -280,7 +280,7 @@
         "Verify in browser using agent-browser mcp"
       ],
       "priority": 15,
-      "passes": false,
+      "passes": true,
       "designReference": []
     },
     {
