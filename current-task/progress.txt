@@ -197,3 +197,23 @@
 ## 2026-09-09 18:45 - chore
 - Pager swipe and `toAccountPageItems` live in `helpers/` / `hooks/`. Currency tests sit next to fetchers. Login helper test is in `helpers/tests/`.
 ---
+
+## 2026-09-09 19:45 - US-017
+- Save creates Firefly accounts (revenue/asset/expense/liability), writes appearance + block order, invalidates Budget accounts. Empty name/currency block submit. Card is last among accounts; Add stays last slot. Mobile 4th-slot Add moves to a new last page without jumping to page 0.
+- **Learnings for future iterations:**
+    - Patterns discovered: `orderedIds` come from the Budget cache. Opening date is `defaultTransactionDate`. Invalidate the prefix `['budget', 'accounts']`, not the dated key. Persist `form.currency` with no `|| primary`.
+    - Gotchas encountered: PUT `updatePreference` 404s for missing keys here — POST `storePreference` after 404. Unmount Create when closed; `Modal.Stack` can leave `opened={false}` in the DOM. 401 on PUT must not fall through to POST.
+    - Useful context: Firefly defaults live in `constants.ts`. Prefs failure after store still closes. Edit is US-020.
+---
+
+## 2026-09-09 20:35 - US-017 review
+- Dropped the extra `refetchQueries` after invalidate. `createBudgetAccount` returns a login-style `{ ok, reason }` instead of sentinel `Error` strings. Appearance and order write in `Promise.allSettled`. Create modal no longer takes `opened` — Budget still mounts it only when the session is open.
+- **Learnings for future iterations:**
+    - Patterns discovered: tagged `{ ok, reason }` + exhaustive `switch` like `useLoginForm`. Prefs after store are one `allSettled`, not two empty catches.
+    - Gotchas encountered: unmount-on-close makes a second `opened` prop dead; do not keep both. `invalidateQueries` already refetches active queries — do not add `refetchQueries`.
+    - Useful context: `CREATE_BUDGET_ACCOUNT_FAILURE_REASON` is `name` | `failed`. Edit should reuse the result type, not copy swallows.
+---
+
+## 2026-09-09 21:18 - US-017 modal opened
+- Create stays mounted. Close is Mantine `opened={false}` again. Stack may leave a hidden node in the DOM; we do not unmount for that.
+---

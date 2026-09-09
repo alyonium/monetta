@@ -1,5 +1,5 @@
 import { type CSSProperties } from 'react';
-import { Button, Group, Modal, TextInput } from '@mantine/core';
+import { Button, Group, Modal, Text, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useTranslation } from 'react-i18next';
 import AccountColorPicker from '@/modules/budget/components/AccountColorPicker/AccountColorPicker.tsx';
@@ -17,27 +17,38 @@ type CreateAccountModalProps = {
   opened: boolean;
   onClose: () => void;
   accountType: AccountType;
+  orderedIds: string[];
+  month: string;
 };
 
 const CreateAccountModal = ({
   opened,
   onClose,
   accountType,
+  orderedIds,
+  month,
 }: CreateAccountModalProps) => {
   const { t } = useTranslation();
   const [pickerOpened, { open: openPicker, close: closePicker }] =
     useDisclosure(false);
-  const { form, showKind, showMoney, currencies } = useCreateAccountForm({
+  const {
+    form,
+    showKind,
+    showMoney,
+    currencies,
+    isSubmitting,
+    saveError,
+    handleSubmit,
+  } = useCreateAccountForm({
     opened,
+    onClose,
     accountType,
+    orderedIds,
+    month,
   });
 
   const ink = accountIconGlyphColor(form.values.color);
   const fieldClassNames = { label: styles.fieldLabel };
-
-  const handleSubmit = form.onSubmit(() => {
-    onClose();
-  });
 
   return (
     <Modal.Stack>
@@ -91,6 +102,7 @@ const CreateAccountModal = ({
                 onCurrencyChange={(value) =>
                   form.setFieldValue('currency', value)
                 }
+                currencyError={form.errors.currency}
                 currencies={currencies}
               />
             )}
@@ -101,11 +113,19 @@ const CreateAccountModal = ({
             onChange={(color) => form.setFieldValue('color', color)}
           />
 
+          {saveError && (
+            <Text c='red' size='sm'>
+              {saveError}
+            </Text>
+          )}
+
           <Group className={styles.actions} justify='flex-end'>
             <Button type='button' variant='default' onClick={onClose}>
               {t('budget.createAccount.cancel')}
             </Button>
-            <Button type='submit'>{t('budget.createAccount.save')}</Button>
+            <Button type='submit' loading={isSubmitting}>
+              {t('budget.createAccount.save')}
+            </Button>
           </Group>
         </form>
       </Modal>

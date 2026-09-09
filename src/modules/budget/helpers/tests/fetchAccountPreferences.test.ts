@@ -8,17 +8,13 @@ import {
 import { UNAUTHENTICATED_ERROR_MESSAGE } from '@/helpers/currency/constants.ts';
 import { fetchAccountPreferences } from '@/modules/budget/helpers/fetchAccountPreferences.ts';
 import {
-  sampleAccountAppearance,
-  sampleAccountAppearanceJson,
-} from './accountAppearanceFixture.ts';
-import {
   appearancePreferenceKey,
-  orderPreferenceKey,
-} from './preferenceKeyFixture.ts';
-import {
   createPreference,
   createPreferencePageResult,
   createRequest,
+  orderPreferenceKey,
+  sampleAccountAppearance,
+  sampleAccountAppearanceJson,
 } from './testHelpers.ts';
 
 vi.mock('@/api/sdk.gen.ts', () => ({

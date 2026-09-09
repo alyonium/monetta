@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { NumberInput, Select } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import type { WalletCurrency } from '@/helpers/currency/types.ts';
@@ -8,6 +9,7 @@ type AccountMoneyFieldsProps = {
   onInitialBalanceChange: (value: number) => void;
   currency: string;
   onCurrencyChange: (value: string) => void;
+  currencyError?: ReactNode;
   currencies: WalletCurrency[];
 };
 
@@ -16,6 +18,7 @@ const AccountMoneyFields = ({
   onInitialBalanceChange,
   currency,
   onCurrencyChange,
+  currencyError,
   currencies,
 }: AccountMoneyFieldsProps) => {
   const { t } = useTranslation();
@@ -45,6 +48,7 @@ const AccountMoneyFields = ({
         disabled={currencies.length === 0}
         searchable
         value={currency}
+        error={currencyError}
         onChange={(value) => onCurrencyChange(value ?? '')}
       />
     </div>

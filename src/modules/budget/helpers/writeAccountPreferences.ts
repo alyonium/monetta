@@ -1,4 +1,5 @@
-import { updatePreference } from '@/api/sdk.gen.ts';
+import { storePreference, updatePreference } from '@/api/sdk.gen.ts';
+import type { PolymorphicProperty } from '@/api/types.gen.ts';
 import {
   ACCOUNT_APPEARANCE_PREFIX,
   ACCOUNT_ORDER_PREFIX,
@@ -9,24 +10,44 @@ import type {
   AccountType,
 } from '@/modules/budget/types/budgetAccount.ts';
 
+const writePreference = async (
+  name: string,
+  data: PolymorphicProperty,
+): Promise<void> => {
+  const updated = await updatePreference({
+    path: { name },
+    body: { data },
+  });
+
+  if (updated.data) {
+    return;
+  }
+
+  if (updated.response.status === 404) {
+    const created = await storePreference({
+      body: { name, data },
+    });
+
+    if (created.data) {
+      return;
+    }
+  }
+
+  throw new Error(ACCOUNT_PREFERENCE_WRITE_ERROR);
+};
+
 export const writeAccountAppearance = async (
   accountId: string,
   appearance: AccountAppearance,
 ): Promise<AccountAppearance> => {
   try {
-    const result = await updatePreference({
-      path: { name: `${ACCOUNT_APPEARANCE_PREFIX}${accountId}` },
-      body: {
-        data: JSON.stringify({
-          icon: appearance.icon,
-          color: appearance.color,
-        }),
-      },
-    });
-
-    if (!result.data) {
-      throw new Error(ACCOUNT_PREFERENCE_WRITE_ERROR);
-    }
+    await writePreference(
+      `${ACCOUNT_APPEARANCE_PREFIX}${accountId}`,
+      JSON.stringify({
+        icon: appearance.icon,
+        color: appearance.color,
+      }),
+    );
 
     return appearance;
   } catch (error) {
@@ -41,14 +62,7 @@ export const writeAccountOrder = async (
   ids: string[],
 ): Promise<string[]> => {
   try {
-    const result = await updatePreference({
-      path: { name: `${ACCOUNT_ORDER_PREFIX}${type.toLowerCase()}` },
-      body: { data: ids },
-    });
-
-    if (!result.data) {
-      throw new Error(ACCOUNT_PREFERENCE_WRITE_ERROR);
-    }
+    await writePreference(`${ACCOUNT_ORDER_PREFIX}${type.toLowerCase()}`, ids);
 
     return ids;
   } catch (error) {

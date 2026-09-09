@@ -12,5 +12,13 @@ export type CreateAccountFormValues = {
 
 export type UseCreateAccountFormParams = {
   opened: boolean;
+  onClose: () => void;
   accountType: AccountType;
+  orderedIds: string[];
+  month: string;
+};
+
+export type CreateAccountFormFieldErrors = {
+  name?: 'budget.createAccount.errors.nameRequired';
+  currency?: 'budget.createAccount.errors.currencyRequired';
 };

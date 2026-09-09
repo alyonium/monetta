@@ -60,8 +60,12 @@ const Budget = () => {
       <CreateAccountModal
         key={create.id}
         opened={create.opened}
-        onClose={() => setCreate((current) => ({ ...current, opened: false }))}
+        onClose={() =>
+          setCreate((current) => ({ ...current, opened: false }))
+        }
         accountType={create.type}
+        orderedIds={data?.[create.type].map((account) => account.id) ?? []}
+        month={month}
       />
     </div>
   );

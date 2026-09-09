@@ -50,6 +50,11 @@ export const en = {
       debt: 'Debt',
       cancel: 'Cancel',
       save: 'Save',
+      errors: {
+        nameRequired: 'Account name is required',
+        currencyRequired: 'Currency is required',
+        saveFailed: 'Could not save the account',
+      },
     },
     paid: 'Paid {{amount}}',
     pagination: {

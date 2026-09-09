@@ -13,8 +13,8 @@ import {
   createFireflyAccount,
   createPreference,
   createPreferencePageResult,
+  orderPreferenceKey,
 } from './testHelpers.ts';
-import { orderPreferenceKey } from './preferenceKeyFixture.ts';
 
 vi.mock('@/api/sdk.gen.ts', () => ({
   listAccount: vi.fn(),

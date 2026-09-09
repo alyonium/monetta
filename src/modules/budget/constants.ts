@@ -15,6 +15,24 @@ export const FIREFLY_ACCOUNT_TYPE = {
   LIABILITIES: 'liabilities',
 } as const;
 
+export const FIREFLY_ACCOUNT_ROLE = {
+  DEFAULT_ASSET: 'defaultAsset',
+} as const;
+
+export const FIREFLY_LIABILITY_TYPE = {
+  DEBT: 'debt',
+} as const;
+
+export const FIREFLY_LIABILITY_DIRECTION = {
+  DEBIT: 'debit',
+} as const;
+
+export const FIREFLY_LIABILITY_INTEREST = '0';
+
+export const FIREFLY_LIABILITY_INTEREST_PERIOD = {
+  MONTHLY: 'monthly',
+} as const;
+
 export const CREATE_ACCOUNT_TITLE_KEY = {
   INCOME: 'budget.createAccount.title.income',
   CURRENT: 'budget.createAccount.title.current',
@@ -56,6 +74,11 @@ export const ACCOUNT_PREFERENCE_WRITE_ERROR =
   'Account preference could not be saved';
 export const ACCOUNTS_MISSING_ERROR = 'Budget accounts are missing';
 export const BUDGET_INSIGHTS_MISSING_ERROR = 'Budget insights are missing';
+
+export const CREATE_BUDGET_ACCOUNT_FAILURE_REASON = {
+  NAME: 'name',
+  FAILED: 'failed',
+} as const;
 
 export const DEFAULT_ACCOUNT_ICON = 'Wallet';
 export const DEFAULT_ACCOUNT_COLOR = '#4C6EF5';

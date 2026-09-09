@@ -1,58 +1,39 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { updatePreference } from '@/api/sdk.gen.ts';
+import { storePreference, updatePreference } from '@/api/sdk.gen.ts';
 import {
   ACCOUNT_PREFERENCE_WRITE_ERROR,
   ACCOUNT_TYPE,
 } from '@/modules/budget/constants.ts';
-import { UNAUTHENTICATED_ERROR_MESSAGE } from '@/helpers/currency/constants.ts';
 import {
   writeAccountAppearance,
   writeAccountOrder,
 } from '@/modules/budget/helpers/writeAccountPreferences.ts';
 import {
+  appearancePreferenceKey,
+  createMissingPreferenceResult,
+  createPreferenceSingleResult,
+  orderPreferenceKey,
   sampleAccountAppearance,
   sampleAccountAppearanceJson,
-} from './accountAppearanceFixture.ts';
-import {
-  appearancePreferenceKey,
-  orderPreferenceKey,
-} from './preferenceKeyFixture.ts';
-import { createRequest } from './testHelpers.ts';
+} from './testHelpers.ts';
 
 vi.mock('@/api/sdk.gen.ts', () => ({
   updatePreference: vi.fn(),
+  storePreference: vi.fn(),
 }));
 
 const updatePreferenceMock = vi.mocked(updatePreference);
-
-const createSuccessResult = (name: string, data: string | string[]) => ({
-  data: {
-    data: {
-      type: 'preferences',
-      id: '1',
-      attributes: { name, data },
-    },
-  },
-  error: undefined,
-  request: createRequest('preferences/name'),
-  response: new Response(null, { status: 200 }),
-});
-
-const createMissingPayload = () => ({
-  data: undefined,
-  error: { message: UNAUTHENTICATED_ERROR_MESSAGE },
-  request: createRequest('preferences/name'),
-  response: new Response(null, { status: 401 }),
-});
+const storePreferenceMock = vi.mocked(storePreference);
 
 describe('writeAccountPreferences', () => {
   beforeEach(() => {
     updatePreferenceMock.mockReset();
+    storePreferenceMock.mockReset();
   });
 
   it('PUTs appearance as a JSON string and returns the written value', async () => {
     updatePreferenceMock.mockResolvedValue(
-      createSuccessResult(
+      createPreferenceSingleResult(
         appearancePreferenceKey('12'),
         sampleAccountAppearanceJson,
       ),
@@ -70,7 +51,7 @@ describe('writeAccountPreferences', () => {
   it('PUTs order as an array of ids and returns the written value', async () => {
     const ids = ['1', '5', '3'];
     updatePreferenceMock.mockResolvedValue(
-      createSuccessResult(orderPreferenceKey(ACCOUNT_TYPE.EXPENSE), ids),
+      createPreferenceSingleResult(orderPreferenceKey(ACCOUNT_TYPE.EXPENSE), ids),
     );
 
     const result = await writeAccountOrder(ACCOUNT_TYPE.EXPENSE, ids);
@@ -79,6 +60,27 @@ describe('writeAccountPreferences', () => {
     expect(updatePreferenceMock).toHaveBeenCalledWith({
       path: { name: orderPreferenceKey(ACCOUNT_TYPE.EXPENSE) },
       body: { data: ids },
+    });
+    expect(storePreferenceMock).not.toHaveBeenCalled();
+  });
+
+  it('POSTs a new preference when PUT returns 404', async () => {
+    updatePreferenceMock.mockResolvedValue(createMissingPreferenceResult(404));
+    storePreferenceMock.mockResolvedValue(
+      createPreferenceSingleResult(
+        appearancePreferenceKey('12'),
+        sampleAccountAppearanceJson,
+      ),
+    );
+
+    const result = await writeAccountAppearance('12', sampleAccountAppearance);
+
+    expect(result).toEqual(sampleAccountAppearance);
+    expect(storePreferenceMock).toHaveBeenCalledWith({
+      body: {
+        name: appearancePreferenceKey('12'),
+        data: sampleAccountAppearanceJson,
+      },
     });
   });
 
@@ -97,7 +99,7 @@ describe('writeAccountPreferences', () => {
 
     expect(networkError).toEqual(new Error('network'));
 
-    updatePreferenceMock.mockResolvedValue(createMissingPayload());
+    updatePreferenceMock.mockResolvedValue(createMissingPreferenceResult());
 
     let missingDataError: Error | undefined;
 
@@ -110,5 +112,6 @@ describe('writeAccountPreferences', () => {
     }
 
     expect(missingDataError).toEqual(new Error(ACCOUNT_PREFERENCE_WRITE_ERROR));
+    expect(storePreferenceMock).not.toHaveBeenCalled();
   });
 });
