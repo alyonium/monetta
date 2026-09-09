@@ -1,3 +1,4 @@
+import { DEFAULT_THEME } from '@mantine/core';
 import type { AccountBlockPagerLayout } from '@/modules/budget/types/accountBlockPagerLayout.ts';
 
 export const ACCOUNT_TYPE = {
@@ -13,6 +14,33 @@ export const FIREFLY_ACCOUNT_TYPE = {
   LIABILITY: 'liability',
   LIABILITIES: 'liabilities',
 } as const;
+
+export const CREATE_ACCOUNT_TITLE_KEY = {
+  INCOME: 'budget.createAccount.title.income',
+  CURRENT: 'budget.createAccount.title.current',
+  EXPENSE: 'budget.createAccount.title.expense',
+} as const satisfies Record<
+  (typeof ACCOUNT_TYPE)[keyof typeof ACCOUNT_TYPE],
+  | 'budget.createAccount.title.income'
+  | 'budget.createAccount.title.current'
+  | 'budget.createAccount.title.expense'
+>;
+
+export const EXPENSE_KIND = {
+  EXPENSE: 'expense',
+  DEBT: 'debt',
+} as const;
+
+export const EXPENSE_KIND_DATA = [
+  {
+    value: EXPENSE_KIND.EXPENSE,
+    label: 'budget.createAccount.expense',
+  },
+  {
+    value: EXPENSE_KIND.DEBT,
+    label: 'budget.createAccount.debt',
+  },
+] as const;
 
 export const ACCOUNT_APPEARANCE_PREFIX = 'monetta.accountAppearance.';
 export const ACCOUNT_ORDER_PREFIX = 'monetta.accountOrder.';
@@ -32,6 +60,35 @@ export const BUDGET_INSIGHTS_MISSING_ERROR = 'Budget insights are missing';
 export const DEFAULT_ACCOUNT_ICON = 'Wallet';
 export const DEFAULT_ACCOUNT_COLOR = '#4C6EF5';
 export const ACCOUNT_ICON_SIZE = 24;
+
+const FILLED_SHADE = 6;
+const ACCOUNT_FILL_WHITE = '#FFFFFF';
+const ACCOUNT_FILL_BLACK = '#000000';
+const ACCOUNT_FILL_LIME = DEFAULT_THEME.colors.lime[FILLED_SHADE];
+const ACCOUNT_FILL_YELLOW = DEFAULT_THEME.colors.yellow[FILLED_SHADE];
+
+export const ACCOUNT_COLORS = [
+  ACCOUNT_FILL_WHITE,
+  ACCOUNT_FILL_BLACK,
+  DEFAULT_THEME.colors.red[FILLED_SHADE],
+  DEFAULT_THEME.colors.pink[FILLED_SHADE],
+  DEFAULT_THEME.colors.grape[FILLED_SHADE],
+  DEFAULT_THEME.colors.violet[FILLED_SHADE],
+  DEFAULT_ACCOUNT_COLOR,
+  DEFAULT_THEME.colors.blue[FILLED_SHADE],
+  DEFAULT_THEME.colors.cyan[FILLED_SHADE],
+  DEFAULT_THEME.colors.teal[FILLED_SHADE],
+  DEFAULT_THEME.colors.green[FILLED_SHADE],
+  ACCOUNT_FILL_LIME,
+  ACCOUNT_FILL_YELLOW,
+  DEFAULT_THEME.colors.orange[FILLED_SHADE],
+] as const;
+
+export const ACCOUNT_DARK_INK_FILLS = [
+  ACCOUNT_FILL_WHITE,
+  ACCOUNT_FILL_LIME,
+  ACCOUNT_FILL_YELLOW,
+] as const;
 
 export const ACCOUNT_BLOCK_DESKTOP_MIN_PX = 961;
 export const ACCOUNT_BLOCK_MOBILE_COLUMNS = 4;

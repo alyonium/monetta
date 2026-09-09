@@ -17,6 +17,7 @@ type GridForPageArgs = {
   pageSize: number;
   columns: number;
   minHeight: string;
+  onAddAccount: () => void;
 };
 
 const gridForPage = ({
@@ -25,11 +26,13 @@ const gridForPage = ({
   pageSize,
   columns,
   minHeight,
+  onAddAccount,
 }: GridForPageArgs) => (
   <AccountPageGrid
     items={slicePage(items, page, pageSize)}
     columns={columns}
     minHeight={minHeight}
+    onAddAccount={onAddAccount}
   />
 );
 
@@ -46,6 +49,7 @@ type AccountBlockViewportProps = {
   onNext: () => void;
   onPrev: () => void;
   onJump: (index: number) => void;
+  onAddAccount: () => void;
 };
 
 const AccountBlockViewport = ({
@@ -61,6 +65,7 @@ const AccountBlockViewport = ({
   onNext,
   onPrev,
   onJump,
+  onAddAccount,
 }: AccountBlockViewportProps) => {
   const canLoop = totalPages > 1;
   const previousPage = prevPageIndex({ page: pageIndex, totalPages });
@@ -105,7 +110,7 @@ const AccountBlockViewport = ({
   }));
 
   const pageGrid = (page: number) =>
-    gridForPage({ items, page, pageSize, columns, minHeight });
+    gridForPage({ items, page, pageSize, columns, minHeight, onAddAccount });
 
   return (
     <div

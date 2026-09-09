@@ -35,6 +35,22 @@ export const en = {
       title: 'Select account icon',
       open: 'Open icon picker',
     },
+    createAccount: {
+      title: {
+        income: 'Create income account',
+        current: 'Create current account',
+        expense: 'Create expense account',
+      },
+      name: 'Account name',
+      initialBalance: 'Initial balance',
+      currency: 'Currency',
+      color: 'Account color',
+      accountType: 'Account type',
+      expense: 'Expense',
+      debt: 'Debt',
+      cancel: 'Cancel',
+      save: 'Save',
+    },
     paid: 'Paid {{amount}}',
     pagination: {
       previous: 'Previous page',

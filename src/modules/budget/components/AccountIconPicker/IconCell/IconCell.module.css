@@ -19,11 +19,19 @@
 }
 
 .selected {
-  color: var(--mantine-color-indigo-6);
-  border-color: var(--mantine-color-indigo-6);
-  background: var(--mantine-color-indigo-light);
+  color: var(--account-icon-picker-glyph-color);
+  border-color: var(--account-icon-picker-glyph-color);
+  background: color-mix(
+    in srgb,
+    var(--account-icon-picker-color) 28%,
+    var(--mantine-color-body)
+  );
 }
 
 .selected:hover {
-  background: var(--mantine-color-indigo-light-hover);
+  background: color-mix(
+    in srgb,
+    var(--account-icon-picker-color) 36%,
+    var(--mantine-color-body)
+  );
 }

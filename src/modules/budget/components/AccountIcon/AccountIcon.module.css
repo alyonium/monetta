@@ -7,7 +7,7 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  color: var(--mantine-color-white);
+  color: var(--account-icon-glyph-color, var(--mantine-color-white));
   background: linear-gradient(
     160deg,
     color-mix(in srgb, var(--account-icon-color) 86%, white) 0%,

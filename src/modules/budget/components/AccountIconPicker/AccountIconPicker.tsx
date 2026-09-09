@@ -1,9 +1,11 @@
+import { type CSSProperties } from 'react';
 import { Modal } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import {
   ACCOUNT_ICONS,
   type AccountIconName,
 } from '@/modules/budget/components/accountIcons.ts';
+import { accountIconGlyphColor } from '@/modules/budget/helpers/accountIconContrast.ts';
 import IconCell from './IconCell/IconCell.tsx';
 import styles from './AccountIconPicker.module.css';
 
@@ -12,6 +14,8 @@ type AccountIconPickerProps = {
   onClose: () => void;
   value: AccountIconName;
   onChange: (name: AccountIconName) => void;
+  color: string;
+  stackId?: string;
 };
 
 const AccountIconPicker = ({
@@ -19,6 +23,8 @@ const AccountIconPicker = ({
   onClose,
   value,
   onChange,
+  color,
+  stackId,
 }: AccountIconPickerProps) => {
   const { t } = useTranslation();
 
@@ -33,10 +39,19 @@ const AccountIconPicker = ({
       onClose={onClose}
       title={t('budget.iconPicker.title')}
       centered
+      stackId={stackId}
       classNames={{ content: styles.content, body: styles.body }}
     >
       <div className={styles.scroller}>
-        <div className={styles.grid}>
+        <div
+          className={styles.grid}
+          style={
+            {
+              '--account-icon-picker-color': color,
+              '--account-icon-picker-glyph-color': accountIconGlyphColor(color),
+            } as CSSProperties
+          }
+        >
           {(Object.keys(ACCOUNT_ICONS) as AccountIconName[]).map((name) => (
             <IconCell
               key={name}

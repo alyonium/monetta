@@ -9,12 +9,14 @@ type AccountPageGridProps = {
   items: AccountPageItem[];
   columns: number;
   minHeight?: string;
+  onAddAccount: () => void;
 };
 
 const AccountPageGrid = ({
   items,
   columns,
   minHeight = ACCOUNT_CARD_MIN_HEIGHT_DEFAULT,
+  onAddAccount,
 }: AccountPageGridProps) => (
   <ul
     className={styles.grid}
@@ -28,7 +30,7 @@ const AccountPageGrid = ({
     {items.map((item) =>
       item.type === 'add' ? (
         <li key='add' className={styles.cell}>
-          <AddAccountButton />
+          <AddAccountButton onClick={onAddAccount} />
         </li>
       ) : (
         <li key={item.account.id} className={styles.cell}>

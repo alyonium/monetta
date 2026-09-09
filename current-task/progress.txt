@@ -181,3 +181,15 @@
     - Gotchas encountered: do not add `color` or `string | null` to the picker until Create/Edit actually pass them. Do not put `useTranslation` on each catalog cell.
     - Useful context: Add still hosts the picker until US-016. Three closed Modals stay until then. Rip this host, restore Plus, one picker on the form.
 ---
+
+## 2026-09-08 14:55 - US-016
+- One Create account modal on Budget. Add is Plus again and opens the form with that block's AccountType. Fields follow the type (Expense|Debt, currencies, closed color set). Icon picker lives on the form icon-button with the form color. Save only closes.
+- **Learnings for future iterations:**
+    - Patterns discovered: `createAccountVisibility(type, isDebt)` returns `{ showKind, showMoney }` (exhaustive switch). Layout is not a mapped field list. `Modal.Stack` + `stackId` so the picker overlay does not close Create. One create session `{ opened, type, id }`; remount with `key={id}` on each Add. `fetchCurrencies` sits next to primary/rates, not in budget helpers.
+    - Gotchas encountered: do not put the modal inside Add — the pager carousel would mount three of them. Mantine 9 ColorPicker uses `withPicker={false}`, not `swatchesOnly`. Glyphs and tinted-block labels share `accountIconGlyphColor`: black on `ACCOUNT_DARK_INK_FILLS` (white / lime / yellow, same tokens as `ACCOUNT_COLORS`), white otherwise. Do not use Mantine `isLightColor` (indigo icons go black). Phosphor catalog stays in `components/accountIcons.ts`, not helpers. Write primary `code` into `form.currency` when the field is still empty; do not display a fallback the form does not hold.
+    - Useful context: US-017 Save calls `storeAccount` (revenue/asset/expense/liability; Debt → liability), writes appearance + order, invalidates `BUDGET_ACCOUNTS_QUERY_KEY`. Validate empty required fields there. Currency to persist is `form.currency`. Edit is US-020.
+---
+
+## 2026-09-09 17:50 - US-016 review
+- Moved Phosphor catalog back to `components/accountIcons.ts` (test next to source). Dropped `accountFillInkColor`. `ACCOUNT_DARK_INK_FILLS` shares lime/yellow/white tokens with `ACCOUNT_COLORS`.
+---

@@ -1,0 +1,15 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px
+    color-mix(in srgb, var(--create-account-ink) 35%, transparent);
+}

@@ -20,9 +20,10 @@ const ACCOUNT_BLOCK_LABEL_KEY = {
 type AccountBlockProps = {
   type: AccountType;
   accounts: BudgetAccount[];
+  onAddAccount: () => void;
 };
 
-const AccountBlock = ({ type, accounts }: AccountBlockProps) => {
+const AccountBlock = ({ type, accounts, onAddAccount }: AccountBlockProps) => {
   const { t } = useTranslation();
   const layout = ACCOUNT_BLOCK_PAGER[type];
 
@@ -31,7 +32,11 @@ const AccountBlock = ({ type, accounts }: AccountBlockProps) => {
       className={clsx(styles.block, layout.fillHeight && styles.fill)}
       aria-label={t(ACCOUNT_BLOCK_LABEL_KEY[type])}
     >
-      <AccountBlockPager accounts={accounts} {...layout} />
+      <AccountBlockPager
+        accounts={accounts}
+        onAddAccount={onAddAccount}
+        {...layout}
+      />
     </section>
   );
 };
