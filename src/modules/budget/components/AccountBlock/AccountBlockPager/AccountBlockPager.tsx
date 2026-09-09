@@ -3,12 +3,12 @@ import { CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react';
 import { clsx } from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { ACCOUNT_ICON_SIZE } from '@/modules/budget/constants.ts';
+import { useAccountBlockPager } from '@/modules/budget/hooks/useAccountBlockPager.ts';
 import type { AccountBlockPagerLayout } from '@/modules/budget/types/accountBlockPagerLayout.ts';
 import type { AccountBlockViewportHandle } from '@/modules/budget/types/accountBlockViewportHandle.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import AccountBlockDots from './AccountBlockDots/AccountBlockDots.tsx';
 import AccountBlockViewport from './AccountBlockViewport/AccountBlockViewport.tsx';
-import { useAccountBlockPager } from './useAccountBlockPager.ts';
 import styles from './AccountBlockPager.module.css';
 
 type AccountBlockPagerProps = {

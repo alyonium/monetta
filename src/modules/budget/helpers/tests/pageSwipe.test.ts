@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { PAGE_SWIPE_DIRECTION } from '@/modules/budget/constants.ts';
-import { resolvePageSwipe, rubberBandDragX } from './pageSwipe.ts';
+import { resolvePageSwipe, rubberBandDragX } from '@/modules/budget/helpers/pageSwipe.ts';
 
 describe('resolvePageSwipe', () => {
   it('goes next when the finger moves left past the threshold', () => {

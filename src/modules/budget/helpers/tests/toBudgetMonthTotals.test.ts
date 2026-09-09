@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { WalletCurrency } from '@/helpers/currency/types.ts';
-import { createExchangeRate } from '@/helpers/tests/helpers.ts';
+import { createExchangeRate } from '@/helpers/currency/tests/testHelpers.ts';
 import { toBudgetMonthTotals } from '@/modules/budget/helpers/toBudgetMonthTotals.ts';
 import { createCurrentAccount } from './testHelpers.ts';
 

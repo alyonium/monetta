@@ -9,8 +9,11 @@ import {
   PAGE_SWIPE_DIRECTION,
   PAGE_SWIPE_MS,
 } from '@/modules/budget/constants.ts';
+import {
+  resolvePageSwipe,
+  rubberBandDragX,
+} from '@/modules/budget/helpers/pageSwipe.ts';
 import type { PageSwipeDirection } from '@/modules/budget/types/pageSwipeDirection.ts';
-import { resolvePageSwipe, rubberBandDragX } from './pageSwipe.ts';
 
 const REST_TRANSFORM = 'translate3d(-100%, 0, 0)';
 const NEXT_TRANSFORM = 'translate3d(-200%, 0, 0)';

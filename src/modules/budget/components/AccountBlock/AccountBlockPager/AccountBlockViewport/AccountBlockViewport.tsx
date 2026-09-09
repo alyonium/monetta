@@ -6,10 +6,10 @@ import {
   prevPageIndex,
   slicePage,
 } from '@/modules/budget/helpers/accountBlockPaging.ts';
+import { usePageSwipe } from '@/modules/budget/hooks/usePageSwipe.ts';
 import type { AccountBlockViewportHandle } from '@/modules/budget/types/accountBlockViewportHandle.ts';
 import type { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
 import styles from './AccountBlockViewport.module.css';
-import { usePageSwipe } from './usePageSwipe.ts';
 
 type GridForPageArgs = {
   items: AccountPageItem[];

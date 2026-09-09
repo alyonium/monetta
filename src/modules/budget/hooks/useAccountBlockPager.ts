@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useElementSize, useMediaQuery } from '@mantine/hooks';
-import { toAccountPageItems } from '@/modules/budget/components/AccountBlock/accountPageItem.ts';
 import {
   ACCOUNT_BLOCK_DESKTOP_MIN_PX,
   ACCOUNT_GRID_ROW_GAP_PX,
@@ -13,6 +12,7 @@ import {
   prevPageIndex,
   rowCount,
 } from '@/modules/budget/helpers/accountBlockPaging.ts';
+import { toAccountPageItems } from '@/modules/budget/helpers/toAccountPageItems.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 const desktopQuery = `(min-width: ${ACCOUNT_BLOCK_DESKTOP_MIN_PX}px)`;

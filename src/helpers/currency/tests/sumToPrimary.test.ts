@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { sumToPrimary } from '@/helpers/currency/sumToPrimary.ts';
-import { createExchangeRate } from '@/helpers/tests/helpers.ts';
+import { createExchangeRate } from '@/helpers/currency/tests/testHelpers.ts';
 
 describe('sumToPrimary', () => {
   it('returns zero for an empty list', () => {

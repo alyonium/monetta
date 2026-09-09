@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { convertToPrimary } from '@/helpers/currency/convertToPrimary.ts';
-import { createExchangeRate } from '@/helpers/tests/helpers.ts';
+import { createExchangeRate } from '@/helpers/currency/tests/testHelpers.ts';
 
 describe('convertToPrimary', () => {
   it('returns the amount when the currency is already primary', () => {

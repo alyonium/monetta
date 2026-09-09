@@ -193,3 +193,7 @@
 ## 2026-09-09 17:50 - US-016 review
 - Moved Phosphor catalog back to `components/accountIcons.ts` (test next to source). Dropped `accountFillInkColor`. `ACCOUNT_DARK_INK_FILLS` shares lime/yellow/white tokens with `ACCOUNT_COLORS`.
 ---
+
+## 2026-09-09 18:45 - chore
+- Pager swipe and `toAccountPageItems` live in `helpers/` / `hooks/`. Currency tests sit next to fetchers. Login helper test is in `helpers/tests/`.
+---
