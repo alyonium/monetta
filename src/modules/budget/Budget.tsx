@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AccountBlock from '@/modules/budget/components/AccountBlock/AccountBlock.tsx';
+import AccountDetailsModal from '@/modules/budget/components/AccountDetailsModal/AccountDetailsModal.tsx';
 import CreateAccountModal from '@/modules/budget/components/CreateAccountModal/CreateAccountModal.tsx';
 import ParametersBar from '@/modules/budget/components/ParametersBar/ParametersBar.tsx';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
@@ -11,13 +12,11 @@ import {
 import { useBudgetAccounts } from '@/modules/budget/hooks/useBudgetAccounts.ts';
 import { useBudgetMonthTotals } from '@/modules/budget/hooks/useBudgetMonthTotals.ts';
 import type { AccountType } from '@/modules/budget/types/budgetAccount.ts';
+import type {
+  AccountDetailsSession,
+  CreateAccountSession,
+} from '@/modules/budget/types/budgetSession.ts';
 import styles from './Budget.module.css';
-
-type CreateAccountSession = {
-  opened: boolean;
-  type: AccountType;
-  id: number;
-};
 
 const Budget = () => {
   const { t } = useTranslation();
@@ -26,6 +25,10 @@ const Budget = () => {
     opened: false,
     type: ACCOUNT_TYPE.INCOME,
     id: 0,
+  });
+  const [details, setDetails] = useState<AccountDetailsSession>({
+    opened: false,
+    account: null,
   });
   const { data, isError } = useBudgetAccounts(month);
   const totals = useBudgetMonthTotals(month, data?.[ACCOUNT_TYPE.CURRENT]);
@@ -49,6 +52,7 @@ const Budget = () => {
             type={type}
             accounts={data[type]}
             onAddAccount={() => onAddAccount(type)}
+            onSelectAccount={(account) => setDetails({ opened: true, account })}
           />
         ))
       ) : (
@@ -60,12 +64,16 @@ const Budget = () => {
       <CreateAccountModal
         key={create.id}
         opened={create.opened}
-        onClose={() =>
-          setCreate((current) => ({ ...current, opened: false }))
-        }
+        onClose={() => setCreate((current) => ({ ...current, opened: false }))}
         accountType={create.type}
         orderedIds={data?.[create.type].map((account) => account.id) ?? []}
         month={month}
+      />
+
+      <AccountDetailsModal
+        opened={details.opened}
+        onClose={() => setDetails({ opened: false, account: null })}
+        account={details.account}
       />
     </div>
   );

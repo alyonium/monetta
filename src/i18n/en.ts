@@ -56,6 +56,17 @@ export const en = {
         saveFailed: 'Could not save the account',
       },
     },
+    accountDetails: {
+      edit: 'Edit account',
+      close: 'Close',
+      balance: 'Balance',
+      debtAmount: 'Debt amount',
+      paidAmount: 'Paid amount',
+      search: 'Search',
+      transactionsPlaceholder: 'Transaction history',
+      delete: 'Delete',
+      hide: 'Hide',
+    },
     paid: 'Paid {{amount}}',
     pagination: {
       previous: 'Previous page',

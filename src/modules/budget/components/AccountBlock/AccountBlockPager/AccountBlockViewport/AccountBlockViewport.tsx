@@ -9,6 +9,7 @@ import {
 import { usePageSwipe } from '@/modules/budget/hooks/usePageSwipe.ts';
 import type { AccountBlockViewportHandle } from '@/modules/budget/types/accountBlockViewportHandle.ts';
 import type { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
+import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountBlockViewport.module.css';
 
 type GridForPageArgs = {
@@ -18,6 +19,7 @@ type GridForPageArgs = {
   columns: number;
   minHeight: string;
   onAddAccount: () => void;
+  onSelectAccount: (account: BudgetAccount) => void;
 };
 
 const gridForPage = ({
@@ -27,12 +29,14 @@ const gridForPage = ({
   columns,
   minHeight,
   onAddAccount,
+  onSelectAccount,
 }: GridForPageArgs) => (
   <AccountPageGrid
     items={slicePage(items, page, pageSize)}
     columns={columns}
     minHeight={minHeight}
     onAddAccount={onAddAccount}
+    onSelectAccount={onSelectAccount}
   />
 );
 
@@ -50,6 +54,7 @@ type AccountBlockViewportProps = {
   onPrev: () => void;
   onJump: (index: number) => void;
   onAddAccount: () => void;
+  onSelectAccount: (account: BudgetAccount) => void;
 };
 
 const AccountBlockViewport = ({
@@ -66,6 +71,7 @@ const AccountBlockViewport = ({
   onPrev,
   onJump,
   onAddAccount,
+  onSelectAccount,
 }: AccountBlockViewportProps) => {
   const canLoop = totalPages > 1;
   const previousPage = prevPageIndex({ page: pageIndex, totalPages });
@@ -110,7 +116,15 @@ const AccountBlockViewport = ({
   }));
 
   const pageGrid = (page: number) =>
-    gridForPage({ items, page, pageSize, columns, minHeight, onAddAccount });
+    gridForPage({
+      items,
+      page,
+      pageSize,
+      columns,
+      minHeight,
+      onAddAccount,
+      onSelectAccount,
+    });
 
   return (
     <div

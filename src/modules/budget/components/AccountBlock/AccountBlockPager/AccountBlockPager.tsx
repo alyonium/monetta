@@ -14,11 +14,13 @@ import styles from './AccountBlockPager.module.css';
 type AccountBlockPagerProps = {
   accounts: BudgetAccount[];
   onAddAccount: () => void;
+  onSelectAccount: (account: BudgetAccount) => void;
 } & AccountBlockPagerLayout;
 
 const AccountBlockPager = ({
   accounts,
   onAddAccount,
+  onSelectAccount,
   minHeight,
   fillHeight,
   minCardHeightPx,
@@ -66,6 +68,7 @@ const AccountBlockPager = ({
           onPrev={goPrev}
           onJump={goToPage}
           onAddAccount={onAddAccount}
+          onSelectAccount={onSelectAccount}
         />
 
         {showArrows && (

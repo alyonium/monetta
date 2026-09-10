@@ -8,7 +8,14 @@
   min-height: var(--account-card-min-height, 6rem);
   height: 100%;
   padding: 4px;
+  cursor: pointer;
   background: transparent;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--mantine-color-indigo-6);
+  outline-offset: 2px;
+  border-radius: var(--mantine-radius-md);
 }
 
 .amounts {

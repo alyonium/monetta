@@ -3,6 +3,7 @@ import AccountItem from '@/modules/budget/components/AccountItem/AccountItem.tsx
 import AddAccountButton from '@/modules/budget/components/AddAccountButton/AddAccountButton.tsx';
 import { ACCOUNT_CARD_MIN_HEIGHT_DEFAULT } from '@/modules/budget/constants.ts';
 import type { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
+import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountPageGrid.module.css';
 
 type AccountPageGridProps = {
@@ -10,6 +11,7 @@ type AccountPageGridProps = {
   columns: number;
   minHeight?: string;
   onAddAccount: () => void;
+  onSelectAccount: (account: BudgetAccount) => void;
 };
 
 const AccountPageGrid = ({
@@ -17,6 +19,7 @@ const AccountPageGrid = ({
   columns,
   minHeight = ACCOUNT_CARD_MIN_HEIGHT_DEFAULT,
   onAddAccount,
+  onSelectAccount,
 }: AccountPageGridProps) => (
   <ul
     className={styles.grid}
@@ -34,7 +37,10 @@ const AccountPageGrid = ({
         </li>
       ) : (
         <li key={item.account.id} className={styles.cell}>
-          <AccountItem account={item.account} />
+          <AccountItem
+            account={item.account}
+            onSelectAccount={onSelectAccount}
+          />
         </li>
       ),
     )}

@@ -217,3 +217,11 @@
 ## 2026-09-09 21:18 - US-017 modal opened
 - Create stays mounted. Close is Mantine `opened={false}` again. Stack may leave a hidden node in the DOM; we do not unmount for that.
 ---
+
+## 2026-09-10 11:11 - US-018
+- Card click opens one `AccountDetailsModal` on Budget. Header follows `createAccountVisibility` (Income name/icon; Current balance+currency; Expense type text; Debt also red debt + green paid). Pencil, Close, overlay close; Delete/Hide/search/list are UI stubs.
+- **Learnings for future iterations:**
+    - Patterns discovered: same session as Create `{ opened, account }`; close keeps last `account` for animation. One modal on Budget, not inside cards. Cards are `role="button"` + Enter/Space, not a native `<button>`.
+    - Gotchas encountered: pager swipe skips `closest('button')` — a real button on the card would block swipe. `onClickCapture` already drops click after a swipe. Carousel prev/next slides are off-screen; click the on-screen card. Automation pointer drag on a card can look like a swipe.
+    - Useful context: i18n `budget.accountDetails.*`. Reuse `budget.createAccount.accountType` / `expense` / `debt` / `currency` and `budget.paid`. Transactions are US-019; edit US-020; delete US-021; hide US-022.
+---

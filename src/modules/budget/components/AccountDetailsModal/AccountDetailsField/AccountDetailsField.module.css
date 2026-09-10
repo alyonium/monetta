@@ -1,0 +1,10 @@
+.label {
+  color: var(--account-details-ink);
+}
+
+.value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}

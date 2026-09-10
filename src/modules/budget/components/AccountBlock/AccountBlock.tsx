@@ -21,9 +21,15 @@ type AccountBlockProps = {
   type: AccountType;
   accounts: BudgetAccount[];
   onAddAccount: () => void;
+  onSelectAccount: (account: BudgetAccount) => void;
 };
 
-const AccountBlock = ({ type, accounts, onAddAccount }: AccountBlockProps) => {
+const AccountBlock = ({
+  type,
+  accounts,
+  onAddAccount,
+  onSelectAccount,
+}: AccountBlockProps) => {
   const { t } = useTranslation();
   const layout = ACCOUNT_BLOCK_PAGER[type];
 
@@ -35,6 +41,7 @@ const AccountBlock = ({ type, accounts, onAddAccount }: AccountBlockProps) => {
       <AccountBlockPager
         accounts={accounts}
         onAddAccount={onAddAccount}
+        onSelectAccount={onSelectAccount}
         {...layout}
       />
     </section>

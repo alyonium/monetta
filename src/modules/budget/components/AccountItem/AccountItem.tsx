@@ -1,3 +1,4 @@
+import { type KeyboardEvent } from 'react';
 import { clsx } from 'clsx';
 import { useTranslation } from 'react-i18next';
 import AccountIcon from '@/modules/budget/components/AccountIcon/AccountIcon.tsx';
@@ -9,16 +10,32 @@ import styles from './AccountItem.module.css';
 
 type AccountItemProps = {
   account: BudgetAccount;
+  onSelectAccount: (account: BudgetAccount) => void;
 };
 
-const AccountItem = ({ account }: AccountItemProps) => {
+const AccountItem = ({ account, onSelectAccount }: AccountItemProps) => {
   const { t } = useTranslation();
   const color = account.color ?? DEFAULT_ACCOUNT_COLOR;
   const amount = (value: number) =>
     formatAccountAmount(value, account.currencySymbol, account.currencyCode);
 
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
+
+    event.preventDefault();
+    onSelectAccount(account);
+  };
+
   return (
-    <div className={styles.card}>
+    <div
+      className={styles.card}
+      role='button'
+      tabIndex={0}
+      onClick={() => onSelectAccount(account)}
+      onKeyDown={onKeyDown}
+    >
       <p className={styles.name}>{account.name}</p>
 
       <AccountIcon icon={resolveAccountIcon(account.icon)} color={color} />
