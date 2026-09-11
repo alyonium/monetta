@@ -3,8 +3,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { ROUTE } from '@/constants/router.ts';
-import { setAccessToken, setBackendUrl } from '@/helpers/authStorage.ts';
-import { configureApiClient } from '@/helpers/configureApiClient.ts';
 import { LOGIN_FAILURE_REASON } from '@/modules/login/constants.ts';
 import { verifyFireflyLogin } from '@/modules/login/helpers/verifyFireflyLogin.ts';
 
@@ -44,16 +42,13 @@ export const useLoginForm = () => {
     setIsSubmitting(true);
     setUnexpectedError(null);
 
-    const token = values.token.trim();
-    const backendUrl = values.backendUrl.trim();
-
     try {
-      const result = await verifyFireflyLogin({ token, backendUrl });
+      const result = await verifyFireflyLogin({
+        token: values.token.trim(),
+        backendUrl: values.backendUrl,
+      });
 
       if (result.ok) {
-        setAccessToken(token);
-        setBackendUrl(backendUrl);
-        configureApiClient({ token, backendUrl });
         navigate(ROUTE.BUDGET);
         return;
       }

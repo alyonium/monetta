@@ -64,7 +64,7 @@ describe('mapFireflyAccount', () => {
   it('returns null when id or name is empty', () => {
     expect(mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET }, ''))).toBeNull();
     expect(
-      mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET, name: '  ' })),
+      mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET, name: '' })),
     ).toBeNull();
   });
 

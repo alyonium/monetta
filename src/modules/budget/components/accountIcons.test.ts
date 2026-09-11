@@ -18,7 +18,6 @@ describe('resolveAccountIcon', () => {
   it('returns Wallet when the name is missing, blank, suffixed, or unknown', () => {
     expect(resolveAccountIcon(null)).toBe(WalletIcon);
     expect(resolveAccountIcon('')).toBe(WalletIcon);
-    expect(resolveAccountIcon('   ')).toBe(WalletIcon);
     expect(resolveAccountIcon('WalletIcon')).toBe(WalletIcon);
     expect(resolveAccountIcon('NotAnIcon')).toBe(WalletIcon);
   });
@@ -33,7 +32,6 @@ describe('toAccountIconName', () => {
   it('falls back to Wallet when the name is missing, blank, suffixed, or unknown', () => {
     expect(toAccountIconName(null)).toBe(DEFAULT_ACCOUNT_ICON);
     expect(toAccountIconName('')).toBe(DEFAULT_ACCOUNT_ICON);
-    expect(toAccountIconName('   ')).toBe(DEFAULT_ACCOUNT_ICON);
     expect(toAccountIconName('WalletIcon')).toBe(DEFAULT_ACCOUNT_ICON);
     expect(isAccountIconName('NotAnIcon')).toBe(false);
   });

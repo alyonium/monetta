@@ -13,7 +13,7 @@ export const validateCreateAccountForm = (
     errors.name = 'budget.createAccount.errors.nameRequired';
   }
 
-  if (showMoney && !values.currency.trim()) {
+  if (showMoney && !values.currency) {
     errors.currency = 'budget.createAccount.errors.currencyRequired';
   }
 

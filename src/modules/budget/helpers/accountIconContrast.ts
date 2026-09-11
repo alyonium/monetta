@@ -7,9 +7,8 @@ const HEX_SHORT = /^#([0-9a-f]{3})$/i;
 const HEX_LONG = /^#([0-9a-f]{6})$/i;
 
 export const normalizeAccountColorHex = (hex: string): string | null => {
-  const trimmed = hex.trim();
-  const short = HEX_SHORT.exec(trimmed);
-  const long = HEX_LONG.exec(trimmed);
+  const short = HEX_SHORT.exec(hex);
+  const long = HEX_LONG.exec(hex);
   const digits = long?.[1] ?? (short ? short[1].replace(/(.)/g, '$1$1') : null);
 
   return digits ? `#${digits.toLowerCase()}` : null;

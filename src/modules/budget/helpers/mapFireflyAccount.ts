@@ -49,11 +49,9 @@ export const mapFireflyAccount = (
   account: Pick<AccountRead, 'id' | 'attributes'>,
   appearance?: AccountAppearance,
 ): BudgetAccount | null => {
-  const id = account.id.trim();
   const { attributes } = account;
-  const name = attributes.name.trim();
 
-  if (!id || !name) {
+  if (!account.id || !attributes.name) {
     return null;
   }
 
@@ -79,15 +77,15 @@ export const mapFireflyAccount = (
 
   const balance = toFiniteNumber(current_balance) ?? 0;
   const currencyCode = (
-    currency_code?.trim() ||
-    primary_currency_code?.trim() ||
+    currency_code ||
+    primary_currency_code ||
     ''
   ).toUpperCase();
   const currencySymbol = currency_symbol || primary_currency_symbol || '';
 
   return {
-    id,
-    name,
+    id: account.id,
+    name: attributes.name,
     type,
     isDebt,
     icon,

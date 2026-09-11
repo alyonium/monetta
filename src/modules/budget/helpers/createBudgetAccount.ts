@@ -40,7 +40,7 @@ export const createBudgetAccount = async ({
     return { ok: false, reason: CREATE_BUDGET_ACCOUNT_FAILURE_REASON.FAILED };
   }
 
-  const id = result.data?.data?.id?.trim();
+  const id = result.data?.data?.id;
 
   if (!id) {
     const error =

@@ -6,7 +6,7 @@ import type { BudgetInsights } from '@/modules/budget/types/budgetMonthTotals.ts
 
 const toInsightAmounts = (entries: InsightTotalEntry[]): AmountInCurrency[] =>
   entries.reduce<AmountInCurrency[]>((amounts, entry) => {
-    const fromCode = entry.currency_code?.trim();
+    const fromCode = entry.currency_code;
     const amount = Number(entry.difference);
 
     if (fromCode && Number.isFinite(amount)) {

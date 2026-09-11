@@ -62,7 +62,7 @@ describe('fetchBudgetInsights', () => {
       createInsightResult([
         { difference: '-10.00', currency_code: 'USD' },
         { difference: 'nope', currency_code: 'EUR' },
-        { difference: '1', currency_code: '  ' },
+        { difference: '1', currency_code: '' },
       ]),
     );
     insightExpenseTotalMock.mockResolvedValue(

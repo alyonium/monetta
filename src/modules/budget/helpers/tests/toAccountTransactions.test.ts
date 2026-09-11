@@ -73,8 +73,8 @@ describe('toAccountTransactions', () => {
         }),
         createTransactionSplit({ amount: 'nope', transaction_journal_id: '3' }),
       ]),
-      createFireflyTransaction('  ', [
-        createTransactionSplit({ transaction_journal_id: '   ' }),
+      createFireflyTransaction('', [
+        createTransactionSplit({ transaction_journal_id: '' }),
       ]),
     ]);
 

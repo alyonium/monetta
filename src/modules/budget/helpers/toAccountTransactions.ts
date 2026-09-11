@@ -9,7 +9,7 @@ const toAccountTransaction = (
   index: number,
 ): AccountTransaction | null => {
   const date = accountTransactionDate(split.date);
-  const journalId = split.transaction_journal_id?.trim() ?? '';
+  const journalId = split.transaction_journal_id ?? '';
 
   if (!date || (!groupId && !journalId)) {
     return null;
@@ -50,10 +50,8 @@ export const toAccountTransactions = (
   const items: AccountTransaction[] = [];
 
   groups.forEach((group) => {
-    const groupId = group.id.trim();
-
     group.attributes.transactions.forEach((split, index) => {
-      const mapped = toAccountTransaction(groupId, split, index);
+      const mapped = toAccountTransaction(group.id, split, index);
 
       if (mapped) {
         items.push(mapped);

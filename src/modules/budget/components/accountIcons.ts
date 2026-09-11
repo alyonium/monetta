@@ -112,10 +112,8 @@ export const isAccountIconName = (name: string): name is AccountIconName =>
   name in ACCOUNT_ICONS;
 
 export const toAccountIconName = (name: string | null): AccountIconName => {
-  const trimmed = name?.trim();
-
-  if (trimmed && isAccountIconName(trimmed)) {
-    return trimmed;
+  if (name && isAccountIconName(name)) {
+    return name;
   }
 
   return DEFAULT_ACCOUNT_ICON;

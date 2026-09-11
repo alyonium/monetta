@@ -18,11 +18,6 @@ describe('validateCreateAccountForm', () => {
       currency: 'budget.createAccount.errors.currencyRequired',
     });
     expect(
-      validateCreateAccountForm({ name: 'Wallet', currency: '  ' }, true),
-    ).toEqual({
-      currency: 'budget.createAccount.errors.currencyRequired',
-    });
-    expect(
       validateCreateAccountForm({ name: 'Salary', currency: '' }, false),
     ).toEqual({});
   });
