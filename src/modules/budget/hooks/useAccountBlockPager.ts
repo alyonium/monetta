@@ -11,8 +11,8 @@ import {
   pageCount,
   prevPageIndex,
   rowCount,
-} from '@/modules/budget/helpers/accountBlockPaging.ts';
-import { toAccountPageItems } from '@/modules/budget/helpers/toAccountPageItems.ts';
+} from '@/modules/budget/helpers/layout/accountBlockPaging.ts';
+import { toAccountPageItems } from '@/modules/budget/helpers/layout/toAccountPageItems.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 const desktopQuery = `(min-width: ${ACCOUNT_BLOCK_DESKTOP_MIN_PX}px)`;

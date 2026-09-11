@@ -5,7 +5,7 @@ import {
   ACCOUNT_ICONS,
   type AccountIconName,
 } from '@/modules/budget/components/accountIcons.ts';
-import { accountIconGlyphColor } from '@/modules/budget/helpers/accountIconContrast.ts';
+import { accountIconGlyphColor } from '@/modules/budget/helpers/appearance/accountIconContrast.ts';
 import IconCell from './IconCell/IconCell.tsx';
 import styles from './AccountIconPicker.module.css';
 

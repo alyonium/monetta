@@ -7,11 +7,11 @@ import CreateAccountModal from '@/modules/budget/components/CreateAccountModal/C
 import EditAccountModal from '@/modules/budget/components/EditAccountModal/EditAccountModal.tsx';
 import ParametersBar from '@/modules/budget/components/ParametersBar/ParametersBar.tsx';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
+import { liveBudgetAccount } from '@/modules/budget/helpers/account/liveBudgetAccount.ts';
 import {
   startOfMonth,
   todayIso,
-} from '@/modules/budget/helpers/budgetMonth.ts';
-import { liveBudgetAccount } from '@/modules/budget/helpers/liveBudgetAccount.ts';
+} from '@/modules/budget/helpers/month/budgetMonth.ts';
 import { useBudgetAccounts } from '@/modules/budget/hooks/useBudgetAccounts.ts';
 import { useBudgetMonthTotals } from '@/modules/budget/hooks/useBudgetMonthTotals.ts';
 import type { AccountType } from '@/modules/budget/types/budgetAccount.ts';

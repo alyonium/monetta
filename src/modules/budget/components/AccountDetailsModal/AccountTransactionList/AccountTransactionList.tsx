@@ -2,7 +2,7 @@ import { Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import AccountTransactionCard from '@/modules/budget/components/AccountDetailsModal/AccountTransactionCard/AccountTransactionCard.tsx';
 import { ACCOUNT_TRANSACTIONS_STATUS } from '@/modules/budget/constants/transactions.ts';
-import type { AccountTransactionsStatus } from '@/modules/budget/helpers/accountTransactionsStatus.ts';
+import type { AccountTransactionsStatus } from '@/modules/budget/helpers/transactions/accountTransactionsStatus.ts';
 import type { AccountTransactionGroup } from '@/modules/budget/types/accountTransaction.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountTransactionList.module.css';

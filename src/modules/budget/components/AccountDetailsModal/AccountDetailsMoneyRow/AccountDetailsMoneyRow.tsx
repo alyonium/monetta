@@ -3,8 +3,8 @@ import AccountDetailsField from '@/modules/budget/components/AccountDetailsModal
 import {
   ACCOUNT_DETAILS_MONEY,
   type AccountDetailsMoney,
-} from '@/modules/budget/helpers/accountDetailsHeader.ts';
-import { formatAccountAmount } from '@/modules/budget/helpers/formatAccountAmount.ts';
+} from '@/modules/budget/helpers/account/accountDetailsHeader.ts';
+import { formatAccountAmount } from '@/modules/budget/helpers/account/formatAccountAmount.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountDetailsMoneyRow.module.css';
 

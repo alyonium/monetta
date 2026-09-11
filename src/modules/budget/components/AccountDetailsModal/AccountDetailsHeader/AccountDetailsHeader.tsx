@@ -7,9 +7,9 @@ import AccountDetailsField from '@/modules/budget/components/AccountDetailsModal
 import AccountDetailsGlyph from '@/modules/budget/components/AccountDetailsModal/AccountDetailsGlyph/AccountDetailsGlyph.tsx';
 import AccountDetailsMoneyRow from '@/modules/budget/components/AccountDetailsModal/AccountDetailsMoneyRow/AccountDetailsMoneyRow.tsx';
 import { DEFAULT_ACCOUNT_COLOR } from '@/modules/budget/constants/appearance.ts';
-import { accountDetailsEditColor } from '@/modules/budget/helpers/accountDetailsEditColor.ts';
-import { accountDetailsHeader } from '@/modules/budget/helpers/accountDetailsHeader.ts';
-import { accountIconGlyphColor } from '@/modules/budget/helpers/accountIconContrast.ts';
+import { accountDetailsHeader } from '@/modules/budget/helpers/account/accountDetailsHeader.ts';
+import { accountDetailsEditColor } from '@/modules/budget/helpers/appearance/accountDetailsEditColor.ts';
+import { accountIconGlyphColor } from '@/modules/budget/helpers/appearance/accountIconContrast.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountDetailsHeader.module.css';
 

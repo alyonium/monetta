@@ -1,6 +1,6 @@
 import { type CSSProperties } from 'react';
 import type { Icon } from '@phosphor-icons/react';
-import { accountIconGlyphColor } from '@/modules/budget/helpers/accountIconContrast.ts';
+import { accountIconGlyphColor } from '@/modules/budget/helpers/appearance/accountIconContrast.ts';
 import { ACCOUNT_ICON_SIZE } from '@/modules/budget/constants/appearance.ts';
 import styles from './AccountIcon.module.css';
 

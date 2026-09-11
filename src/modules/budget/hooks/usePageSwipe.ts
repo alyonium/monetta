@@ -12,7 +12,7 @@ import {
 import {
   resolvePageSwipe,
   rubberBandDragX,
-} from '@/modules/budget/helpers/pageSwipe.ts';
+} from '@/modules/budget/helpers/layout/pageSwipe.ts';
 import type { PageSwipeDirection } from '@/modules/budget/types/pageSwipeDirection.ts';
 
 const REST_TRANSFORM = 'translate3d(-100%, 0, 0)';

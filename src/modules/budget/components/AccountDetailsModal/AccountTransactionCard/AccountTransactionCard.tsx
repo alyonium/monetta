@@ -3,11 +3,11 @@ import { ArrowRightIcon } from '@phosphor-icons/react';
 import { clsx } from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { ACCOUNT_TRANSACTION_FLOW } from '@/modules/budget/constants/transactions.ts';
+import { formatAccountAmount } from '@/modules/budget/helpers/account/formatAccountAmount.ts';
 import {
   accountTransactionFlow,
   type AccountTransactionFlow,
-} from '@/modules/budget/helpers/accountTransactionFlow.ts';
-import { formatAccountAmount } from '@/modules/budget/helpers/formatAccountAmount.ts';
+} from '@/modules/budget/helpers/transactions/accountTransactionFlow.ts';
 import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountTransactionCard.module.css';

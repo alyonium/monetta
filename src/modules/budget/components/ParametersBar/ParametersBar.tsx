@@ -7,7 +7,7 @@ import type { WalletCurrency } from '@/helpers/currency/types.ts';
 import {
   startOfMonth,
   todayIso,
-} from '@/modules/budget/helpers/budgetMonth.ts';
+} from '@/modules/budget/helpers/month/budgetMonth.ts';
 import type { BudgetMonthTotals } from '@/modules/budget/types/budgetMonthTotals.ts';
 import styles from './ParametersBar.module.css';
 

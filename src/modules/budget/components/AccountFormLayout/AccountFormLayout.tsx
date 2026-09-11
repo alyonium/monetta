@@ -6,7 +6,7 @@ import {
 import { Group, Text, TextInput, type TextInputProps } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import AccountColorPicker from '@/modules/budget/components/AccountColorPicker/AccountColorPicker.tsx';
-import { accountIconGlyphColor } from '@/modules/budget/helpers/accountIconContrast.ts';
+import { accountIconGlyphColor } from '@/modules/budget/helpers/appearance/accountIconContrast.ts';
 import styles from './AccountFormLayout.module.css';
 
 type AccountFormLayoutProps = {
