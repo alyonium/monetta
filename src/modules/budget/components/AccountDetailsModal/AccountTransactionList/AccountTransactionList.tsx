@@ -59,6 +59,10 @@ const AccountTransactionList = ({
           ))}
         </div>
       );
+    default: {
+      const unexpectedStatus: never = status;
+      return unexpectedStatus;
+    }
   }
 };
 

@@ -29,6 +29,10 @@ const amountClass = (
       return styles.in;
     case ACCOUNT_TRANSACTION_FLOW.OUT:
       return styles.out;
+    default: {
+      const unexpectedFlow: never = flow;
+      return unexpectedFlow;
+    }
   }
 };
 

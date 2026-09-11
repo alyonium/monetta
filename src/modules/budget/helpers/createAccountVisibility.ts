@@ -12,5 +12,9 @@ export const createAccountVisibility = (
       return { showKind: false, showMoney: true };
     case ACCOUNT_TYPE.EXPENSE:
       return { showKind: true, showMoney: isDebt };
+    default: {
+      const unexpectedType: never = type;
+      return unexpectedType;
+    }
   }
 };
