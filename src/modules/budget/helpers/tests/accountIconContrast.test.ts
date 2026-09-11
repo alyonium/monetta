@@ -11,7 +11,7 @@ import {
 } from '@/modules/budget/helpers/accountIconContrast.ts';
 
 describe('accountIconGlyphColor', () => {
-  it('returns a black glyph on white, lime, and yellow fills', () => {
+  it('returns a black glyph on white, lime, yellow, and orange fills', () => {
     expect(accountIconGlyphColor('#FFFFFF')).toBe(ACCOUNT_ICON_GLYPH_DARK);
     expect(accountIconGlyphColor('#ffffff')).toBe(ACCOUNT_ICON_GLYPH_DARK);
     expect(accountIconGlyphColor('#fff')).toBe(ACCOUNT_ICON_GLYPH_DARK);
