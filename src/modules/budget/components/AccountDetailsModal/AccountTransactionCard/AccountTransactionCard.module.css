@@ -1,0 +1,49 @@
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-md);
+}
+
+.details {
+  flex: 1;
+  min-width: 0;
+}
+
+.route {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.from {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.arrow {
+  flex-shrink: 0;
+}
+
+.amount {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.in {
+  color: var(--mantine-color-green-6);
+}
+
+.out {
+  color: var(--mantine-color-red-6);
+}

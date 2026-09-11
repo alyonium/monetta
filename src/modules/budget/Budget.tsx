@@ -72,7 +72,9 @@ const Budget = () => {
 
       <AccountDetailsModal
         opened={details.opened}
-        onClose={() => setDetails({ opened: false, account: null })}
+        onClose={() =>
+          setDetails((current) => ({ ...current, opened: false }))
+        }
         account={details.account}
       />
     </div>

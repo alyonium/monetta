@@ -1,5 +1,6 @@
 import type { AccountProperties, AccountRead } from '@/api/types.gen.ts';
 import { ACCOUNT_TYPE, FIREFLY_ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import { toFiniteNumber } from '@/modules/budget/helpers/toFiniteNumber.ts';
 import type {
   AccountAppearance,
   AccountType,
@@ -22,12 +23,6 @@ const toBudgetAccountType = (
     default:
       return null;
   }
-};
-
-const toFiniteNumber = (value: string | null | undefined): number | null => {
-  const parsed = Number(value);
-
-  return Number.isFinite(parsed) ? parsed : null;
 };
 
 const debtFields = (

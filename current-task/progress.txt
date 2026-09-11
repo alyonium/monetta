@@ -225,3 +225,11 @@
     - Gotchas encountered: pager swipe skips `closest('button')` — a real button on the card would block swipe. `onClickCapture` already drops click after a swipe. Carousel prev/next slides are off-screen; click the on-screen card. Automation pointer drag on a card can look like a swipe.
     - Useful context: i18n `budget.accountDetails.*`. Reuse `budget.createAccount.accountType` / `expense` / `debt` / `currency` and `budget.paid`. Transactions are US-019; edit US-020; delete US-021; hide US-022.
 ---
+
+## 2026-09-10 19:50 - US-019
+- AccountDetailsModal loads all account transactions via Query, groups cards by date, and filters them with a client search. Empty copy is “No transactions found for this account”.
+- **Learnings for future iterations:**
+    - Patterns discovered: Query prefix `['budget', 'accountTransactions']` is separate from `['budget', 'accounts']`. `listTransactionByAccount` pages with `collectFireflyPages` and no date range. Search remounts with `key={account.id}`. Close still keeps the last account.
+    - Gotchas encountered: Firefly calendar day is the ISO `YYYY-MM-DD` prefix, not local dayjs. Do not pass `start`/`end`/`type`. Pager `onClickCapture` still swallows automation clicks that look like swipes.
+    - Useful context: i18n `budget.accountDetails.route` / `noTransactions` / `loading` / `loadFailed`. Card is `source → destination` with amount top-right: green if this account is destination, red if source. Card click → EditTransactionModal is US-029. History infinite scroll is US-030.
+---
