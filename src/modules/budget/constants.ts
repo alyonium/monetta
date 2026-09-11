@@ -44,6 +44,17 @@ export const CREATE_ACCOUNT_TITLE_KEY = {
   | 'budget.createAccount.title.expense'
 >;
 
+export const EDIT_ACCOUNT_TITLE_KEY = {
+  INCOME: 'budget.editAccount.title.income',
+  CURRENT: 'budget.editAccount.title.current',
+  EXPENSE: 'budget.editAccount.title.expense',
+} as const satisfies Record<
+  (typeof ACCOUNT_TYPE)[keyof typeof ACCOUNT_TYPE],
+  | 'budget.editAccount.title.income'
+  | 'budget.editAccount.title.current'
+  | 'budget.editAccount.title.expense'
+>;
+
 export const EXPENSE_KIND = {
   EXPENSE: 'expense',
   DEBT: 'debt',

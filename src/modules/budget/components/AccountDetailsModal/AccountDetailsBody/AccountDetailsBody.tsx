@@ -13,9 +13,14 @@ import styles from './AccountDetailsBody.module.css';
 type AccountDetailsBodyProps = {
   account: BudgetAccount;
   opened: boolean;
+  onEdit: () => void;
 };
 
-const AccountDetailsBody = ({ account, opened }: AccountDetailsBodyProps) => {
+const AccountDetailsBody = ({
+  account,
+  opened,
+  onEdit,
+}: AccountDetailsBodyProps) => {
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const { data, isLoading, isError } = useAccountTransactions(
@@ -34,7 +39,7 @@ const AccountDetailsBody = ({ account, opened }: AccountDetailsBodyProps) => {
 
   return (
     <div className={styles.body}>
-      <AccountDetailsHeader account={account} />
+      <AccountDetailsHeader account={account} onEdit={onEdit} />
 
       <TextInput
         label={t('budget.accountDetails.search')}

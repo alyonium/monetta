@@ -1,3 +1,4 @@
+import { validateAccountName } from '@/modules/budget/helpers/validateAccountName.ts';
 import type {
   CreateAccountFormFieldErrors,
   CreateAccountFormValues,
@@ -8,9 +9,10 @@ export const validateCreateAccountForm = (
   showMoney: boolean,
 ): CreateAccountFormFieldErrors => {
   const errors: CreateAccountFormFieldErrors = {};
+  const nameError = validateAccountName(values.name);
 
-  if (!values.name.trim()) {
-    errors.name = 'budget.createAccount.errors.nameRequired';
+  if (nameError) {
+    errors.name = nameError;
   }
 
   if (showMoney && !values.currency) {

@@ -1,17 +1,14 @@
-import { type CSSProperties } from 'react';
-import { Button, Group, Modal, Text, TextInput } from '@mantine/core';
+import { Button, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useTranslation } from 'react-i18next';
-import AccountColorPicker from '@/modules/budget/components/AccountColorPicker/AccountColorPicker.tsx';
+import AccountFormLayout from '@/modules/budget/components/AccountFormLayout/AccountFormLayout.tsx';
 import AccountIconButton from '@/modules/budget/components/AccountIconButton/AccountIconButton.tsx';
 import AccountIconPicker from '@/modules/budget/components/AccountIconPicker/AccountIconPicker.tsx';
 import AccountMoneyFields from '@/modules/budget/components/AccountMoneyFields/AccountMoneyFields.tsx';
 import ExpenseKindControl from '@/modules/budget/components/ExpenseKindControl/ExpenseKindControl.tsx';
 import { CREATE_ACCOUNT_TITLE_KEY } from '@/modules/budget/constants.ts';
-import { accountIconGlyphColor } from '@/modules/budget/helpers/accountIconContrast.ts';
 import { useCreateAccountForm } from '@/modules/budget/hooks/useCreateAccountForm.ts';
 import type { AccountType } from '@/modules/budget/types/budgetAccount.ts';
-import styles from './CreateAccountModal.module.css';
 
 type CreateAccountModalProps = {
   opened: boolean;
@@ -47,9 +44,6 @@ const CreateAccountModal = ({
     month,
   });
 
-  const ink = accountIconGlyphColor(form.values.color);
-  const fieldClassNames = { label: styles.fieldLabel };
-
   return (
     <Modal.Stack>
       <Modal
@@ -59,40 +53,29 @@ const CreateAccountModal = ({
         title={t(CREATE_ACCOUNT_TITLE_KEY[accountType])}
         centered
       >
-        <form className={styles.form} onSubmit={handleSubmit}>
-          {showKind && (
-            <ExpenseKindControl
-              isDebt={form.values.isDebt}
-              onChange={(isDebt) => form.setFieldValue('isDebt', isDebt)}
+        <AccountFormLayout
+          color={form.values.color}
+          onColorChange={(color) => form.setFieldValue('color', color)}
+          onSubmit={handleSubmit}
+          beforeFields={
+            showKind && (
+              <ExpenseKindControl
+                isDebt={form.values.isDebt}
+                onChange={(isDebt) => form.setFieldValue('isDebt', isDebt)}
+              />
+            )
+          }
+          iconButton={
+            <AccountIconButton
+              icon={form.values.icon}
+              color={form.values.color}
+              expanded={pickerOpened}
+              onClick={openPicker}
             />
-          )}
-
-          <div
-            className={styles.fields}
-            style={
-              {
-                '--create-account-color': form.values.color,
-                '--create-account-ink': ink,
-              } as CSSProperties
-            }
-          >
-            <div className={styles.nameRow}>
-              <AccountIconButton
-                icon={form.values.icon}
-                color={form.values.color}
-                expanded={pickerOpened}
-                onClick={openPicker}
-              />
-
-              <TextInput
-                className={styles.nameField}
-                label={t('budget.createAccount.name')}
-                classNames={fieldClassNames}
-                {...form.getInputProps('name')}
-              />
-            </div>
-
-            {showMoney && (
+          }
+          nameInputProps={form.getInputProps('name')}
+          extraFields={
+            showMoney && (
               <AccountMoneyFields
                 initialBalance={form.values.initialBalance}
                 onInitialBalanceChange={(value) =>
@@ -105,29 +88,20 @@ const CreateAccountModal = ({
                 currencyError={form.errors.currency}
                 currencies={currencies}
               />
-            )}
-          </div>
-
-          <AccountColorPicker
-            value={form.values.color}
-            onChange={(color) => form.setFieldValue('color', color)}
-          />
-
-          {saveError && (
-            <Text c='red' size='sm'>
-              {saveError}
-            </Text>
-          )}
-
-          <Group className={styles.actions} justify='flex-end'>
-            <Button type='button' variant='default' onClick={onClose}>
-              {t('budget.createAccount.cancel')}
-            </Button>
-            <Button type='submit' loading={isSubmitting}>
-              {t('budget.createAccount.save')}
-            </Button>
-          </Group>
-        </form>
+            )
+          }
+          error={saveError}
+          actions={
+            <>
+              <Button type='button' variant='default' onClick={onClose}>
+                {t('budget.createAccount.cancel')}
+              </Button>
+              <Button type='submit' loading={isSubmitting}>
+                {t('budget.createAccount.save')}
+              </Button>
+            </>
+          }
+        />
       </Modal>
 
       <AccountIconPicker

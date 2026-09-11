@@ -7,17 +7,20 @@ type AccountDetailsModalProps = {
   opened: boolean;
   onClose: () => void;
   account: BudgetAccount | null;
+  onEdit: () => void;
 };
 
 const AccountDetailsModal = ({
   opened,
   onClose,
   account,
+  onEdit,
 }: AccountDetailsModalProps) => {
   const { t } = useTranslation();
 
   return (
     <Modal
+      stackId='account-details'
       opened={opened}
       onClose={onClose}
       title={account?.name ?? ''}
@@ -29,6 +32,7 @@ const AccountDetailsModal = ({
           key={account.id}
           account={account}
           opened={opened}
+          onEdit={onEdit}
         />
       )}
     </Modal>

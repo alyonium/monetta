@@ -11,5 +11,5 @@
   background: transparent;
   border-radius: 50%;
   box-shadow: 0 0 0 2px
-    color-mix(in srgb, var(--create-account-ink) 35%, transparent);
+    color-mix(in srgb, var(--account-form-ink) 35%, transparent);
 }

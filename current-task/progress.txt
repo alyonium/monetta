@@ -233,3 +233,19 @@
     - Gotchas encountered: Firefly calendar day is the ISO `YYYY-MM-DD` prefix, not local dayjs. Do not pass `start`/`end`/`type`. Pager `onClickCapture` still swallows automation clicks that look like swipes.
     - Useful context: i18n `budget.accountDetails.route` / `noTransactions` / `loading` / `loadFailed`. Card is `source → destination` with amount top-right: green if this account is destination, red if source. Card click → EditTransactionModal is US-029. History infinite scroll is US-030.
 ---
+
+## 2026-09-11 17:50 - US-020
+- Pencil opens EditAccountModal (Income/Current/Expense). Discard resets the form without Firefly. Save PUTs name (Current also opening_balance + date), writes appearance, invalidates accounts + that account’s transactions. Details stays open.
+- **Learnings for future iterations:**
+    - Patterns discovered: Create is the template (`{ ok, reason }`, `allSettled` prefs, always mounted). Edit of Current also invalidates `[...ACCOUNT_TRANSACTIONS_QUERY_KEY, id]`.
+    - Gotchas encountered: this Firefly requires `opening_balance_date` whenever `opening_balance` is present. Do not wrap Details+Edit in `Modal.Stack`. Lock Details dismiss while Edit is open. Pager cards are `role="button"`; prev/next slides are `inert`.
+    - Useful context: PUT Current writes type `opening balance`, not reconciliation. Debt is Expense — no balance, no kind control. Delete is US-021.
+---
+
+## 2026-09-11 18:50 - US-020 review
+- Details → Edit → picker share one Modal.Stack only while `edit.account` is set. Shared AccountFormLayout chrome. validateAccountName. Date is an orchestrator input. Appearance uses catch, not allSettled of one promise.
+- **Learnings for future iterations:**
+    - Patterns discovered: Edit overlays Details, so one stack for that session. Create stays in its own stack and stays mounted.
+    - Gotchas encountered: wrapping idle Details in a stack leaves a closed overlay that captures clicks. Unmounting Edit while Details stays in the stack leaves a phantom `stackId` (Mantine has no unmount cleanup) so Details goes `__hidden` and Escape closes both. Enter the stack when Details is open so pencil does not remount Details. Close Edit with `opened: false` and keep `account` until Details closes. Do not use `locked` / picker `zIndex`. `createAccountVisibility` is the wrong helper for Edit.
+    - Useful context: CSS tokens `--account-form-color` / `--account-form-ink`. Delete is US-021.
+---

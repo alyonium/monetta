@@ -56,6 +56,14 @@ export const en = {
         saveFailed: 'Could not save the account',
       },
     },
+    editAccount: {
+      title: {
+        income: 'Edit income account',
+        current: 'Edit current account',
+        expense: 'Edit expense account',
+      },
+      discard: 'Discard',
+    },
     accountDetails: {
       edit: 'Edit account',
       close: 'Close',

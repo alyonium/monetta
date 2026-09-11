@@ -15,9 +15,13 @@ import styles from './AccountDetailsHeader.module.css';
 
 type AccountDetailsHeaderProps = {
   account: BudgetAccount;
+  onEdit: () => void;
 };
 
-const AccountDetailsHeader = ({ account }: AccountDetailsHeaderProps) => {
+const AccountDetailsHeader = ({
+  account,
+  onEdit,
+}: AccountDetailsHeaderProps) => {
   const { t } = useTranslation();
   const color = account.color ?? DEFAULT_ACCOUNT_COLOR;
   const ink = accountIconGlyphColor(color);
@@ -59,6 +63,7 @@ const AccountDetailsHeader = ({ account }: AccountDetailsHeaderProps) => {
         autoContrast
         className={styles.edit}
         color={edit}
+        onClick={onEdit}
         radius='md'
         size='input-sm'
         type='button'

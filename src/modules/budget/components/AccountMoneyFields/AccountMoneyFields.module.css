@@ -6,7 +6,7 @@
 }
 
 .fieldLabel {
-  color: var(--create-account-ink);
+  color: var(--account-form-ink);
 }
 
 .balance {

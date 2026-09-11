@@ -1,6 +1,6 @@
 import { storeAccount } from '@/api/sdk.gen.ts';
-import type { ValidationErrorResponse } from '@/api/types.gen.ts';
 import { CREATE_BUDGET_ACCOUNT_FAILURE_REASON } from '@/modules/budget/constants.ts';
+import { hasNameError } from '@/modules/budget/helpers/hasNameError.ts';
 import { toAccountStoreBody } from '@/modules/budget/helpers/toAccountStoreBody.ts';
 import {
   writeAccountAppearance,
@@ -10,12 +10,6 @@ import type {
   CreateBudgetAccountInput,
   CreateBudgetAccountResult,
 } from '@/modules/budget/types/createBudgetAccount.ts';
-
-const hasNameError = (error: ValidationErrorResponse | undefined): boolean => {
-  const names = error?.errors?.name;
-
-  return Array.isArray(names) && names.length > 0;
-};
 
 export const createBudgetAccount = async ({
   accountType,
