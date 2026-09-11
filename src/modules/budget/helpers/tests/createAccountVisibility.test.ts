@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createAccountVisibility } from '@/modules/budget/helpers/createAccountVisibility.ts';
-import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 
 describe('createAccountVisibility', () => {
   it('hides kind and money for income', () => {

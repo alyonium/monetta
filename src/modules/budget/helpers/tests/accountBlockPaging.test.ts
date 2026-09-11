@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   ACCOUNT_BLOCK_MOBILE_COLUMNS,
   ACCOUNT_GRID_ROW_GAP_PX,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/layout.ts';
 import {
   clampPageIndex,
   columnCount,

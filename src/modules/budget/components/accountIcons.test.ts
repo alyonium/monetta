@@ -6,7 +6,7 @@ import {
   resolveAccountIcon,
   toAccountIconName,
 } from '@/modules/budget/components/accountIcons.ts';
-import { DEFAULT_ACCOUNT_ICON } from '@/modules/budget/constants.ts';
+import { DEFAULT_ACCOUNT_ICON } from '@/modules/budget/constants/appearance.ts';
 
 describe('resolveAccountIcon', () => {
   it('returns the catalog icon for a known name', () => {

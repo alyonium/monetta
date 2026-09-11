@@ -1,5 +1,5 @@
 import { storeAccount } from '@/api/sdk.gen.ts';
-import { CREATE_BUDGET_ACCOUNT_FAILURE_REASON } from '@/modules/budget/constants.ts';
+import { CREATE_BUDGET_ACCOUNT_FAILURE_REASON } from '@/modules/budget/constants/account.ts';
 import { hasNameError } from '@/modules/budget/helpers/hasNameError.ts';
 import { toAccountStoreBody } from '@/modules/budget/helpers/toAccountStoreBody.ts';
 import {

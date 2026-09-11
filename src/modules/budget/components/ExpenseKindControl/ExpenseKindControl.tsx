@@ -1,6 +1,6 @@
 import { Input, SegmentedControl } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { EXPENSE_KIND, EXPENSE_KIND_DATA } from '@/modules/budget/constants.ts';
+import { EXPENSE_KIND, EXPENSE_KIND_DATA } from '@/modules/budget/constants/account.ts';
 
 type ExpenseKindControlProps = {
   isDebt: boolean;

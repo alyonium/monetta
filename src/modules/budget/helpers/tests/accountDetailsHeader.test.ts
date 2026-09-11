@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import {
   ACCOUNT_DETAILS_MONEY,
   accountDetailsHeader,

@@ -1,6 +1,6 @@
 import { PlusIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
-import { ACCOUNT_ICON_SIZE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_ICON_SIZE } from '@/modules/budget/constants/appearance.ts';
 import styles from './AddAccountButton.module.css';
 
 type AddAccountButtonProps = {

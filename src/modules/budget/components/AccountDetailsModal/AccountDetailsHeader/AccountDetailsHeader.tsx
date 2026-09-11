@@ -6,7 +6,7 @@ import { resolveAccountIcon } from '@/modules/budget/components/accountIcons.ts'
 import AccountDetailsField from '@/modules/budget/components/AccountDetailsModal/AccountDetailsField/AccountDetailsField.tsx';
 import AccountDetailsGlyph from '@/modules/budget/components/AccountDetailsModal/AccountDetailsGlyph/AccountDetailsGlyph.tsx';
 import AccountDetailsMoneyRow from '@/modules/budget/components/AccountDetailsModal/AccountDetailsMoneyRow/AccountDetailsMoneyRow.tsx';
-import { DEFAULT_ACCOUNT_COLOR } from '@/modules/budget/constants.ts';
+import { DEFAULT_ACCOUNT_COLOR } from '@/modules/budget/constants/appearance.ts';
 import { accountDetailsEditColor } from '@/modules/budget/helpers/accountDetailsEditColor.ts';
 import { accountDetailsHeader } from '@/modules/budget/helpers/accountDetailsHeader.ts';
 import { accountIconGlyphColor } from '@/modules/budget/helpers/accountIconContrast.ts';

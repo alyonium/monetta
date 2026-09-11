@@ -1,9 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { storePreference, updatePreference } from '@/api/sdk.gen.ts';
-import {
-  ACCOUNT_PREFERENCE_WRITE_ERROR,
-  ACCOUNT_TYPE,
-} from '@/modules/budget/constants.ts';
+import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
+import { ACCOUNT_PREFERENCE_WRITE_ERROR } from '@/modules/budget/constants/queries.ts';
 import {
   writeAccountAppearance,
   writeAccountOrder,

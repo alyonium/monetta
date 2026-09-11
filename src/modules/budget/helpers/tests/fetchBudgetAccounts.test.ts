@@ -1,11 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { listAccount, listPreference } from '@/api/sdk.gen.ts';
+import { ACCOUNT_TYPE, FIREFLY_ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import {
-  ACCOUNT_TYPE,
   ACCOUNTS_PAGE_LIMIT,
-  FIREFLY_ACCOUNT_TYPE,
   PREFERENCES_PAGE_LIMIT,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/queries.ts';
 import { fetchBudgetAccounts } from '@/modules/budget/helpers/fetchBudgetAccounts.ts';
 import {
   createAccountPageResult,

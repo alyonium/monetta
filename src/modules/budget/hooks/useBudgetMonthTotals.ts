@@ -5,7 +5,7 @@ import {
 } from '@/helpers/currency/constants.ts';
 import { fetchExchangeRates } from '@/helpers/currency/fetchExchangeRates.ts';
 import { fetchPrimaryCurrency } from '@/helpers/currency/fetchPrimaryCurrency.ts';
-import { BUDGET_INSIGHTS_QUERY_KEY } from '@/modules/budget/constants.ts';
+import { BUDGET_INSIGHTS_QUERY_KEY } from '@/modules/budget/constants/queries.ts';
 import { monthRange, todayIso } from '@/modules/budget/helpers/budgetMonth.ts';
 import { fetchBudgetInsights } from '@/modules/budget/helpers/fetchBudgetInsights.ts';
 import { toBudgetMonthTotals } from '@/modules/budget/helpers/toBudgetMonthTotals.ts';

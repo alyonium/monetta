@@ -2,7 +2,7 @@ import { Text } from '@mantine/core';
 import { ArrowRightIcon } from '@phosphor-icons/react';
 import { clsx } from 'clsx';
 import { useTranslation } from 'react-i18next';
-import { ACCOUNT_TRANSACTION_FLOW } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TRANSACTION_FLOW } from '@/modules/budget/constants/transactions.ts';
 import {
   accountTransactionFlow,
   type AccountTransactionFlow,

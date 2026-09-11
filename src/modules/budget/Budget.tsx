@@ -6,7 +6,7 @@ import AccountDetailsModal from '@/modules/budget/components/AccountDetailsModal
 import CreateAccountModal from '@/modules/budget/components/CreateAccountModal/CreateAccountModal.tsx';
 import EditAccountModal from '@/modules/budget/components/EditAccountModal/EditAccountModal.tsx';
 import ParametersBar from '@/modules/budget/components/ParametersBar/ParametersBar.tsx';
-import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import {
   startOfMonth,
   todayIso,

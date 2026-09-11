@@ -1,4 +1,4 @@
-import { ACCOUNT_DARK_INK_FILLS } from '@/modules/budget/constants.ts';
+import { ACCOUNT_DARK_INK_FILLS } from '@/modules/budget/constants/appearance.ts';
 
 export const ACCOUNT_ICON_GLYPH_DARK = '#000000';
 export const ACCOUNT_ICON_GLYPH_LIGHT = '#FFFFFF';

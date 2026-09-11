@@ -3,7 +3,7 @@ import { listTransactionByAccount } from '@/api/sdk.gen.ts';
 import {
   ACCOUNT_TRANSACTIONS_MISSING_ERROR,
   ACCOUNT_TRANSACTIONS_PAGE_LIMIT,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/queries.ts';
 import { fetchAccountTransactions } from '@/modules/budget/helpers/fetchAccountTransactions.ts';
 import {
   createFireflyTransaction,

@@ -3,7 +3,7 @@ import {
   ACCOUNT_CARD_MIN_WIDTH_PX,
   ACCOUNT_GRID_GAP_PX,
   ACCOUNT_GRID_ROW_GAP_PX,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/layout.ts';
 
 type PageCursor = {
   page: number;

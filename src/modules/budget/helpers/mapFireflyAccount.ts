@@ -1,5 +1,5 @@
 import type { AccountProperties, AccountRead } from '@/api/types.gen.ts';
-import { ACCOUNT_TYPE, FIREFLY_ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TYPE, FIREFLY_ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { toFiniteNumber } from '@/modules/budget/helpers/toFiniteNumber.ts';
 import type {
   AccountAppearance,

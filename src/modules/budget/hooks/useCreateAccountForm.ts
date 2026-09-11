@@ -8,12 +8,12 @@ import {
 } from '@/helpers/currency/constants.ts';
 import { fetchCurrencies } from '@/helpers/currency/fetchCurrencies.ts';
 import { fetchPrimaryCurrency } from '@/helpers/currency/fetchPrimaryCurrency.ts';
+import { CREATE_BUDGET_ACCOUNT_FAILURE_REASON } from '@/modules/budget/constants/account.ts';
 import {
-  BUDGET_ACCOUNTS_QUERY_KEY,
-  CREATE_BUDGET_ACCOUNT_FAILURE_REASON,
   DEFAULT_ACCOUNT_COLOR,
   DEFAULT_ACCOUNT_ICON,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/appearance.ts';
+import { BUDGET_ACCOUNTS_QUERY_KEY } from '@/modules/budget/constants/queries.ts';
 import { defaultTransactionDate, todayIso } from '@/modules/budget/helpers/budgetMonth.ts';
 import { createAccountVisibility } from '@/modules/budget/helpers/createAccountVisibility.ts';
 import { createBudgetAccount } from '@/modules/budget/helpers/createBudgetAccount.ts';

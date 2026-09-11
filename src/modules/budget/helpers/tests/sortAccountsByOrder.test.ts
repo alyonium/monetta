@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { sortAccountsByOrder } from '@/modules/budget/helpers/sortAccountsByOrder.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 

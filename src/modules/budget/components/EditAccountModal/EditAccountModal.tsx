@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import AccountFormLayout from '@/modules/budget/components/AccountFormLayout/AccountFormLayout.tsx';
 import AccountIconButton from '@/modules/budget/components/AccountIconButton/AccountIconButton.tsx';
 import AccountIconPicker from '@/modules/budget/components/AccountIconPicker/AccountIconPicker.tsx';
-import { EDIT_ACCOUNT_TITLE_KEY } from '@/modules/budget/constants.ts';
+import { EDIT_ACCOUNT_TITLE_KEY } from '@/modules/budget/constants/account.ts';
 import { useEditAccountForm } from '@/modules/budget/hooks/useEditAccountForm.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 

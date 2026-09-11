@@ -3,7 +3,7 @@ import {
   ACCOUNT_COLORS,
   ACCOUNT_DARK_INK_FILLS,
   DEFAULT_ACCOUNT_COLOR,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/appearance.ts';
 import {
   ACCOUNT_ICON_GLYPH_DARK,
   ACCOUNT_ICON_GLYPH_LIGHT,

@@ -51,7 +51,7 @@ import {
   WrenchIcon,
   type Icon,
 } from '@phosphor-icons/react';
-import { DEFAULT_ACCOUNT_ICON } from '@/modules/budget/constants.ts';
+import { DEFAULT_ACCOUNT_ICON } from '@/modules/budget/constants/appearance.ts';
 
 export const ACCOUNT_ICONS = {
   Wallet: WalletIcon,

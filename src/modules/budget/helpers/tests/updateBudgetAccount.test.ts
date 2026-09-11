@@ -3,10 +3,12 @@ import { updateAccount, updatePreference } from '@/api/sdk.gen.ts';
 import {
   ACCOUNT_TYPE,
   CREATE_BUDGET_ACCOUNT_FAILURE_REASON,
+  FIREFLY_ACCOUNT_TYPE,
+} from '@/modules/budget/constants/account.ts';
+import {
   DEFAULT_ACCOUNT_COLOR,
   DEFAULT_ACCOUNT_ICON,
-  FIREFLY_ACCOUNT_TYPE,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/appearance.ts';
 import { updateBudgetAccount } from '@/modules/budget/helpers/updateBudgetAccount.ts';
 import type { EditAccountFormValues } from '@/modules/budget/types/editAccountForm.ts';
 import {

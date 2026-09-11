@@ -1,7 +1,7 @@
 import { insightExpenseTotal, insightIncomeTotal } from '@/api/sdk.gen.ts';
 import type { InsightTotalEntry } from '@/api/types.gen.ts';
 import type { AmountInCurrency } from '@/helpers/currency/types.ts';
-import { BUDGET_INSIGHTS_MISSING_ERROR } from '@/modules/budget/constants.ts';
+import { BUDGET_INSIGHTS_MISSING_ERROR } from '@/modules/budget/constants/queries.ts';
 import type { BudgetInsights } from '@/modules/budget/types/budgetMonthTotals.ts';
 
 const toInsightAmounts = (entries: InsightTotalEntry[]): AmountInCurrency[] =>

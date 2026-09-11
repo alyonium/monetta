@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PAGE_SWIPE_DIRECTION } from '@/modules/budget/constants.ts';
+import { PAGE_SWIPE_DIRECTION } from '@/modules/budget/constants/layout.ts';
 import { resolvePageSwipe, rubberBandDragX } from '@/modules/budget/helpers/pageSwipe.ts';
 
 describe('resolvePageSwipe', () => {

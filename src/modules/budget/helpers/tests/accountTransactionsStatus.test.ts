@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ACCOUNT_TRANSACTIONS_STATUS } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TRANSACTIONS_STATUS } from '@/modules/budget/constants/transactions.ts';
 import { accountTransactionsStatus } from '@/modules/budget/helpers/accountTransactionsStatus.ts';
 import { createAccountTransaction } from './testHelpers.ts';
 

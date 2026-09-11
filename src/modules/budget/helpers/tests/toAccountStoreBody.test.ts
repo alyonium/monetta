@@ -7,7 +7,7 @@ import {
   FIREFLY_LIABILITY_INTEREST,
   FIREFLY_LIABILITY_INTEREST_PERIOD,
   FIREFLY_LIABILITY_TYPE,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/account.ts';
 import { toAccountStoreBody } from '@/modules/budget/helpers/toAccountStoreBody.ts';
 
 const OPENING_DATE = '2026-09-09';

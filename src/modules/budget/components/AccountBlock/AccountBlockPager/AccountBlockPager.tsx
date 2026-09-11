@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react';
 import { clsx } from 'clsx';
 import { useTranslation } from 'react-i18next';
-import { ACCOUNT_ICON_SIZE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_ICON_SIZE } from '@/modules/budget/constants/appearance.ts';
 import { useAccountBlockPager } from '@/modules/budget/hooks/useAccountBlockPager.ts';
 import type { AccountBlockPagerLayout } from '@/modules/budget/types/accountBlockPagerLayout.ts';
 import type { AccountBlockViewportHandle } from '@/modules/budget/types/accountBlockViewportHandle.ts';

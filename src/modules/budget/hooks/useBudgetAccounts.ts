@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { BUDGET_ACCOUNTS_QUERY_KEY } from '@/modules/budget/constants.ts';
+import { BUDGET_ACCOUNTS_QUERY_KEY } from '@/modules/budget/constants/queries.ts';
 import {
   fireflyBalanceDate,
   todayIso,

@@ -5,11 +5,11 @@ import type {
   TransactionRead,
   TransactionSplit,
 } from '@/api/types.gen.ts';
+import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import {
   ACCOUNT_APPEARANCE_PREFIX,
   ACCOUNT_ORDER_PREFIX,
-  ACCOUNT_TYPE,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/queries.ts';
 import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 import type {
   AccountAppearance,

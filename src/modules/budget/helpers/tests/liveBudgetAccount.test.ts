@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { liveBudgetAccount } from '@/modules/budget/helpers/liveBudgetAccount.ts';
 import { createCurrentAccount } from './testHelpers.ts';
 

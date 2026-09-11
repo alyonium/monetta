@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { toAccountUpdateBody } from '@/modules/budget/helpers/toAccountUpdateBody.ts';
 
 const OPENING_DATE = '2026-09-11';

@@ -4,7 +4,7 @@ import {
   ACCOUNT_APPEARANCE_PREFIX,
   ACCOUNT_ORDER_PREFIX,
   ACCOUNT_PREFERENCE_WRITE_ERROR,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/queries.ts';
 import type {
   AccountAppearance,
   AccountType,

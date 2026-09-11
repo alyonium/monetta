@@ -1,7 +1,7 @@
 import type { Icon } from '@phosphor-icons/react';
 import { clsx } from 'clsx';
 import type { AccountIconName } from '@/modules/budget/components/accountIcons.ts';
-import { ACCOUNT_ICON_SIZE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_ICON_SIZE } from '@/modules/budget/constants/appearance.ts';
 import styles from './IconCell.module.css';
 
 type IconCellProps = {

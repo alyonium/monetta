@@ -1,4 +1,4 @@
-import { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import type { AccountType } from '@/modules/budget/types/budgetAccount.ts';
 
 export const ACCOUNT_DETAILS_MONEY = {

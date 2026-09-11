@@ -6,7 +6,7 @@ import AccountIconButton from '@/modules/budget/components/AccountIconButton/Acc
 import AccountIconPicker from '@/modules/budget/components/AccountIconPicker/AccountIconPicker.tsx';
 import AccountMoneyFields from '@/modules/budget/components/AccountMoneyFields/AccountMoneyFields.tsx';
 import ExpenseKindControl from '@/modules/budget/components/ExpenseKindControl/ExpenseKindControl.tsx';
-import { CREATE_ACCOUNT_TITLE_KEY } from '@/modules/budget/constants.ts';
+import { CREATE_ACCOUNT_TITLE_KEY } from '@/modules/budget/constants/account.ts';
 import { useCreateAccountForm } from '@/modules/budget/hooks/useCreateAccountForm.ts';
 import type { AccountType } from '@/modules/budget/types/budgetAccount.ts';
 

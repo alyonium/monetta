@@ -3,7 +3,7 @@ import { useElementSize, useMediaQuery } from '@mantine/hooks';
 import {
   ACCOUNT_BLOCK_DESKTOP_MIN_PX,
   ACCOUNT_GRID_ROW_GAP_PX,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/layout.ts';
 import {
   clampPageIndex,
   columnCount,

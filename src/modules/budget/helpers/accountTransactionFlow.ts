@@ -1,4 +1,4 @@
-import { ACCOUNT_TRANSACTION_FLOW } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TRANSACTION_FLOW } from '@/modules/budget/constants/transactions.ts';
 import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 
 export type AccountTransactionFlow =

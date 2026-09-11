@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ACCOUNT_TYPE, FIREFLY_ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TYPE, FIREFLY_ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { toBudgetAccounts } from '@/modules/budget/helpers/toBudgetAccounts.ts';
 import type { AccountPreferences } from '@/modules/budget/types/budgetAccount.ts';
 import { createFireflyAccount } from './testHelpers.ts';

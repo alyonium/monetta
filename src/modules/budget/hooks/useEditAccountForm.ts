@@ -4,12 +4,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { toAccountIconName } from '@/modules/budget/components/accountIcons.ts';
 import {
-  ACCOUNT_TRANSACTIONS_QUERY_KEY,
   ACCOUNT_TYPE,
-  BUDGET_ACCOUNTS_QUERY_KEY,
   CREATE_BUDGET_ACCOUNT_FAILURE_REASON,
-  DEFAULT_ACCOUNT_COLOR,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/account.ts';
+import { DEFAULT_ACCOUNT_COLOR } from '@/modules/budget/constants/appearance.ts';
+import {
+  ACCOUNT_TRANSACTIONS_QUERY_KEY,
+  BUDGET_ACCOUNTS_QUERY_KEY,
+} from '@/modules/budget/constants/queries.ts';
 import { todayIso } from '@/modules/budget/helpers/budgetMonth.ts';
 import { updateBudgetAccount } from '@/modules/budget/helpers/updateBudgetAccount.ts';
 import { validateAccountName } from '@/modules/budget/helpers/validateAccountName.ts';

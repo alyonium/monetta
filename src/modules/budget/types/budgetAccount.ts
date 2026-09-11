@@ -1,4 +1,4 @@
-import type { ACCOUNT_TYPE } from '@/modules/budget/constants.ts';
+import type { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 
 export type AccountType = (typeof ACCOUNT_TYPE)[keyof typeof ACCOUNT_TYPE];
 

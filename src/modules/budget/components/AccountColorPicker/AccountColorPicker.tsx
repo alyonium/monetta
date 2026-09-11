@@ -1,6 +1,6 @@
 import { ColorPicker, Input } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { ACCOUNT_COLORS } from '@/modules/budget/constants.ts';
+import { ACCOUNT_COLORS } from '@/modules/budget/constants/appearance.ts';
 import styles from './AccountColorPicker.module.css';
 
 const SWATCHES_PER_ROW = 7;

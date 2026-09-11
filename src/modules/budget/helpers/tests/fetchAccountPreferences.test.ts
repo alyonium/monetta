@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { listPreference } from '@/api/sdk.gen.ts';
+import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import {
   ACCOUNT_PREFERENCES_MISSING_ERROR,
-  ACCOUNT_TYPE,
   PREFERENCES_PAGE_LIMIT,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/queries.ts';
 import { UNAUTHENTICATED_ERROR_MESSAGE } from '@/helpers/currency/constants.ts';
 import { fetchAccountPreferences } from '@/modules/budget/helpers/fetchAccountPreferences.ts';
 import {

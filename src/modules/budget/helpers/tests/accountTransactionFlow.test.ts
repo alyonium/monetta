@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ACCOUNT_TRANSACTION_FLOW } from '@/modules/budget/constants.ts';
+import { ACCOUNT_TRANSACTION_FLOW } from '@/modules/budget/constants/transactions.ts';
 import { accountTransactionFlow } from '@/modules/budget/helpers/accountTransactionFlow.ts';
 import { createAccountTransaction } from './testHelpers.ts';
 

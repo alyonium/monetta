@@ -3,7 +3,7 @@ import { collectFireflyPages } from '@/helpers/collectFireflyPages.ts';
 import {
   ACCOUNT_TRANSACTIONS_MISSING_ERROR,
   ACCOUNT_TRANSACTIONS_PAGE_LIMIT,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/queries.ts';
 import { toAccountTransactions } from '@/modules/budget/helpers/toAccountTransactions.ts';
 import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 

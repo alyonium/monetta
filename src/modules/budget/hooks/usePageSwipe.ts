@@ -8,7 +8,7 @@ import {
   PAGE_SWIPE_AXIS_LOCK_PX,
   PAGE_SWIPE_DIRECTION,
   PAGE_SWIPE_MS,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/layout.ts';
 import {
   resolvePageSwipe,
   rubberBandDragX,

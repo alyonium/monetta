@@ -1,5 +1,5 @@
 import { updateAccount } from '@/api/sdk.gen.ts';
-import { CREATE_BUDGET_ACCOUNT_FAILURE_REASON } from '@/modules/budget/constants.ts';
+import { CREATE_BUDGET_ACCOUNT_FAILURE_REASON } from '@/modules/budget/constants/account.ts';
 import { hasNameError } from '@/modules/budget/helpers/hasNameError.ts';
 import { toAccountUpdateBody } from '@/modules/budget/helpers/toAccountUpdateBody.ts';
 import { writeAccountAppearance } from '@/modules/budget/helpers/writeAccountPreferences.ts';

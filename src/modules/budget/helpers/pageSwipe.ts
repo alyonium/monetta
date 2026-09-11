@@ -2,7 +2,7 @@ import {
   PAGE_SWIPE_DIRECTION,
   PAGE_SWIPE_PX,
   PAGE_SWIPE_RUBBER_BAND,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/layout.ts';
 import type { PageSwipeDirection } from '@/modules/budget/types/pageSwipeDirection.ts';
 
 export const resolvePageSwipe = (

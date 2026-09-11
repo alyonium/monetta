@@ -3,7 +3,7 @@ import { collectFireflyPages } from '@/helpers/collectFireflyPages.ts';
 import {
   ACCOUNTS_MISSING_ERROR,
   ACCOUNTS_PAGE_LIMIT,
-} from '@/modules/budget/constants.ts';
+} from '@/modules/budget/constants/queries.ts';
 import { fetchAccountPreferences } from '@/modules/budget/helpers/fetchAccountPreferences.ts';
 import { toBudgetAccounts } from '@/modules/budget/helpers/toBudgetAccounts.ts';
 import type { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
