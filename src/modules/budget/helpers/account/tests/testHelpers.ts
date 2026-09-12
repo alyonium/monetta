@@ -90,6 +90,18 @@ export const createMissingAccountResult = (
   response: new Response(null, { status }),
 });
 
+export const createDeletedAccountResult = (): {
+  data: void;
+  error: undefined;
+  request: Request;
+  response: Response;
+} => ({
+  data: undefined,
+  error: undefined,
+  request: createRequest('accounts'),
+  response: new Response(null, { status: 204 }),
+});
+
 export const createPreferenceSingleResult = (
   name: string,
   data: PreferenceRead['attributes']['data'],

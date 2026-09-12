@@ -77,6 +77,9 @@ export const en = {
       loadFailed: 'Failed to load transactions',
       delete: 'Delete',
       hide: 'Hide',
+      deleteConfirm:
+        'Do you want to delete the {{name}} account? This action cannot be undone.',
+      deleteFailed: 'Could not delete the account',
     },
     paid: 'Paid {{amount}}',
     pagination: {

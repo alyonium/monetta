@@ -74,14 +74,16 @@ export const useEditAccountForm = ({
 
       if (result.ok) {
         form.setInitialValues(values);
-        await Promise.all([
-          queryClient.invalidateQueries({
-            queryKey: BUDGET_ACCOUNTS_QUERY_KEY,
-          }),
-          queryClient.invalidateQueries({
+        await queryClient.invalidateQueries({
+          queryKey: BUDGET_ACCOUNTS_QUERY_KEY,
+        });
+
+        if (showBalance) {
+          await queryClient.invalidateQueries({
             queryKey: [...ACCOUNT_TRANSACTIONS_QUERY_KEY, account.id],
-          }),
-        ]);
+          });
+        }
+
         onClose();
         return;
       }

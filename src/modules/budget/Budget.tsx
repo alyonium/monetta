@@ -103,14 +103,12 @@ const Budget = () => {
 
       {details.opened || edit.account ? (
         <Modal.Stack>
-          {
-            <AccountDetailsModal
-              opened={details.opened}
-              onClose={onCloseDetails}
-              account={detailsAccount}
-              onEdit={onEditAccount}
-            />
-          }
+          <AccountDetailsModal
+            opened={details.opened}
+            onClose={onCloseDetails}
+            account={detailsAccount}
+            onEdit={onEditAccount}
+          />
           {edit.account && (
             <EditAccountModal
               key={edit.id}

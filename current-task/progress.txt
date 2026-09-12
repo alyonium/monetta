@@ -249,3 +249,19 @@
     - Gotchas encountered: wrapping idle Details in a stack leaves a closed overlay that captures clicks. Unmounting Edit while Details stays in the stack leaves a phantom `stackId` (Mantine has no unmount cleanup) so Details goes `__hidden` and Escape closes both. Enter the stack when Details is open so pencil does not remount Details. Close Edit with `opened: false` and keep `account` until Details closes. Do not use `locked` / picker `zIndex`. `createAccountVisibility` is the wrong helper for Edit.
     - Useful context: CSS tokens `--account-form-color` / `--account-form-ink`. Delete is US-021.
 ---
+
+## 2026-09-12 00:31 - US-021
+- Delete in Details opens `AccountDeleteConfirmModal`. Confirm calls `deleteAccount` (204), invalidates accounts/transactions/insights, closes Details/Confirm/Edit, and drops the card. Cancel and overlay leave Details open. Hide still does nothing.
+- **Learnings for future iterations:**
+    - Patterns discovered: 204 success is `response.ok`, not `result.data`. Confirm is a third sibling in the Details `Modal.Stack` (`deleteConfirm.account`), like Edit, no `id`. Invalidate insights with accounts after account mutations.
+    - Gotchas encountered: Create/Edit “no `data` → fail” is wrong for delete. 204 fixture `data` is `void`. Do not `setState` in `useEffect` to clear the API error. Do not write prefs. Do not wrap idle Details in a stack.
+    - Useful context: i18n `budget.accountDetails.deleteConfirm` / `deleteFailed`. Hide is US-022. Pager: click the visible card, not `inert`.
+---
+
+## 2026-09-12 10:00 - US-021 review
+- Confirm moved into Details (`useDisclosure` + sibling Modal). Deleted `DeleteAccountSession`, Budget `onDelete`, and `useDeleteBudgetAccount`. Result is `{ ok: true } | { ok: false }`.
+- **Learnings for future iterations:**
+    - Patterns discovered: yes/no dialogs belong on the screen that already has the account, like the picker on Edit. Page sessions are for full screens (Create/Edit).
+    - Gotchas encountered: a one-reason tagged `FAILED` is a boolean in a union costume. `response.ok` already covers 204. Do not add a Budget session for Hide.
+    - Useful context: stack remains `details.opened || edit.account`. Hide is US-022.
+---
