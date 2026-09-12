@@ -15,6 +15,7 @@ type AccountDetailsBodyProps = {
   opened: boolean;
   onEdit: () => void;
   onDelete: () => void;
+  onHide: () => void;
 };
 
 const AccountDetailsBody = ({
@@ -22,6 +23,7 @@ const AccountDetailsBody = ({
   opened,
   onEdit,
   onDelete,
+  onHide,
 }: AccountDetailsBodyProps) => {
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
@@ -62,7 +64,7 @@ const AccountDetailsBody = ({
           {t('budget.accountDetails.delete')}
         </Button>
 
-        <Button type='button' variant='default'>
+        <Button type='button' variant='default' onClick={onHide}>
           {t('budget.accountDetails.hide')}
         </Button>
       </Group>

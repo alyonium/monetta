@@ -80,6 +80,9 @@ export const en = {
       deleteConfirm:
         'Do you want to delete the {{name}} account? This action cannot be undone.',
       deleteFailed: 'Could not delete the account',
+      hideConfirm:
+        'Do you want to hide the {{name}} account? You can get the selected account back through the Firefly interface.',
+      hideFailed: 'Could not hide the account',
     },
     paid: 'Paid {{amount}}',
     pagination: {

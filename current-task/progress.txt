@@ -265,3 +265,11 @@
     - Gotchas encountered: a one-reason tagged `FAILED` is a boolean in a union costume. `response.ok` already covers 204. Do not add a Budget session for Hide.
     - Useful context: stack remains `details.opened || edit.account`. Hide is US-022.
 ---
+
+## 2026-09-12 12:38 - US-022
+- Hide in Details opens `AccountHideConfirmModal`. Confirm PUTs `updateAccount` `{ name, active: false }`, invalidates accounts, closes Details/Confirm, and drops the card. Cancel, overlay, and Escape leave Details open. Delete still works.
+- **Learnings for future iterations:**
+    - Patterns discovered: Hide confirm belongs in Details (`useDisclosure` + sibling), like Delete. No Budget session. PUT `{ name, active: false }`; success is `response.ok` (200 with body).
+    - Gotchas encountered: do not reuse `updateBudgetAccount` / `toAccountUpdateBody`. Invalidate accounts only — hide does not change Income/Expenses insights. Do not invalidate account transactions (Details closes). Hide button is `variant="default"`, not red. Hide confirm has no title so a11y snapshot may omit it.
+    - Useful context: i18n `budget.accountDetails.hideConfirm` / `hideFailed`. Existing `budget.accountDetails.hide` and `budget.createAccount.cancel`. Pager: click the visible card, not `inert`.
+---

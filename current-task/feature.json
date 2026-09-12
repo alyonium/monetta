@@ -384,7 +384,7 @@
         "Verify in browser using agent-browser mcp"
       ],
       "priority": 22,
-      "passes": false,
+      "passes": true,
       "designReference": []
     },
     {
