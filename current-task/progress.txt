@@ -273,3 +273,19 @@
     - Gotchas encountered: do not reuse `updateBudgetAccount` / `toAccountUpdateBody`. Invalidate accounts only — hide does not change Income/Expenses insights. Do not invalidate account transactions (Details closes). Hide button is `variant="default"`, not red. Hide confirm has no title so a11y snapshot may omit it.
     - Useful context: i18n `budget.accountDetails.hideConfirm` / `hideFailed`. Existing `budget.accountDetails.hide` and `budget.createAccount.cancel`. Pager: click the visible card, not `inert`.
 ---
+
+## 2026-09-12 23:25 - US-023
+- Shared `TagsField` (`PillsInput` + up to 10 Firefly badges). Catalog via `listTag`. Temporary host on Settings until US-024.
+- **Learnings for future iterations:**
+    - Patterns discovered: `src/helpers/tags/` like currency. `TAGS_QUERY_KEY` `['tags', 'list']`. Field is controlled `value` / `onChange` / `enabled`. i18n `tags.*` at the catalog root.
+    - Gotchas encountered: do not use `TagsInput` (comma is a valid Firefly tag). Do not call `storeTag`. Enter must `preventDefault`. Hash footer clicks can lag — navigate `/#/monetta/settings` directly. Pill remove may be missing from a11y snapshots.
+    - Useful context: US-024 removes the Settings host and puts `TagsField` on `RecordIncomeModal`. US-039 must not still find that host.
+---
+
+## 2026-09-13 11:49 - US-023 host
+- Moved the temporary `TagsField` host from Settings to History. Settings is a stub again.
+---
+
+## 2026-09-13 14:11 - US-023 review
+- Removed the History playground host and `enabled` on `TagsField`. Field stays unused until RecordIncomeModal.
+---

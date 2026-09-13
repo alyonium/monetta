@@ -103,6 +103,12 @@ export const en = {
       loadFailed: 'Failed to load accounts',
     },
   },
+  tags: {
+    label: 'Tags',
+    placeholder: 'Search or create a tag',
+    remove: 'Remove {{name}}',
+    suggestions: 'Tag suggestions',
+  },
 } as const;
 
 export type EnTranslation = typeof en;
