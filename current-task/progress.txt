@@ -289,3 +289,11 @@
 ## 2026-09-13 14:11 - US-023 review
 - Removed the History playground host and `enabled` on `TagsField`. Field stays unused until RecordIncomeModal.
 ---
+
+## 2026-09-25 13:15 - US-024
+- Drag income → current opens `RecordIncomeModal`; Save writes `deposit` via `storeTransaction` and invalidates accounts/insights/transactions/tags/history. tsc, vitest (203), eslint green.
+- **Learnings for future iterations:**
+    - Patterns discovered: one `DndContext` in `Budget.tsx` + `DragOverlay`; roles in `constants/accountDnd.ts`, drop classified by `resolveRecordDrop` (`income`/`expense`/`transfer`/`null`). Shared `RecordTransactionFields`, `toTransactionStoreBody`, `createBudgetTransaction`, `invalidateTransactionQueries` — US-025/026 reuse them.
+    - Gotchas encountered: card stays `role="button"` (a `<button>` breaks pager swipe); `PointerSensor` distance `PAGE_SWIPE_AXIS_LOCK_PX`, swipe captures pointer only after axis locks to X; `date` in body is `${date}T12:00:00`; empty `description` falls back to income account name.
+    - Useful context: `HISTORY_TRANSACTIONS_QUERY_KEY` is in `src/modules/history/constants/queries.ts` — contract for US-030. In Edit mode (US-027) drops must not open record modals; swipe is disabled during drag via `usePageSwipe` `enabled` flag.
+---

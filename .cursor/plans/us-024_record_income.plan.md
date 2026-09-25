@@ -4,16 +4,16 @@ overview: "Следующая история — US-024: перетаскива�
 todos:
   - id: swipe-dnd-coexist
     content: "usePageSwipe: capture только на оси X; DndContext + PointerSensor distance 8"
-    status: pending
+    status: completed
   - id: income-drop-modal
     content: Общий resolveRecordDrop + таблица ACCOUNT_DND; в UI только income→current открывает RecordIncomeModal
-    status: pending
+    status: completed
   - id: store-deposit
     content: Общие toTransactionStoreBody / createBudgetTransaction / invalidateTransactionQueries; deposit в этой истории
-    status: pending
+    status: completed
   - id: quality
     content: "Vitest, tsc, lint, браузер mobile/desktop; US-024 passes: true"
-    status: in_progress
+    status: completed
 isProject: false
 ---
 
