@@ -1,59 +1,61 @@
-import { type KeyboardEvent } from 'react';
+import type {
+  KeyboardEvent,
+  PointerEvent as ReactPointerEvent,
+} from 'react';
+import type {
+  DraggableAttributes,
+  DraggableSyntheticListeners,
+} from '@dnd-kit/core';
 import { clsx } from 'clsx';
-import { useTranslation } from 'react-i18next';
-import AccountIcon from '@/modules/budget/components/AccountIcon/AccountIcon.tsx';
-import { resolveAccountIcon } from '@/modules/budget/components/accountIcons.ts';
-import { DEFAULT_ACCOUNT_COLOR } from '@/modules/budget/constants/appearance.ts';
-import { formatAccountAmount } from '@/modules/budget/helpers/account/formatAccountAmount.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import AccountItemBody from './AccountItemBody/AccountItemBody.tsx';
 import styles from './AccountItem.module.css';
 
 type AccountItemProps = {
   account: BudgetAccount;
-  onSelectAccount: (account: BudgetAccount) => void;
+  overlay?: boolean;
+  isOver?: boolean;
+  isDragging?: boolean;
+  cardRef?: (node: HTMLElement | null) => void;
+  onClick?: () => void;
+  onKeyDown?: (event: KeyboardEvent<HTMLDivElement>) => void;
+  onPointerDownCapture?: (
+    event: ReactPointerEvent<HTMLDivElement>,
+  ) => void;
+  listeners?: DraggableSyntheticListeners;
+  attributes?: DraggableAttributes;
 };
 
-const AccountItem = ({ account, onSelectAccount }: AccountItemProps) => {
-  const { t } = useTranslation();
-  const color = account.color ?? DEFAULT_ACCOUNT_COLOR;
-  const amount = (value: number) =>
-    formatAccountAmount(value, account.currencySymbol, account.currencyCode);
-
-  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key !== 'Enter' && event.key !== ' ') {
-      return;
-    }
-
-    event.preventDefault();
-    onSelectAccount(account);
-  };
-
-  return (
-    <div
-      className={styles.card}
-      role='button'
-      tabIndex={0}
-      onClick={() => onSelectAccount(account)}
-      onKeyDown={onKeyDown}
-    >
-      <p className={styles.name}>{account.name}</p>
-
-      <AccountIcon icon={resolveAccountIcon(account.icon)} color={color} />
-
-      {account.isDebt ? (
-        <div className={styles.amounts}>
-          <p className={clsx(styles.amount, styles.debtAmount)}>
-            {amount(account.debtAmount ?? 0)}
-          </p>
-          <p className={clsx(styles.amount, styles.paidAmount)}>
-            {t('budget.paid', { amount: amount(account.paidAmount ?? 0) })}
-          </p>
-        </div>
-      ) : (
-        <p className={styles.amount}>{amount(account.balance)}</p>
-      )}
-    </div>
-  );
-};
+const AccountItem = ({
+  account,
+  overlay = false,
+  isOver = false,
+  isDragging = false,
+  cardRef,
+  onClick,
+  onKeyDown,
+  onPointerDownCapture,
+  listeners,
+  attributes,
+}: AccountItemProps) => (
+  <div
+    ref={cardRef}
+    className={clsx(
+      styles.card,
+      isOver && styles.isOver,
+      isDragging && styles.isDragging,
+      overlay && styles.overlay,
+    )}
+    role={overlay ? undefined : 'button'}
+    tabIndex={overlay ? undefined : 0}
+    onClick={onClick}
+    onKeyDown={onKeyDown}
+    onPointerDownCapture={onPointerDownCapture}
+    {...attributes}
+    {...listeners}
+  >
+    <AccountItemBody account={account} />
+  </div>
+);
 
 export default AccountItem;

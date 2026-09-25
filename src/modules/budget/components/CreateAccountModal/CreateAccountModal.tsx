@@ -13,6 +13,7 @@ import type { AccountType } from '@/modules/budget/types/budgetAccount.ts';
 type CreateAccountModalProps = {
   opened: boolean;
   onClose: () => void;
+  onExitTransitionEnd: () => void;
   accountType: AccountType;
   orderedIds: string[];
   month: string;
@@ -21,6 +22,7 @@ type CreateAccountModalProps = {
 const CreateAccountModal = ({
   opened,
   onClose,
+  onExitTransitionEnd,
   accountType,
   orderedIds,
   month,
@@ -50,6 +52,7 @@ const CreateAccountModal = ({
         stackId='create-account'
         opened={opened}
         onClose={onClose}
+        onExitTransitionEnd={onExitTransitionEnd}
         title={t(CREATE_ACCOUNT_TITLE_KEY[accountType])}
         centered
       >

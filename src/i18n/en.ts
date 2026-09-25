@@ -75,8 +75,8 @@ export const en = {
       noTransactions: 'No transactions found for this account',
       loading: 'Loading transactions',
       loadFailed: 'Failed to load transactions',
-      delete: 'Delete',
-      hide: 'Hide',
+      delete: 'Delete account',
+      hide: 'Hide account',
       deleteConfirm:
         'Do you want to delete the {{name}} account? This action cannot be undone.',
       deleteFailed: 'Could not delete the account',
@@ -98,6 +98,25 @@ export const en = {
       balance: 'Balance',
       month: 'Month',
       edit: 'Edit',
+    },
+    recordTransaction: {
+      amount: 'Amount',
+      currency: 'Currency',
+      date: 'Date',
+      description: 'Description',
+      cancel: 'Cancel',
+      save: 'Save',
+      errors: {
+        amountRequired: 'Amount is required',
+        accountRequired: 'Account is required',
+        dateRequired: 'Date is required',
+        saveFailed: 'Could not save the transaction',
+      },
+    },
+    recordIncome: {
+      title: 'Record income',
+      incomeAccount: 'Income account',
+      currentAccount: 'Current account',
     },
     errors: {
       loadFailed: 'Failed to load accounts',

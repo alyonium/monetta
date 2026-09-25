@@ -11,12 +11,14 @@ import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 type EditAccountModalProps = {
   opened: boolean;
   onClose: () => void;
+  onExitTransitionEnd: () => void;
   account: BudgetAccount;
 };
 
 const EditAccountModal = ({
   opened,
   onClose,
+  onExitTransitionEnd,
   account,
 }: EditAccountModalProps) => {
   const { t } = useTranslation();
@@ -40,6 +42,7 @@ const EditAccountModal = ({
         stackId='edit-account'
         opened={opened}
         onClose={onClose}
+        onExitTransitionEnd={onExitTransitionEnd}
         title={t(EDIT_ACCOUNT_TITLE_KEY[account.type])}
         centered
       >

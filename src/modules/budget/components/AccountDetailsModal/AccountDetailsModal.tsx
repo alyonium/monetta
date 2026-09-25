@@ -1,14 +1,20 @@
 import { Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useTranslation } from 'react-i18next';
-import AccountDeleteConfirmModal from '@/modules/budget/components/AccountDeleteConfirmModal/AccountDeleteConfirmModal.tsx';
 import AccountDetailsBody from '@/modules/budget/components/AccountDetailsModal/AccountDetailsBody/AccountDetailsBody.tsx';
-import AccountHideConfirmModal from '@/modules/budget/components/AccountHideConfirmModal/AccountHideConfirmModal.tsx';
+import ConfirmModal from '@/modules/budget/components/ConfirmModal/ConfirmModal.tsx';
+import {
+  BUDGET_ACCOUNTS_QUERY_KEY,
+  BUDGET_INSIGHTS_QUERY_KEY,
+} from '@/modules/budget/constants/queries.ts';
+import { deleteBudgetAccount } from '@/modules/budget/helpers/account/deleteBudgetAccount.ts';
+import { hideBudgetAccount } from '@/modules/budget/helpers/account/hideBudgetAccount.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 type AccountDetailsModalProps = {
   opened: boolean;
   onClose: () => void;
+  onExitTransitionEnd: () => void;
   account: BudgetAccount | null;
   onEdit: () => void;
 };
@@ -16,6 +22,7 @@ type AccountDetailsModalProps = {
 const AccountDetailsModal = ({
   opened,
   onClose,
+  onExitTransitionEnd,
   account,
   onEdit,
 }: AccountDetailsModalProps) => {
@@ -37,6 +44,7 @@ const AccountDetailsModal = ({
         stackId='account-details'
         opened={opened}
         onClose={handleClose}
+        onExitTransitionEnd={onExitTransitionEnd}
         title={account?.name ?? ''}
         centered
         closeButtonProps={{ 'aria-label': t('budget.accountDetails.close') }}
@@ -55,16 +63,33 @@ const AccountDetailsModal = ({
 
       {account && (
         <>
-          <AccountDeleteConfirmModal
+          <ConfirmModal
+            stackId='account-delete-confirm'
             opened={opened && deleteOpened}
             onClose={closeDelete}
-            account={account}
+            message={t('budget.accountDetails.deleteConfirm', {
+              name: account.name,
+            })}
+            confirmLabel={t('budget.accountDetails.delete')}
+            errorMessage={t('budget.accountDetails.deleteFailed')}
+            invalidateKeys={[
+              BUDGET_ACCOUNTS_QUERY_KEY,
+              BUDGET_INSIGHTS_QUERY_KEY,
+            ]}
+            onConfirm={() => deleteBudgetAccount(account.id)}
             onSuccess={handleClose}
           />
-          <AccountHideConfirmModal
+          <ConfirmModal
+            stackId='account-hide-confirm'
             opened={opened && hideOpened}
             onClose={closeHide}
-            account={account}
+            message={t('budget.accountDetails.hideConfirm', {
+              name: account.name,
+            })}
+            confirmLabel={t('budget.accountDetails.hide')}
+            errorMessage={t('budget.accountDetails.hideFailed')}
+            invalidateKeys={[BUDGET_ACCOUNTS_QUERY_KEY]}
+            onConfirm={() => hideBudgetAccount(account.id, account.name)}
             onSuccess={handleClose}
           />
         </>

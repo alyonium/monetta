@@ -1,0 +1,16 @@
+.amountRow {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--mantine-spacing-xs);
+  min-width: 0;
+}
+
+.amount {
+  flex: 1;
+  min-width: 0;
+}
+
+.currency {
+  flex: 0 0 5.75rem;
+  width: 5.75rem;
+}

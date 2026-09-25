@@ -11,14 +11,16 @@ import styles from './TagsField.module.css';
 type TagsFieldProps = {
   value: string[];
   onChange: (tags: string[]) => void;
+  enabled?: boolean;
 };
 
-const TagsField = ({ value, onChange }: TagsFieldProps) => {
+const TagsField = ({ value, onChange, enabled = true }: TagsFieldProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const { data: catalog = [] } = useQuery({
     queryKey: TAGS_QUERY_KEY,
     queryFn: fetchTags,
+    enabled,
   });
   const suggestions = filterTagSuggestions(catalog, query, value);
 

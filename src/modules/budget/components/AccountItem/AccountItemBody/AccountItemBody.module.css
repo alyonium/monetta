@@ -1,0 +1,31 @@
+.amounts {
+  width: 100%;
+  min-width: 0;
+}
+
+.name,
+.amount {
+  margin: 0;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.name {
+  font-size: var(--mantine-font-size-sm);
+}
+
+.amount {
+  font-size: var(--mantine-font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.debtAmount {
+  color: var(--mantine-color-red-6);
+}
+
+.paidAmount {
+  color: var(--mantine-color-green-6);
+}

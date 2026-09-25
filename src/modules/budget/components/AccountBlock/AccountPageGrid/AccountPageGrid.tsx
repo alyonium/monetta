@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import AccountItem from '@/modules/budget/components/AccountItem/AccountItem.tsx';
+import InteractiveAccountItem from '@/modules/budget/components/AccountItem/InteractiveAccountItem.tsx';
 import AddAccountButton from '@/modules/budget/components/AddAccountButton/AddAccountButton.tsx';
 import { ACCOUNT_CARD_MIN_HEIGHT_DEFAULT } from '@/modules/budget/constants/layout.ts';
 import type { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
@@ -12,6 +13,7 @@ type AccountPageGridProps = {
   minHeight?: string;
   onAddAccount: () => void;
   onSelectAccount: (account: BudgetAccount) => void;
+  interactive?: boolean;
 };
 
 const AccountPageGrid = ({
@@ -20,6 +22,7 @@ const AccountPageGrid = ({
   minHeight = ACCOUNT_CARD_MIN_HEIGHT_DEFAULT,
   onAddAccount,
   onSelectAccount,
+  interactive = true,
 }: AccountPageGridProps) => (
   <ul
     className={styles.grid}
@@ -37,10 +40,14 @@ const AccountPageGrid = ({
         </li>
       ) : (
         <li key={item.account.id} className={styles.cell}>
-          <AccountItem
-            account={item.account}
-            onSelectAccount={onSelectAccount}
-          />
+          {interactive ? (
+            <InteractiveAccountItem
+              account={item.account}
+              onSelectAccount={onSelectAccount}
+            />
+          ) : (
+            <AccountItem account={item.account} />
+          )}
         </li>
       ),
     )}

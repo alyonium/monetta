@@ -59,12 +59,12 @@ const AccountDetailsBody = ({
         />
       </div>
 
-      <Group justify='space-between'>
+      <Group>
         <Button type='button' color='red' variant='light' onClick={onDelete}>
           {t('budget.accountDetails.delete')}
         </Button>
 
-        <Button type='button' variant='default' onClick={onHide}>
+        <Button type='button' color='red' variant='light' onClick={onHide}>
           {t('budget.accountDetails.hide')}
         </Button>
       </Group>

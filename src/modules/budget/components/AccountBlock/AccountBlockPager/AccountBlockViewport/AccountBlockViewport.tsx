@@ -1,4 +1,5 @@
 import { type Ref, useImperativeHandle } from 'react';
+import { useDndContext } from '@dnd-kit/core';
 import { clsx } from 'clsx';
 import AccountPageGrid from '@/modules/budget/components/AccountBlock/AccountPageGrid/AccountPageGrid.tsx';
 import {
@@ -20,6 +21,7 @@ type GridForPageArgs = {
   minHeight: string;
   onAddAccount: () => void;
   onSelectAccount: (account: BudgetAccount) => void;
+  interactive: boolean;
 };
 
 const gridForPage = ({
@@ -30,6 +32,7 @@ const gridForPage = ({
   minHeight,
   onAddAccount,
   onSelectAccount,
+  interactive,
 }: GridForPageArgs) => (
   <AccountPageGrid
     items={slicePage(items, page, pageSize)}
@@ -37,6 +40,7 @@ const gridForPage = ({
     minHeight={minHeight}
     onAddAccount={onAddAccount}
     onSelectAccount={onSelectAccount}
+    interactive={interactive}
   />
 );
 
@@ -73,6 +77,7 @@ const AccountBlockViewport = ({
   onAddAccount,
   onSelectAccount,
 }: AccountBlockViewportProps) => {
+  const { active } = useDndContext();
   const canLoop = totalPages > 1;
   const previousPage = prevPageIndex({ page: pageIndex, totalPages });
   const nextPage = nextPageIndex({ page: pageIndex, totalPages });
@@ -91,6 +96,7 @@ const AccountBlockViewport = ({
     onPrev,
     canLoop,
     pageIndex,
+    enabled: !active,
   });
 
   useImperativeHandle(carouselRef, () => ({
@@ -115,7 +121,7 @@ const AccountBlockViewport = ({
     },
   }));
 
-  const pageGrid = (page: number) =>
+  const pageGrid = (page: number, interactive: boolean) =>
     gridForPage({
       items,
       page,
@@ -124,6 +130,7 @@ const AccountBlockViewport = ({
       minHeight,
       onAddAccount,
       onSelectAccount,
+      interactive,
     });
 
   return (
@@ -138,13 +145,13 @@ const AccountBlockViewport = ({
     >
       <div ref={trackRef} className={styles.track}>
         <div className={styles.slide} aria-hidden inert>
-          {canLoop && pageGrid(previousPage)}
+          {canLoop && pageGrid(previousPage, false)}
         </div>
 
-        <div className={styles.slide}>{pageGrid(pageIndex)}</div>
+        <div className={styles.slide}>{pageGrid(pageIndex, true)}</div>
 
         <div className={styles.slide} aria-hidden inert>
-          {canLoop && pageGrid(nextPage)}
+          {canLoop && pageGrid(nextPage, false)}
         </div>
       </div>
     </div>

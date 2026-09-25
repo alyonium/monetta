@@ -26,6 +26,7 @@ type UsePageSwipeOptions = {
   onPrev: () => void;
   canLoop: boolean;
   pageIndex: number;
+  enabled?: boolean;
 };
 
 const prefersReducedMotion = (): boolean =>
@@ -36,6 +37,7 @@ export const usePageSwipe = ({
   onPrev,
   canLoop,
   pageIndex,
+  enabled = true,
 }: UsePageSwipeOptions) => {
   const trackRef = useRef<HTMLDivElement>(null);
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
@@ -56,6 +58,20 @@ export const usePageSwipe = ({
       : 'none';
     track.style.transform = transform;
   };
+
+  useLayoutEffect(() => {
+    if (enabled) {
+      return;
+    }
+
+    pointerStart.current = null;
+    axisLock.current = null;
+    dragging.current = false;
+
+    if (!settling.current) {
+      setTrackTransform(REST_TRANSFORM, false);
+    }
+  }, [enabled]);
 
   useLayoutEffect(() => {
     if (dragging.current || settling.current) {
@@ -126,6 +142,7 @@ export const usePageSwipe = ({
 
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (
+      !enabled ||
       settling.current ||
       (event.pointerType === 'mouse' && event.button !== 0) ||
       (event.target instanceof Element && event.target.closest('button'))
@@ -137,18 +154,12 @@ export const usePageSwipe = ({
     axisLock.current = null;
     didSwipe.current = false;
     dragging.current = false;
-
-    try {
-      event.currentTarget.setPointerCapture(event.pointerId);
-    } catch {
-      // Pointer capture is unavailable for some synthetic events.
-    }
   };
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const start = pointerStart.current;
 
-    if (!start || settling.current) {
+    if (!enabled || !start || settling.current) {
       return;
     }
 
@@ -164,6 +175,14 @@ export const usePageSwipe = ({
       }
 
       axisLock.current = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+
+      if (axisLock.current === 'x') {
+        try {
+          event.currentTarget.setPointerCapture(event.pointerId);
+        } catch (error) {
+          void error;
+        }
+      }
     }
 
     if (axisLock.current !== 'x') {
@@ -183,6 +202,10 @@ export const usePageSwipe = ({
     const start = pointerStart.current;
     pointerStart.current = null;
     dragging.current = false;
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
 
     if (!start || settling.current) {
       return;
