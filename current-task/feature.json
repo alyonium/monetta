@@ -406,7 +406,7 @@
       "title": "Записать доход перетаскиванием income на current",
       "description": "Как пользователь, я хочу бросить income-счёт на current и сохранить доход.",
       "changes": [
-        "Дроп income → current открывает RecordIncomeModal в src/modules/budget/components",
+        "Дроп income → current открывает RecordTransactionModal в src/modules/budget/components",
         "Поля: Income account (select всех income кроме скрытых, по умолчанию откуда начался drag), Current account (select всех current кроме скрытых, по умолчанию куда бросили), Amount (число, валюта current, обязательное), Currency (текст только чтение рядом с Amount, валюта current), Date (обязательная; сегодня, если выбран текущий месяц Budget, иначе первый день выбранного месяца), Description (текст, необязательное), Tags (поле из US-023, необязательное)",
         "Save вызывает storeTransaction как Record income (в Firefly — deposit), обновляет балансы, инвалидирует query счетов Budget и History",
         "Cancel и клик снаружи закрывают без сохранения",
@@ -422,15 +422,15 @@
       "title": "Записать расход перетаскиванием current на expense",
       "description": "Как пользователь, я хочу бросить current на expense или debt и сохранить расход.",
       "changes": [
-        "Дроп current → expense/debt открывает RecordExpenseModal в src/modules/budget/components",
-        "Поля: Current account (select всех current кроме скрытых, по умолчанию откуда начался drag), Expense account (select всех expense и debt кроме скрытых, по умолчанию куда бросили), Amount (число, валюта current, обязательное), Currency (текст только чтение рядом с Amount, валюта current), Date (как в RecordIncomeModal), Description (необязательное), Tags (поле из US-023, необязательное)",
+        "Дроп current → expense/debt открывает ту же RecordTransactionModal в src/modules/budget/components",
+        "Поля: Current account (select всех current кроме скрытых, по умолчанию откуда начался drag), Expense account (select всех expense и debt кроме скрытых, по умолчанию куда бросили), Amount (число, валюта current, обязательное), Currency (текст только чтение рядом с Amount, валюта current), Date (как в RecordTransactionModal), Description (необязательное), Tags (поле из US-023, необязательное)",
         "Save вызывает storeTransaction как Record expense (в Firefly — withdrawal), инвалидирует query счетов Budget и History",
         "Cancel и клик снаружи закрывают без сохранения",
         "Typecheck passes",
         "Verify in browser using agent-browser mcp"
       ],
       "priority": 25,
-      "passes": false,
+      "passes": true,
       "designReference": []
     },
     {
@@ -439,7 +439,7 @@
       "description": "Как пользователь, я хочу бросить один current на другой и сохранить перевод, в том числе между валютами.",
       "changes": [
         "Дроп current → current открывает RecordTransferModal в src/modules/budget/components",
-        "Поля: From (select всех current кроме скрытых, по умолчанию откуда начался drag), To (select всех current кроме скрытых, по умолчанию куда бросили), Date (как в RecordIncomeModal), Description (необязательное), Tags (поле из US-023, необязательное)",
+        "Поля: From (select всех current кроме скрытых, по умолчанию откуда начался drag), To (select всех current кроме скрытых, по умолчанию куда бросили), Date (как в RecordTransactionModal), Description (необязательное), Tags (поле из US-023, необязательное)",
         "Одинаковая валюта From/To: одно обязательное Amount и Currency только чтение. Разная валюта: обязательные Amount debited (валюта From) и Amount credited (валюта To), у каждого своя Currency только чтение",
         "Save вызывает storeTransaction как Record transfer (в Firefly — transfer), инвалидирует query счетов Budget и History",
         "Cancel и клик снаружи закрывают без сохранения",
@@ -456,7 +456,7 @@
       "description": "Как пользователь, я хочу кнопку Edit в parameters bar, чтобы любой income, current и expense переставить внутри своего блока.",
       "changes": [
         "Кнопка Edit в parameters bar включает режим: любой счёт блока можно перетащить на новое место в этом же блоке (@dnd-kit sortable; income только с income, current только с current, expense/debt только с expense/debt)",
-        "В Edit дроп счёта на счёт не открывает RecordIncomeModal, RecordExpenseModal и RecordTransferModal",
+        "В Edit дроп счёта на счёт не открывает RecordTransactionModal и RecordTransferModal",
         "Дроп на новый индекс в том же блоке пишет monetta.accountOrder.<block> и обновляет сетку; слот Add account не сортируется и остаётся последним",
         "Свайп страниц во время драга выключен; перенос на другую страницу того же блока — US-028",
         "Typecheck passes",

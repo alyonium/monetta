@@ -1,6 +1,6 @@
 .amountRow {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: var(--mantine-spacing-xs);
   min-width: 0;
 }

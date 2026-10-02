@@ -2,77 +2,74 @@ import { Button, Group, Modal, Select, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import RecordTransactionFields from '@/modules/budget/components/RecordTransactionFields/RecordTransactionFields.tsx';
 import { toAccountSelectData } from '@/modules/budget/helpers/account/toAccountSelectData.ts';
-import { useRecordIncomeForm } from '@/modules/budget/hooks/useRecordIncomeForm.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
-import styles from './RecordIncomeModal.module.css';
+import { recordTransactionKindConfig } from '@/modules/budget/helpers/transactions/recordTransactionKind.ts';
+import { useRecordTransactionForm } from '@/modules/budget/hooks/useRecordTransactionForm.ts';
+import type { RecordTransactionDrop } from '@/modules/budget/helpers/transactions/recordTransactionKind.ts';
+import type { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
+import styles from './RecordTransactionModal.module.css';
 
-type RecordIncomeModalProps = {
+type RecordTransactionModalProps = {
   opened: boolean;
   onClose: () => void;
   onExitTransitionEnd: () => void;
-  source: BudgetAccount;
-  destination: BudgetAccount;
-  incomeAccounts: BudgetAccount[];
-  currentAccounts: BudgetAccount[];
+  drop: RecordTransactionDrop;
+  accounts: BudgetAccountsByBlock;
   month: string;
 };
 
-const RecordIncomeModal = ({
+const RecordTransactionModal = ({
   opened,
   onClose,
   onExitTransitionEnd,
-  source,
-  destination,
-  incomeAccounts,
-  currentAccounts,
+  drop,
+  accounts,
   month,
-}: RecordIncomeModalProps) => {
+}: RecordTransactionModalProps) => {
   const { t } = useTranslation();
-  const {
-    form,
-    selectedCurrent,
-    isSubmitting,
-    saveError,
-    handleSubmit,
-  } = useRecordIncomeForm({
-    onClose,
-    source,
-    destination,
-    incomeAccounts,
-    currentAccounts,
-    month,
-  });
+  const config = recordTransactionKindConfig[drop.kind];
+  const sourceAccounts = accounts[config.source.accountType];
+  const destinationAccounts = accounts[config.destination.accountType];
+  const { form, currencyCode, isSubmitting, saveError, handleSubmit } =
+    useRecordTransactionForm({
+      onClose,
+      config,
+      sourceAccounts,
+      destinationAccounts,
+      sourceId: drop.source.id,
+      destinationId: drop.destination.id,
+      month,
+    });
 
   return (
     <Modal
       opened={opened}
       onClose={onClose}
       onExitTransitionEnd={onExitTransitionEnd}
-      title={t('budget.recordIncome.title')}
+      title={t(config.titleKey)}
       centered
     >
       <form className={styles.form} onSubmit={handleSubmit}>
         <Select
-          label={t('budget.recordIncome.incomeAccount')}
-          data={toAccountSelectData(incomeAccounts)}
+          label={t(config.source.labelKey)}
+          data={toAccountSelectData(sourceAccounts)}
           allowDeselect={false}
           searchable
-          {...form.getInputProps('incomeAccountId')}
+          {...form.getInputProps('sourceAccountId')}
         />
 
         <Select
-          label={t('budget.recordIncome.currentAccount')}
-          data={toAccountSelectData(currentAccounts)}
+          label={t(config.destination.labelKey)}
+          data={toAccountSelectData(destinationAccounts)}
           allowDeselect={false}
           searchable
-          {...form.getInputProps('currentAccountId')}
+          {...form.getInputProps('destinationAccountId')}
         />
 
         <RecordTransactionFields
           amount={form.values.amount}
           onAmountChange={(value) => form.setFieldValue('amount', value)}
           amountError={form.errors.amount}
-          currency={selectedCurrent.currencyCode}
+          currency={currencyCode}
           date={form.values.date}
           onDateChange={(value) => form.setFieldValue('date', value)}
           dateError={form.errors.date}
@@ -95,6 +92,7 @@ const RecordIncomeModal = ({
           <Button type='button' variant='default' onClick={onClose}>
             {t('budget.recordTransaction.cancel')}
           </Button>
+
           <Button type='submit' loading={isSubmitting}>
             {t('budget.recordTransaction.save')}
           </Button>
@@ -104,4 +102,4 @@ const RecordIncomeModal = ({
   );
 };
 
-export default RecordIncomeModal;
+export default RecordTransactionModal;

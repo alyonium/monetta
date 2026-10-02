@@ -8,6 +8,7 @@ import {
   accountTransactionFlow,
   type AccountTransactionFlow,
 } from '@/modules/budget/helpers/transactions/accountTransactionFlow.ts';
+import { hasTransactionDescription } from '@/modules/budget/helpers/transactions/transactionDescription.ts';
 import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountTransactionCard.module.css';
@@ -66,7 +67,7 @@ const AccountTransactionCard = ({
           </Text>
         </div>
 
-        {transaction.description && (
+        {hasTransactionDescription(transaction.description) && (
           <Text c='dimmed' size='sm'>
             {transaction.description}
           </Text>

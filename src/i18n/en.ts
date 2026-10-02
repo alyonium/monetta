@@ -118,6 +118,11 @@ export const en = {
       incomeAccount: 'Income account',
       currentAccount: 'Current account',
     },
+    recordExpense: {
+      title: 'Record expense',
+      currentAccount: 'Current account',
+      expenseAccount: 'Expense account',
+    },
     errors: {
       loadFailed: 'Failed to load accounts',
     },

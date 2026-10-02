@@ -1,4 +1,5 @@
 import type { TransactionStoreWritable } from '@/api/types.gen.ts';
+import { transactionDescription } from '@/modules/budget/helpers/transactions/transactionDescription.ts';
 import type { ToTransactionStoreBodyInput } from '@/modules/budget/types/createBudgetTransaction.ts';
 
 export const toTransactionStoreBody = ({
@@ -18,7 +19,7 @@ export const toTransactionStoreBody = ({
     amount: String(amount),
     currency_code: currencyCode,
     date: `${date}T12:00:00`,
-    description,
+    description: transactionDescription(description),
   };
 
   if (tags.length > 0) {

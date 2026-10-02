@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { FIREFLY_TRANSACTION_TYPE } from '@/modules/budget/constants/transactions.ts';
+import { hasTransactionDescription } from '@/modules/budget/helpers/transactions/transactionDescription.ts';
 import { toTransactionStoreBody } from '@/modules/budget/helpers/transactions/toTransactionStoreBody.ts';
 
 const baseInput = {
@@ -31,14 +32,14 @@ describe('toTransactionStoreBody', () => {
     });
   });
 
-  it('omits tags when the list is empty and keeps an empty description', () => {
-    expect(
-      toTransactionStoreBody({
-        ...baseInput,
-        description: '',
-        tags: [],
-      }),
-    ).toEqual({
+  it('omits tags when the list is empty and fills a blank description with an invisible mark', () => {
+    const body = toTransactionStoreBody({
+      ...baseInput,
+      description: '   ',
+      tags: [],
+    });
+
+    expect(body).toEqual({
       transactions: [
         {
           type: FIREFLY_TRANSACTION_TYPE.DEPOSIT,
@@ -47,9 +48,12 @@ describe('toTransactionStoreBody', () => {
           amount: '12.5',
           currency_code: 'EUR',
           date: '2026-09-13T12:00:00',
-          description: '',
+          description: '\u2066',
         },
       ],
     });
+    expect(
+      hasTransactionDescription(body.transactions[0].description),
+    ).toBe(false);
   });
 });

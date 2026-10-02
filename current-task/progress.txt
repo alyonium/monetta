@@ -297,3 +297,15 @@
     - Gotchas encountered: card stays `role="button"` (a `<button>` breaks pager swipe); `PointerSensor` distance `PAGE_SWIPE_AXIS_LOCK_PX`, swipe captures pointer only after axis locks to X; `date` in body is `${date}T12:00:00`; empty `description` falls back to income account name.
     - Useful context: `HISTORY_TRANSACTIONS_QUERY_KEY` is in `src/modules/history/constants/queries.ts` — contract for US-030. In Edit mode (US-027) drops must not open record modals; swipe is disabled during drag via `usePageSwipe` `enabled` flag.
 ---
+
+## 2026-09-25 15:45 - US-025
+- Drag current → expense/debt opens `RecordExpenseModal`; Save writes `withdrawal` via `storeTransaction` and invalidates accounts/insights/transactions/tags/history. tsc, vitest (203), eslint green.
+- **Learnings for future iterations:**
+    - Patterns discovered: expense form mirrors income (`useRecordExpenseForm`, `initialRecordExpenseFormValues`, `validateRecordExpenseForm`, `recordExpenseForm` types). `ACCOUNT_DND` now CURRENT draggable+droppable, EXPENSE droppable. Expense select data is `data[ACCOUNT_TYPE.EXPENSE]` — debts included. Description fallback is the expense account name.
+    - Gotchas encountered: withdrawal direction is source=current, destination=expense — opposite of deposit. EXPENSE stays `draggable: false` until reorder (US-027).
+    - Useful context: US-026 reuses `RecordTransactionFields`/`toTransactionStoreBody`/`createBudgetTransaction`/`invalidateTransactionQueries`; TRANSFER case in `Budget.tsx` switch still returns early. Same-currency transfer = one Amount; cross-currency needs debited+credited fields.
+---
+
+## 2026-10-02 22:10 - US-025 review
+- Income and expense share `RecordTransactionModal` and `useModalSession<RecordDrop>`. Transfer stays a no-op. Ids must resolve in the passed lists; empty description is sent empty.
+---

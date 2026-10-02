@@ -63,7 +63,7 @@ export const createAccountTransaction = (
   ...extra,
 });
 
-export const createBudgetAccountFixture = (
+export const createBudgetAccount = (
   extra: Partial<BudgetAccount> & Pick<BudgetAccount, 'id' | 'type'>,
 ): BudgetAccount => ({
   name: extra.name ?? extra.id,

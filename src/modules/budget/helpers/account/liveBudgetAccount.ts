@@ -1,3 +1,4 @@
+import { accountById } from '@/modules/budget/helpers/account/accountById.ts';
 import type {
   BudgetAccount,
   BudgetAccountsByBlock,
@@ -11,9 +12,12 @@ export const liveBudgetAccount = (
     return null;
   }
 
-  return (
-    accounts?.[sessionAccount.type].find(
-      (item) => item.id === sessionAccount.id,
-    ) ?? sessionAccount
-  );
+  const accountsOfType = accounts?.[sessionAccount.type] ?? [];
+  const liveAccount = accountById(accountsOfType, sessionAccount.id);
+
+  if (liveAccount) {
+    return liveAccount;
+  }
+
+  return sessionAccount;
 };

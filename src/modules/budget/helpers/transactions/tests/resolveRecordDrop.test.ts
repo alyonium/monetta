@@ -2,33 +2,33 @@ import { describe, expect, it } from 'vitest';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { RECORD_DROP_KIND } from '@/modules/budget/constants/accountDnd.ts';
 import { resolveRecordDrop } from '@/modules/budget/helpers/transactions/resolveRecordDrop.ts';
-import { createBudgetAccountFixture } from './testHelpers.ts';
+import { createBudgetAccount } from './testHelpers.ts';
 
-const income = createBudgetAccountFixture({
+const income = createBudgetAccount({
   id: 'inc-1',
   type: ACCOUNT_TYPE.INCOME,
   name: 'Salary',
 });
 
-const current = createBudgetAccountFixture({
+const current = createBudgetAccount({
   id: 'cur-1',
   type: ACCOUNT_TYPE.CURRENT,
   name: 'Wallet',
 });
 
-const otherCurrent = createBudgetAccountFixture({
+const otherCurrent = createBudgetAccount({
   id: 'cur-2',
   type: ACCOUNT_TYPE.CURRENT,
   name: 'Bank',
 });
 
-const expense = createBudgetAccountFixture({
+const expense = createBudgetAccount({
   id: 'exp-1',
   type: ACCOUNT_TYPE.EXPENSE,
   name: 'Groceries',
 });
 
-const otherIncome = createBudgetAccountFixture({
+const otherIncome = createBudgetAccount({
   id: 'inc-2',
   type: ACCOUNT_TYPE.INCOME,
   name: 'Gift',
