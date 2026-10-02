@@ -1,4 +1,5 @@
 import {
+  PAGE_SWIPE_AXIS_LOCK_PX,
   PAGE_SWIPE_DIRECTION,
   PAGE_SWIPE_PX,
   PAGE_SWIPE_RUBBER_BAND,
@@ -16,6 +17,9 @@ export const resolvePageSwipe = (
 
   return dx < 0 ? PAGE_SWIPE_DIRECTION.NEXT : PAGE_SWIPE_DIRECTION.PREV;
 };
+
+export const isPageSwipeAxis = (dx: number, dy: number): boolean =>
+  Math.abs(dx) >= PAGE_SWIPE_AXIS_LOCK_PX && Math.abs(dx) > Math.abs(dy);
 
 export const rubberBandDragX = (dx: number, canLoop: boolean): number => {
   if (!canLoop) {
