@@ -6,6 +6,7 @@ import {
   recordTransactionCurrencyAccount,
   recordTransactionKindConfig,
   toRecordTransactionDrop,
+  toRecordTransferDrop,
 } from '@/modules/budget/helpers/transactions/recordTransactionKind.ts';
 import { createBudgetAccount } from './testHelpers.ts';
 
@@ -70,6 +71,29 @@ describe('recordTransactionKindConfig', () => {
     };
 
     expect(toRecordTransactionDrop(drop)).toEqual(drop);
+  });
+
+  it('keeps a transfer drop for the transfer modal', () => {
+    const drop = {
+      kind: RECORD_DROP_KIND.TRANSFER,
+      source: current,
+      destination: expense,
+    };
+
+    expect(toRecordTransferDrop(drop)).toEqual({
+      source: current,
+      destination: expense,
+    });
+  });
+
+  it('drops a non-transfer instead of opening the transfer form', () => {
+    expect(
+      toRecordTransferDrop({
+        kind: RECORD_DROP_KIND.EXPENSE,
+        source: current,
+        destination: expense,
+      }),
+    ).toBeNull();
   });
 
   it('returns no currency account when the current side did not resolve', () => {

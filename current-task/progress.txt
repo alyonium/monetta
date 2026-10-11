@@ -309,3 +309,15 @@
 ## 2026-10-02 22:10 - US-025 review
 - Income and expense share `RecordTransactionModal` and `useModalSession<RecordDrop>`. Transfer stays a no-op. Ids must resolve in the passed lists; empty description is sent empty.
 ---
+
+## 2026-10-03 10:45 - US-026
+- Drag current → current opens `RecordTransferModal`. Save writes `transfer`: one amount when currencies match, debited plus credited (`foreign_amount`) when they differ. tsc, vitest (226), eslint green.
+- **Learnings for future iterations:**
+    - Patterns discovered: same `useModalSession<RecordDrop>` as income/expense. `toRecordTransferDrop` mounts the transfer modal; `toRecordTransactionDrop` still returns null. `RecordAmountRow` is the shared amount+currency row.
+    - Gotchas encountered: `foreign_amount` and `foreign_currency_code` go on the body only when both are passed. Same From and To is an error on To. A blank description is still U+2066, not the account name.
+    - Useful context: US-027 must not open `RecordTransactionModal` or `RecordTransferModal` while Edit is on. Horizontal card movement is a page swipe until the drag axis is vertical.
+---
+
+## 2026-10-03 11:20 - US-026
+- Holding a current card still for `ACCOUNT_DRAG_HOLD_MS` picks it up, so a transfer can be dragged left or right without a downward move first. A sideways move before that hold still pages the block.
+---

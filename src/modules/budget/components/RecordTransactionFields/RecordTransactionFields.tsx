@@ -1,16 +1,14 @@
 import type { ReactNode } from 'react';
-import { NumberInput, TextInput } from '@mantine/core';
+import { TextInput } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useTranslation } from 'react-i18next';
 import TagsField from '@/components/TagsField/TagsField.tsx';
 import { todayIso } from '@/modules/budget/helpers/month/budgetMonth.ts';
-import styles from './RecordTransactionFields.module.css';
+import type { RecordAmountField } from '@/modules/budget/types/recordAmountField.ts';
+import RecordAmountRow from './RecordAmountRow.tsx';
 
 type RecordTransactionFieldsProps = {
-  amount: number | string;
-  onAmountChange: (value: number | string) => void;
-  amountError?: ReactNode;
-  currency: string;
+  amounts: RecordAmountField[];
   date: string;
   onDateChange: (value: string) => void;
   dateError?: ReactNode;
@@ -22,10 +20,7 @@ type RecordTransactionFieldsProps = {
 };
 
 const RecordTransactionFields = ({
-  amount,
-  onAmountChange,
-  amountError,
-  currency,
+  amounts,
   date,
   onDateChange,
   dateError,
@@ -39,25 +34,17 @@ const RecordTransactionFields = ({
 
   return (
     <>
-      <div className={styles.amountRow}>
-        <NumberInput
-          className={styles.amount}
-          label={t('budget.recordTransaction.amount')}
-          data-autofocus
-          hideControls
-          min={0}
-          value={amount}
-          error={amountError}
-          onChange={onAmountChange}
+      {amounts.map((amount, index) => (
+        <RecordAmountRow
+          key={amount.label}
+          label={amount.label}
+          amount={amount.amount}
+          onAmountChange={amount.onAmountChange}
+          amountError={amount.error}
+          currency={amount.currency}
+          autoFocus={index === 0}
         />
-
-        <TextInput
-          className={styles.currency}
-          label={t('budget.recordTransaction.currency')}
-          value={currency}
-          readOnly
-        />
-      </div>
+      ))}
 
       <DatePickerInput
         label={t('budget.recordTransaction.date')}

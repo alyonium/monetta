@@ -8,6 +8,10 @@ export type ToTransactionStoreBodyInput = {
   destinationId: string;
   amount: number;
   currencyCode: string;
+  foreign?: {
+    amount: number;
+    currencyCode: string;
+  };
   date: string;
   description: string;
   tags: string[];

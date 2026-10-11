@@ -123,6 +123,16 @@ export const en = {
       currentAccount: 'Current account',
       expenseAccount: 'Expense account',
     },
+    recordTransfer: {
+      title: 'Record transfer',
+      from: 'From',
+      to: 'To',
+      amountDebited: 'Amount debited',
+      amountCredited: 'Amount credited',
+      errors: {
+        sameAccount: 'Choose a different account',
+      },
+    },
     errors: {
       loadFailed: 'Failed to load accounts',
     },

@@ -52,8 +52,61 @@ describe('toTransactionStoreBody', () => {
         },
       ],
     });
+    expect(hasTransactionDescription(body.transactions[0].description)).toBe(
+      false,
+    );
+  });
+
+  it('omits foreign fields when a transfer has no foreign amount', () => {
     expect(
-      hasTransactionDescription(body.transactions[0].description),
-    ).toBe(false);
+      toTransactionStoreBody({
+        ...baseInput,
+        type: FIREFLY_TRANSACTION_TYPE.TRANSFER,
+        sourceId: 'current-1',
+        destinationId: 'current-2',
+      }),
+    ).toEqual({
+      transactions: [
+        {
+          type: FIREFLY_TRANSACTION_TYPE.TRANSFER,
+          source_id: 'current-1',
+          destination_id: 'current-2',
+          amount: '12.5',
+          currency_code: 'EUR',
+          date: '2026-09-13T12:00:00',
+          description: '  bonus  ',
+          tags: ['gift', 'salary'],
+        },
+      ],
+    });
+  });
+
+  it('adds foreign amount and currency when foreign is passed', () => {
+    expect(
+      toTransactionStoreBody({
+        ...baseInput,
+        type: FIREFLY_TRANSACTION_TYPE.TRANSFER,
+        sourceId: 'current-eur',
+        destinationId: 'current-usd',
+        amount: 10,
+        currencyCode: 'EUR',
+        foreign: { amount: 11, currencyCode: 'USD' },
+      }),
+    ).toEqual({
+      transactions: [
+        {
+          type: FIREFLY_TRANSACTION_TYPE.TRANSFER,
+          source_id: 'current-eur',
+          destination_id: 'current-usd',
+          amount: '10',
+          currency_code: 'EUR',
+          foreign_amount: '11',
+          foreign_currency_code: 'USD',
+          date: '2026-09-13T12:00:00',
+          description: '  bonus  ',
+          tags: ['gift', 'salary'],
+        },
+      ],
+    });
   });
 });

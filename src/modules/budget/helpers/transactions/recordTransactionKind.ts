@@ -6,6 +6,12 @@ import {
 import { FIREFLY_TRANSACTION_TYPE } from '@/modules/budget/constants/transactions.ts';
 import type { RecordDrop } from '@/modules/budget/helpers/transactions/resolveRecordDrop.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import type {
+  RecordTransactionDrop,
+  RecordTransactionKind,
+  RecordTransactionKindConfig,
+  RecordTransferDrop,
+} from '@/modules/budget/types/recordTransactionKind.ts';
 
 export const recordTransactionKindConfig = {
   [RECORD_DROP_KIND.INCOME]: {
@@ -34,17 +40,6 @@ export const recordTransactionKindConfig = {
   },
 } as const;
 
-export type RecordTransactionKind = keyof typeof recordTransactionKindConfig;
-
-export type RecordTransactionKindConfig =
-  (typeof recordTransactionKindConfig)[RecordTransactionKind];
-
-export type RecordTransactionDrop = {
-  kind: RecordTransactionKind;
-  source: BudgetAccount;
-  destination: BudgetAccount;
-};
-
 export const isRecordTransactionKind = (
   kind: RecordDropKind,
 ): kind is RecordTransactionKind =>
@@ -59,6 +54,19 @@ export const toRecordTransactionDrop = (
 
   return {
     kind: drop.kind,
+    source: drop.source,
+    destination: drop.destination,
+  };
+};
+
+export const toRecordTransferDrop = (
+  drop: RecordDrop | null,
+): RecordTransferDrop | null => {
+  if (!drop || drop.kind !== RECORD_DROP_KIND.TRANSFER) {
+    return null;
+  }
+
+  return {
     source: drop.source,
     destination: drop.destination,
   };

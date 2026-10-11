@@ -5,7 +5,6 @@ import {
   type DragEndEvent,
   type DragStartEvent,
 } from '@dnd-kit/core';
-import { PAGE_SWIPE_AXIS_LOCK_PX } from '@/modules/budget/constants/layout.ts';
 import { AccountPointerSensor } from '@/modules/budget/hooks/accountPointerSensor.ts';
 import {
   budgetAccountFromDndData,
@@ -18,11 +17,7 @@ export const useAccountDnd = (onDrop: (drop: RecordDrop) => void) => {
   const [activeAccount, setActiveAccount] = useState<BudgetAccount | null>(
     null,
   );
-  const sensors = useSensors(
-    useSensor(AccountPointerSensor, {
-      activationConstraint: { distance: PAGE_SWIPE_AXIS_LOCK_PX },
-    }),
-  );
+  const sensors = useSensors(useSensor(AccountPointerSensor));
 
   const onDragStart = (event: DragStartEvent) => {
     setActiveAccount(

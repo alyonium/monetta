@@ -41,3 +41,10 @@ export const PAGE_SWIPE_PX = 48;
 export const PAGE_SWIPE_MS = 280;
 export const PAGE_SWIPE_AXIS_LOCK_PX = 8;
 export const PAGE_SWIPE_RUBBER_BAND = 0.35;
+export const ACCOUNT_DRAG_HOLD_MS = 350;
+
+export const ACCOUNT_DRAG_GESTURE = {
+  SWIPE: 'swipe',
+  DRAG: 'drag',
+  WAIT: 'wait',
+} as const;

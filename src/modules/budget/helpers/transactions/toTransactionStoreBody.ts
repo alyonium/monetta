@@ -8,6 +8,7 @@ export const toTransactionStoreBody = ({
   destinationId,
   amount,
   currencyCode,
+  foreign,
   date,
   description,
   tags,
@@ -21,6 +22,11 @@ export const toTransactionStoreBody = ({
     date: `${date}T12:00:00`,
     description: transactionDescription(description),
   };
+
+  if (foreign) {
+    split.foreign_amount = String(foreign.amount);
+    split.foreign_currency_code = foreign.currencyCode;
+  }
 
   if (tags.length > 0) {
     split.tags = tags;

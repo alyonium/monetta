@@ -9,14 +9,17 @@ import CreateAccountModal from '@/modules/budget/components/CreateAccountModal/C
 import EditAccountModal from '@/modules/budget/components/EditAccountModal/EditAccountModal.tsx';
 import ParametersBar from '@/modules/budget/components/ParametersBar/ParametersBar.tsx';
 import RecordTransactionModal from '@/modules/budget/components/RecordTransactionModal/RecordTransactionModal.tsx';
+import RecordTransferModal from '@/modules/budget/components/RecordTransferModal/RecordTransferModal.tsx';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
-import { RECORD_DROP_KIND } from '@/modules/budget/constants/accountDnd.ts';
 import { liveBudgetAccount } from '@/modules/budget/helpers/account/liveBudgetAccount.ts';
 import {
   startOfMonth,
   todayIso,
 } from '@/modules/budget/helpers/month/budgetMonth.ts';
-import { toRecordTransactionDrop } from '@/modules/budget/helpers/transactions/recordTransactionKind.ts';
+import {
+  toRecordTransactionDrop,
+  toRecordTransferDrop,
+} from '@/modules/budget/helpers/transactions/recordTransactionKind.ts';
 import type { RecordDrop } from '@/modules/budget/helpers/transactions/resolveRecordDrop.ts';
 import { useAccountDnd } from '@/modules/budget/hooks/useAccountDnd.ts';
 import { useBudgetAccounts } from '@/modules/budget/hooks/useBudgetAccounts.ts';
@@ -39,23 +42,11 @@ const Budget = () => {
   const { data, isError } = useBudgetAccounts(month);
   const totals = useBudgetMonthTotals(month, data?.[ACCOUNT_TYPE.CURRENT]);
   const { sensors, activeAccount, onDragStart, onDragEnd, onDragCancel } =
-    useAccountDnd((drop) => {
-      switch (drop.kind) {
-        case RECORD_DROP_KIND.INCOME:
-        case RECORD_DROP_KIND.EXPENSE:
-          recordModal.open(drop);
-          return;
-        case RECORD_DROP_KIND.TRANSFER:
-          return;
-        default: {
-          const unexpectedKind: never = drop.kind;
-          void unexpectedKind;
-        }
-      }
-    });
+    useAccountDnd(recordModal.open);
   const detailsAccount = liveBudgetAccount(data, detailsModal.session.payload);
   const createType = createModal.session.payload ?? ACCOUNT_TYPE.INCOME;
   const transactionDrop = toRecordTransactionDrop(recordModal.session.payload);
+  const transferDrop = toRecordTransferDrop(recordModal.session.payload);
   const recordAccounts = {
     [ACCOUNT_TYPE.INCOME]: data?.[ACCOUNT_TYPE.INCOME] ?? [],
     [ACCOUNT_TYPE.CURRENT]: data?.[ACCOUNT_TYPE.CURRENT] ?? [],
@@ -153,6 +144,18 @@ const Budget = () => {
           onExitTransitionEnd={recordModal.dispose}
           drop={transactionDrop}
           accounts={recordAccounts}
+          month={month}
+        />
+      )}
+
+      {transferDrop && (
+        <RecordTransferModal
+          key={recordModal.session.id}
+          opened={recordModal.session.opened}
+          onClose={recordModal.close}
+          onExitTransitionEnd={recordModal.dispose}
+          drop={transferDrop}
+          accounts={recordAccounts[ACCOUNT_TYPE.CURRENT]}
           month={month}
         />
       )}
