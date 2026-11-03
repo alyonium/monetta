@@ -43,23 +43,33 @@ export const createFireflyAccount = (
   attributes: { name, type, ...extra },
 });
 
+export const createBudgetAccount = (
+  extra: Partial<BudgetAccount> & Pick<BudgetAccount, 'id' | 'type'>,
+): BudgetAccount => ({
+  name: extra.name ?? extra.id,
+  isDebt: false,
+  icon: null,
+  color: null,
+  balance: 0,
+  currencyCode: 'EUR',
+  currencySymbol: '€',
+  debtAmount: null,
+  paidAmount: null,
+  ...extra,
+});
+
 export const createCurrentAccount = (
   id: string,
   balance: number,
   currencyCode: string,
-): BudgetAccount => ({
-  id,
-  name: id,
-  type: ACCOUNT_TYPE.CURRENT,
-  isDebt: false,
-  icon: null,
-  color: null,
-  balance,
-  currencyCode,
-  currencySymbol: '',
-  debtAmount: null,
-  paidAmount: null,
-});
+): BudgetAccount =>
+  createBudgetAccount({
+    id,
+    type: ACCOUNT_TYPE.CURRENT,
+    balance,
+    currencyCode,
+    currencySymbol: '',
+  });
 
 export const createPreference = (
   id: string,

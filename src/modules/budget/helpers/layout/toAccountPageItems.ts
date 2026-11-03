@@ -5,9 +5,16 @@ const ADD_ITEM: AccountPageItem = { type: 'add' };
 
 export const toAccountPageItems = (
   accounts: BudgetAccount[],
-): AccountPageItem[] => [
-  ...accounts.map(
-    (account): AccountPageItem => ({ type: 'account', account }),
-  ),
-  ADD_ITEM,
-];
+  editing = false,
+): AccountPageItem[] => {
+  const items = accounts.map((account): AccountPageItem => ({
+    type: 'account',
+    account,
+  }));
+
+  if (editing) {
+    return items;
+  }
+
+  return [...items, ADD_ITEM];
+};

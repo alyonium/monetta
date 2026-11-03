@@ -1,15 +1,25 @@
 .grid {
   --account-card-min-height: 6rem;
+  --account-column-gap: var(--mantine-spacing-xs);
+  --account-row-gap: 0px;
   display: grid;
   grid-template-rows: auto;
-  column-gap: var(--mantine-spacing-xs);
-  row-gap: 0;
+  column-gap: var(--account-column-gap);
+  row-gap: var(--account-row-gap);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .cell {
+  position: relative;
   display: flex;
   min-width: 0;
+}
+
+.entering {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
 }

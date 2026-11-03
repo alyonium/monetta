@@ -21,12 +21,14 @@ type UseAccountBlockPagerArgs = {
   accounts: BudgetAccount[];
   fillHeight: boolean;
   minCardHeightPx: number;
+  editing: boolean;
 };
 
 export const useAccountBlockPager = ({
   accounts,
   fillHeight,
   minCardHeightPx,
+  editing,
 }: UseAccountBlockPagerArgs) => {
   const isDesktop = useMediaQuery(desktopQuery, false, {
     getInitialValueInEffect: false,
@@ -43,7 +45,7 @@ export const useAccountBlockPager = ({
       })
     : 1;
   const pageSize = columns * rows;
-  const items = toAccountPageItems(accounts);
+  const items = toAccountPageItems(accounts, editing);
   const totalPages = pageCount(items.length, pageSize);
   const currentPage = clampPageIndex(pageIndex, totalPages);
 
@@ -55,10 +57,9 @@ export const useAccountBlockPager = ({
     currentPage,
     totalPages,
     showArrows: isDesktop && totalPages > 1,
-    goNext: () =>
-      setPageIndex(nextPageIndex({ page: currentPage, totalPages })),
-    goPrev: () =>
-      setPageIndex(prevPageIndex({ page: currentPage, totalPages })),
-    goToPage: (index: number) => setPageIndex(clampPageIndex(index, totalPages)),
+    goNext: () => setPageIndex((page) => nextPageIndex({ page, totalPages })),
+    goPrev: () => setPageIndex((page) => prevPageIndex({ page, totalPages })),
+    goToPage: (index: number) =>
+      setPageIndex(clampPageIndex(index, totalPages)),
   };
 };

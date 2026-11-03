@@ -34,6 +34,7 @@ import styles from './Budget.module.css';
 const Budget = () => {
   const { t } = useTranslation();
   const [month, setMonth] = useState(() => startOfMonth(todayIso()));
+  const [editing, setEditing] = useState(false);
   const createModal = useModalSession<AccountType>();
   const detailsModal = useModalSession<BudgetAccount>();
   const editModal = useModalSession<BudgetAccount>();
@@ -41,8 +42,21 @@ const Budget = () => {
 
   const { data, isError } = useBudgetAccounts(month);
   const totals = useBudgetMonthTotals(month, data?.[ACCOUNT_TYPE.CURRENT]);
-  const { sensors, activeAccount, onDragStart, onDragEnd, onDragCancel } =
-    useAccountDnd(recordModal.open);
+  const {
+    sensors,
+    collisionDetection,
+    activeAccount,
+    overAccount,
+    onDragStart,
+    onDragOver,
+    onDragEnd,
+    onDragCancel,
+  } = useAccountDnd({
+    editing,
+    month,
+    accounts: data,
+    onDrop: recordModal.open,
+  });
   const detailsAccount = liveBudgetAccount(data, detailsModal.session.payload);
   const createType = createModal.session.payload ?? ACCOUNT_TYPE.INCOME;
   const transactionDrop = toRecordTransactionDrop(recordModal.session.payload);
@@ -66,13 +80,21 @@ const Budget = () => {
 
   return (
     <div className={styles.page}>
-      <ParametersBar month={month} onMonthChange={setMonth} totals={totals} />
+      <ParametersBar
+        month={month}
+        onMonthChange={setMonth}
+        totals={totals}
+        editing={editing}
+        onEditToggle={() => setEditing((current) => !current)}
+      />
 
       {data ? (
         <DndContext
           sensors={sensors}
+          collisionDetection={collisionDetection}
           autoScroll={false}
           onDragStart={onDragStart}
+          onDragOver={onDragOver}
           onDragEnd={onDragEnd}
           onDragCancel={onDragCancel}
         >
@@ -81,6 +103,8 @@ const Budget = () => {
               key={type}
               type={type}
               accounts={data[type]}
+              editing={editing}
+              overAccount={overAccount}
               onAddAccount={() => createModal.open(type)}
               onSelectAccount={detailsModal.open}
             />

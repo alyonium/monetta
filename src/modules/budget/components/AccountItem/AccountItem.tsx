@@ -1,4 +1,5 @@
 import type {
+  CSSProperties,
   KeyboardEvent,
   PointerEvent as ReactPointerEvent,
 } from 'react';
@@ -19,11 +20,10 @@ type AccountItemProps = {
   cardRef?: (node: HTMLElement | null) => void;
   onClick?: () => void;
   onKeyDown?: (event: KeyboardEvent<HTMLDivElement>) => void;
-  onPointerDownCapture?: (
-    event: ReactPointerEvent<HTMLDivElement>,
-  ) => void;
+  onPointerDownCapture?: (event: ReactPointerEvent<HTMLDivElement>) => void;
   listeners?: DraggableSyntheticListeners;
   attributes?: DraggableAttributes;
+  style?: CSSProperties;
 };
 
 const AccountItem = ({
@@ -37,6 +37,7 @@ const AccountItem = ({
   onPointerDownCapture,
   listeners,
   attributes,
+  style,
 }: AccountItemProps) => (
   <div
     ref={cardRef}
@@ -53,6 +54,7 @@ const AccountItem = ({
     onPointerDownCapture={onPointerDownCapture}
     {...attributes}
     {...listeners}
+    style={style}
   >
     <AccountItemBody account={account} />
   </div>

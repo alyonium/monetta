@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { validateRecordTransferForm } from '@/modules/budget/helpers/transactions/validateRecordTransferForm.ts';
 import type { RecordTransferFormValues } from '@/modules/budget/types/recordTransferForm.ts';
-import { createBudgetAccount } from './testHelpers.ts';
+import { createBudgetAccount } from '@/modules/budget/helpers/account/tests/testHelpers.ts';
 
 const eur = createBudgetAccount({
   id: 'eur-1',

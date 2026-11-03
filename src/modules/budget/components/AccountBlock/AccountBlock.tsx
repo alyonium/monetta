@@ -20,6 +20,8 @@ const ACCOUNT_BLOCK_LABEL_KEY = {
 type AccountBlockProps = {
   type: AccountType;
   accounts: BudgetAccount[];
+  editing: boolean;
+  overAccount: BudgetAccount | null;
   onAddAccount: () => void;
   onSelectAccount: (account: BudgetAccount) => void;
 };
@@ -27,6 +29,8 @@ type AccountBlockProps = {
 const AccountBlock = ({
   type,
   accounts,
+  editing,
+  overAccount,
   onAddAccount,
   onSelectAccount,
 }: AccountBlockProps) => {
@@ -40,6 +44,8 @@ const AccountBlock = ({
     >
       <AccountBlockPager
         accounts={accounts}
+        editing={editing}
+        overAccount={overAccount}
         onAddAccount={onAddAccount}
         onSelectAccount={onSelectAccount}
         {...layout}

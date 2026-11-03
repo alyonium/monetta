@@ -8,7 +8,7 @@ import {
   toRecordTransactionDrop,
   toRecordTransferDrop,
 } from '@/modules/budget/helpers/transactions/recordTransactionKind.ts';
-import { createBudgetAccount } from './testHelpers.ts';
+import { createBudgetAccount } from '@/modules/budget/helpers/account/tests/testHelpers.ts';
 
 const income = createBudgetAccount({
   id: 'inc-1',

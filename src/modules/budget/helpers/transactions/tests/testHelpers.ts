@@ -1,6 +1,5 @@
 import type { TransactionRead, TransactionSplit } from '@/api/types.gen.ts';
 import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 type PagePagination = { current_page: number; total_pages: number };
 
@@ -60,21 +59,6 @@ export const createAccountTransaction = (
   currencySymbol: '€',
   type: 'withdrawal',
   tags: [],
-  ...extra,
-});
-
-export const createBudgetAccount = (
-  extra: Partial<BudgetAccount> & Pick<BudgetAccount, 'id' | 'type'>,
-): BudgetAccount => ({
-  name: extra.name ?? extra.id,
-  isDebt: false,
-  icon: null,
-  color: null,
-  balance: 0,
-  currencyCode: 'EUR',
-  currencySymbol: '€',
-  debtAmount: null,
-  paidAmount: null,
   ...extra,
 });
 

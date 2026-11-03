@@ -1,3 +1,15 @@
+@property --account-shift-x {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --account-shift-y {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -11,6 +23,13 @@
   cursor: pointer;
   background: transparent;
   touch-action: none;
+  transform: translate(
+    calc(var(--account-shift-x) * (100% + var(--account-column-gap, 0px))),
+    calc(var(--account-shift-y) * (100% + var(--account-row-gap, 0px)))
+  );
+  transition:
+    --account-shift-x 200ms ease,
+    --account-shift-y 200ms ease;
 }
 
 .overlay {

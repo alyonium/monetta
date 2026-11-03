@@ -321,3 +321,23 @@
 ## 2026-10-03 11:20 - US-026
 - Holding a current card still for `ACCOUNT_DRAG_HOLD_MS` picks it up, so a transfer can be dragged left or right without a downward move first. A sideways move before that hold still pages the block.
 ---
+
+## 2026-10-11 18:00 - US-027
+- Edit in the parameters bar reorders accounts inside their own block and writes `monetta.accountOrder.<block>`. Add is hidden, and record modals stay closed. tsc, vitest (236), eslint green.
+- **Learnings for future iterations:**
+    - Patterns discovered: `sorting` goes Budget → block → pager → viewport → grid. Only the interactive slide uses `SortableContext` + `useSortable`. `reorderBlock` + `persistBlockOrder` run from `useAccountDnd` instead of `resolveRecordDrop`.
+    - Gotchas encountered: do not mount `useDraggable` and `useSortable` on the same id. `closestCenter` is filtered by account type, so a drop over another block can still land on the nearest card of the same type. Add is omitted by `toAccountPageItems(accounts, true)`; `clampPageIndex` already pulls back an Add-only page.
+    - Useful context: swipe stays off while `DndContext.active` is set. Moving a card onto another page is US-028 — this story's sortable list is only the current page.
+---
+
+## 2026-10-12 17:15 - US-028
+- In Edit, holding a drag at the left or right edge of a block turns that page once; the card stays in hand and a drop on the new page writes `monetta.accountOrder.<block>`. Record modals stay closed. tsc, vitest, eslint green.
+- **Learnings for future iterations:**
+    - Patterns discovered: `useAccountDragPageEdge` calls the instant pager `onNext`/`onPrev` after `ACCOUNT_PAGE_EDGE_HOLD_MS` (450) inside `ACCOUNT_PAGE_EDGE_PX` (28), once per dwell. `accountDraggedOffPage` remounts the dragged account off-screen so its sortable registration survives the page swap.
+    - Gotchas encountered: unmounting the source card makes dnd-kit replace `active.data` with `{ current: {} }`, and `onDragEnd` then skips the reorder. A second `useSortable` for the same id must not be a droppable.
+    - Useful context: swipe stays disabled for the whole drag. Leave the edge and re-enter to turn another page. Verification restored the Current block (page 1 starts with test1).
+---
+
+## 2026-10-12 18:30 - US-028
+- Holding a drag in the edge keeps turning pages, so the card can reach any later or earlier page of the same block. Each hold interval calls `onNext`/`onPrev` again. Leaving the edge stops it.
+---

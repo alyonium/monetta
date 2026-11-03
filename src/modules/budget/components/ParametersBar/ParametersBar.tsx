@@ -11,12 +11,6 @@ import {
 import type { BudgetMonthTotals } from '@/modules/budget/types/budgetMonthTotals.ts';
 import styles from './ParametersBar.module.css';
 
-type ParametersBarProps = {
-  month: string;
-  onMonthChange: (month: string) => void;
-  totals: BudgetMonthTotals;
-};
-
 const AMOUNT_PLACEHOLDER = '—';
 
 const formatTotalAmount = (
@@ -27,7 +21,21 @@ const formatTotalAmount = (
     ? formatWalletAmount(amount, currency)
     : AMOUNT_PLACEHOLDER;
 
-const ParametersBar = ({ month, onMonthChange, totals }: ParametersBarProps) => {
+type ParametersBarProps = {
+  month: string;
+  onMonthChange: (month: string) => void;
+  totals: BudgetMonthTotals;
+  editing: boolean;
+  onEditToggle: () => void;
+};
+
+const ParametersBar = ({
+  month,
+  onMonthChange,
+  totals,
+  editing,
+  onEditToggle,
+}: ParametersBarProps) => {
   const { t } = useTranslation();
 
   const onDateChange = (value: string | null) => {
@@ -86,10 +94,12 @@ const ParametersBar = ({ month, onMonthChange, totals }: ParametersBarProps) => 
 
         <ActionIcon
           aria-label={t('budget.parameters.edit')}
+          aria-pressed={editing}
+          onClick={onEditToggle}
           radius='md'
           size='input-sm'
           type='button'
-          variant='default'
+          variant={editing ? 'filled' : 'default'}
         >
           <PencilSimpleIcon aria-hidden size={18} />
         </ActionIcon>

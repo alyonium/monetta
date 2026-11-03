@@ -1,21 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { sortAccountsByOrder } from '@/modules/budget/helpers/account/sortAccountsByOrder.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { createBudgetAccount } from '@/modules/budget/helpers/account/tests/testHelpers.ts';
 
-const createAccount = (id: string, name = id): BudgetAccount => ({
-  id,
-  name,
-  type: ACCOUNT_TYPE.CURRENT,
-  isDebt: false,
-  icon: null,
-  color: null,
-  balance: 0,
-  currencyCode: 'EUR',
-  currencySymbol: '€',
-  debtAmount: null,
-  paidAmount: null,
-});
+const createAccount = (id: string, name = id) =>
+  createBudgetAccount({ id, name, type: ACCOUNT_TYPE.CURRENT });
 
 describe('sortAccountsByOrder', () => {
   it('orders known ids first and keeps the rest in original order', () => {
