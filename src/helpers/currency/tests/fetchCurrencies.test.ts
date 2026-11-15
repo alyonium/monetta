@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { listCurrency } from '@/api/sdk.gen.ts';
+import { createFireflyRequest } from '@/helpers/tests/createFireflyRequest.ts';
 import { CurrencyRead } from '@/api/types.gen.ts';
 import {
   CURRENCIES_MISSING_ERROR,
@@ -13,9 +14,6 @@ vi.mock('@/api/sdk.gen.ts', () => ({
 }));
 
 const listCurrencyMock = vi.mocked(listCurrency);
-
-const createRequest = () =>
-  new Request('https://demo.firefly-iii.org/api/v1/currencies');
 
 const createFireflyCurrency = (
   id: string,
@@ -36,7 +34,7 @@ const createCurrencyPageResult = (
     links: {},
   },
   error: undefined,
-  request: createRequest(),
+  request: createFireflyRequest('currencies'),
   response: new Response(null, { status: 200 }),
 });
 
@@ -116,7 +114,7 @@ describe('fetchCurrencies', () => {
     listCurrencyMock.mockResolvedValue({
       data: undefined,
       error: { message: UNAUTHENTICATED_ERROR_MESSAGE },
-      request: createRequest(),
+      request: createFireflyRequest('currencies'),
       response: new Response(null, { status: 401 }),
     });
 

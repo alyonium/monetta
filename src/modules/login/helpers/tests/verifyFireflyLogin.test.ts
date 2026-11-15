@@ -10,6 +10,10 @@ import {
 import { getCurrentUser } from '@/api/sdk.gen.ts';
 import { client } from '@/api/client.gen.ts';
 import { ACCESS_TOKEN_KEY, BACKEND_URL_KEY } from '@/helpers/authStorage.ts';
+import {
+  FIREFLY_DEMO_BASE_URL,
+  createFireflyRequest,
+} from '@/helpers/tests/createFireflyRequest.ts';
 import { stubLocalStorage } from '@/helpers/tests/stubLocalStorage.ts';
 import { LOGIN_FAILURE_REASON } from '@/modules/login/constants.ts';
 import { verifyFireflyLogin } from '@/modules/login/helpers/verifyFireflyLogin.ts';
@@ -28,12 +32,9 @@ type CurrentUserMockResult = {
 const getCurrentUserMock = getCurrentUser as unknown as Mock<
   () => Promise<CurrentUserMockResult>
 >;
-const DEMO_BASE_URL = 'https://demo.firefly-iii.org/api';
-const USER_URL = `${DEMO_BASE_URL}/v1/about/user`;
-
 const restoreClient = () => {
   client.setConfig({
-    baseUrl: DEMO_BASE_URL,
+    baseUrl: FIREFLY_DEMO_BASE_URL,
     headers: {
       Authorization: null,
       Accept: null,
@@ -41,14 +42,12 @@ const restoreClient = () => {
   });
 };
 
-const createRequest = () => new Request(USER_URL);
-
 const resolveCurrentUser = (
   result: Omit<CurrentUserMockResult, 'request'> &
     Partial<Pick<CurrentUserMockResult, 'request'>>,
 ) => {
   getCurrentUserMock.mockResolvedValue({
-    request: createRequest(),
+    request: createFireflyRequest('about/user'),
     ...result,
   });
 };

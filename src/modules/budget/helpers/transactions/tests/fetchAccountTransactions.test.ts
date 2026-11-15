@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { listTransactionByAccount } from '@/api/sdk.gen.ts';
+import { createFireflyRequest } from '@/helpers/tests/createFireflyRequest.ts';
 import {
   ACCOUNT_TRANSACTIONS_MISSING_ERROR,
   ACCOUNT_TRANSACTIONS_PAGE_LIMIT,
@@ -7,7 +8,6 @@ import {
 import { fetchAccountTransactions } from '@/modules/budget/helpers/transactions/fetchAccountTransactions.ts';
 import {
   createFireflyTransaction,
-  createRequest,
   createTransactionPageResult,
   createTransactionSplit,
 } from './testHelpers.ts';
@@ -89,7 +89,7 @@ describe('fetchAccountTransactions', () => {
     listTransactionByAccountMock.mockResolvedValue({
       data: undefined,
       error: { message: 'Server error' },
-      request: createRequest('accounts/1/transactions'),
+      request: createFireflyRequest('accounts/1/transactions'),
       response: new Response(null, { status: 500 }),
     });
 

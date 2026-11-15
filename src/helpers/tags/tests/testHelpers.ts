@@ -1,7 +1,5 @@
 import { TagRead } from '@/api/types.gen.ts';
-
-export const createRequest = () =>
-  new Request('https://demo.firefly-iii.org/api/v1/tags');
+import { createFireflyRequest } from '@/helpers/tests/createFireflyRequest.ts';
 
 export const createFireflyTag = (id: string, tag: string): TagRead => ({
   type: 'tags',
@@ -20,6 +18,6 @@ export const createTagPageResult = (
     links: {},
   },
   error: undefined,
-  request: createRequest(),
+  request: createFireflyRequest('tags'),
   response: new Response(null, { status: 200 }),
 });

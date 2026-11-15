@@ -3,6 +3,7 @@ import {
   PreferenceRead,
   ShortAccountTypeProperty,
 } from '@/api/types.gen.ts';
+import { createFireflyRequest } from '@/helpers/tests/createFireflyRequest.ts';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import {
   ACCOUNT_APPEARANCE_PREFIX,
@@ -28,9 +29,6 @@ export const appearancePreferenceKey = (accountId: string): string =>
 
 export const orderPreferenceKey = (type: AccountType): string =>
   `${ACCOUNT_ORDER_PREFIX}${type.toLowerCase()}`;
-
-export const createRequest = (path: string) =>
-  new Request(`https://demo.firefly-iii.org/api/v1/${path}`);
 
 export const createFireflyAccount = (
   id: string,
@@ -86,7 +84,7 @@ export const createAccountSingleResult = (account: AccountRead) => ({
     data: account,
   },
   error: undefined,
-  request: createRequest('accounts'),
+  request: createFireflyRequest('accounts'),
   response: new Response(null, { status: 200 }),
 });
 
@@ -96,7 +94,7 @@ export const createMissingAccountResult = (
 ) => ({
   data: undefined,
   error,
-  request: createRequest('accounts'),
+  request: createFireflyRequest('accounts'),
   response: new Response(null, { status }),
 });
 
@@ -108,7 +106,7 @@ export const createDeletedAccountResult = (): {
 } => ({
   data: undefined,
   error: undefined,
-  request: createRequest('accounts'),
+  request: createFireflyRequest('accounts'),
   response: new Response(null, { status: 204 }),
 });
 
@@ -120,7 +118,7 @@ export const createPreferenceSingleResult = (
     data: createPreference('1', name, data),
   },
   error: undefined,
-  request: createRequest('preferences/name'),
+  request: createFireflyRequest('preferences/name'),
   response: new Response(null, { status: 200 }),
 });
 
@@ -130,7 +128,7 @@ export const createMissingPreferenceResult = (
 ) => ({
   data: undefined,
   error,
-  request: createRequest('preferences/name'),
+  request: createFireflyRequest('preferences/name'),
   response: new Response(null, { status }),
 });
 
@@ -143,7 +141,7 @@ export const createAccountPageResult = (
     meta: { pagination },
   },
   error: undefined,
-  request: createRequest('accounts'),
+  request: createFireflyRequest('accounts'),
   response: new Response(null, { status: 200 }),
 });
 
@@ -157,7 +155,7 @@ export const createPreferencePageResult = (
     links: {},
   },
   error: undefined,
-  request: createRequest('preferences'),
+  request: createFireflyRequest('preferences'),
   response: new Response(null, { status: 200 }),
 });
 

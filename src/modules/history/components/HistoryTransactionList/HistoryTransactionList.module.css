@@ -1,0 +1,27 @@
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+}
+
+.date {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 0 calc(var(--mantine-spacing-md) * -1);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  background: var(--mantine-color-body);
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding-block: var(--mantine-spacing-sm);
+}

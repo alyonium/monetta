@@ -1,10 +1,8 @@
 import { TransactionRead, TransactionSplit } from '@/api/types.gen.ts';
+import { createFireflyRequest } from '@/helpers/tests/createFireflyRequest.ts';
 import { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 
 type PagePagination = { current_page: number; total_pages: number };
-
-export const createRequest = (path: string) =>
-  new Request(`https://demo.firefly-iii.org/api/v1/${path}`);
 
 export const createTransactionSplit = (
   extra: Partial<TransactionSplit> = {},
@@ -38,7 +36,7 @@ export const createTransactionPageResult = (
     links: {},
   },
   error: undefined,
-  request: createRequest('accounts/1/transactions'),
+  request: createFireflyRequest('accounts/1/transactions'),
   response: new Response(null, { status: 200 }),
 });
 
@@ -69,7 +67,7 @@ export const createTransactionSingleResult = (transaction: TransactionRead) => (
     data: transaction,
   },
   error: undefined,
-  request: createRequest('transactions'),
+  request: createFireflyRequest('transactions'),
   response: new Response(null, { status: 200 }),
 });
 
@@ -79,6 +77,6 @@ export const createMissingTransactionResult = (
 ) => ({
   data: undefined,
   error,
-  request: createRequest('transactions'),
+  request: createFireflyRequest('transactions'),
   response: new Response(null, { status }),
 });

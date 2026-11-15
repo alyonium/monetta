@@ -363,3 +363,11 @@
 - **Learnings for future iterations:**
     - Gotchas encountered: do not encode a missing journal id as a string the gate has to recognize.
 ---
+
+## 2026-11-15 13:20 - US-030
+- History lists wallet transactions by date and loads the next 10 Firefly groups when the list end is still on screen. tsc, vitest (265), eslint green.
+- **Learnings for future iterations:**
+    - Patterns discovered: `useHistoryTransactions` is `useInfiniteQuery` on the existing `HISTORY_TRANSACTIONS_QUERY_KEY`. `fetchHistoryTransactionsPage` calls `listTransaction` with `{ page, limit: 10 }` only. Pages flatten into `groupAccountTransactions`, so a day split across pages stays one section.
+    - Gotchas encountered: do not use `collectFireflyPages` here. Do not slice to 10 cards. A stale `useIntersection` entry still says visible after the list grows — also check the sentinel rect against the page scroller before `fetchNextPage`, and skip while `isFetchNextPageError` or the loop refetches. Mantine `Badge` uppercases tags; the history tag sets `text-transform: none`. The card is not a button until US-034.
+    - Useful context: one amount when `foreignAmount` is null or the currency codes match; otherwise `−` debited in red and `+` credited in green. Credited currency is `foreignCurrencyCode` through `formatAccountAmount`. i18n is `history.*` plus `history.type.*`. US-031 search, US-032 filters (`start`/`end`/`type`), and US-033 sort are not on this screen yet.
+---

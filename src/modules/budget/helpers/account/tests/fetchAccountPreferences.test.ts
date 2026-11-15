@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { listPreference } from '@/api/sdk.gen.ts';
+import { createFireflyRequest } from '@/helpers/tests/createFireflyRequest.ts';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import {
   ACCOUNT_PREFERENCES_MISSING_ERROR,
@@ -11,7 +12,6 @@ import {
   appearancePreferenceKey,
   createPreference,
   createPreferencePageResult,
-  createRequest,
   orderPreferenceKey,
   sampleAccountAppearance,
   sampleAccountAppearanceJson,
@@ -112,7 +112,7 @@ describe('fetchAccountPreferences', () => {
     listPreferenceMock.mockResolvedValue({
       data: undefined,
       error: { message: UNAUTHENTICATED_ERROR_MESSAGE },
-      request: createRequest('preferences'),
+      request: createFireflyRequest('preferences'),
       response: new Response(null, { status: 401 }),
     });
 

@@ -2,13 +2,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { client } from '@/api/client.gen.ts';
 import { setAccessToken, setBackendUrl } from '@/helpers/authStorage.ts';
 import { configureApiClient } from '@/helpers/configureApiClient.ts';
+import { FIREFLY_DEMO_BASE_URL } from '@/helpers/tests/createFireflyRequest.ts';
 import { stubLocalStorage } from '@/helpers/tests/stubLocalStorage.ts';
-
-const DEMO_BASE_URL = 'https://demo.firefly-iii.org/api';
 
 const restoreClient = () => {
   client.setConfig({
-    baseUrl: DEMO_BASE_URL,
+    baseUrl: FIREFLY_DEMO_BASE_URL,
     headers: {
       Authorization: null,
       Accept: null,
@@ -65,7 +64,7 @@ describe('configureApiClient', () => {
   it('does not overwrite the demo config when credentials are missing', () => {
     configureApiClient();
 
-    expect(client.getConfig().baseUrl).toBe(DEMO_BASE_URL);
+    expect(client.getConfig().baseUrl).toBe(FIREFLY_DEMO_BASE_URL);
     expect(headerValue('Authorization')).toBeNull();
   });
 
@@ -74,7 +73,7 @@ describe('configureApiClient', () => {
 
     configureApiClient();
 
-    expect(client.getConfig().baseUrl).toBe(DEMO_BASE_URL);
+    expect(client.getConfig().baseUrl).toBe(FIREFLY_DEMO_BASE_URL);
     expect(headerValue('Authorization')).toBeNull();
   });
 });

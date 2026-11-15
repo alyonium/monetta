@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { insightExpenseTotal, insightIncomeTotal } from '@/api/sdk.gen.ts';
 import { InsightTotalEntry } from '@/api/types.gen.ts';
+import { createFireflyRequest } from '@/helpers/tests/createFireflyRequest.ts';
 import { BUDGET_INSIGHTS_MISSING_ERROR } from '@/modules/budget/constants/queries.ts';
 import { fetchBudgetInsights } from '@/modules/budget/helpers/month/fetchBudgetInsights.ts';
-import { createRequest } from '@/modules/budget/helpers/account/tests/testHelpers.ts';
 
 vi.mock('@/api/sdk.gen.ts', () => ({
   insightIncomeTotal: vi.fn(),
@@ -19,14 +19,14 @@ const END = '2026-09-07';
 const createInsightResult = (data: InsightTotalEntry[]) => ({
   data,
   error: undefined,
-  request: createRequest('insight/income/total'),
+  request: createFireflyRequest('insight/income/total'),
   response: new Response(null, { status: 200 }),
 });
 
 const createMissingInsightResult = () => ({
   data: undefined,
   error: { message: 'Unauthenticated' },
-  request: createRequest('insight/income/total'),
+  request: createFireflyRequest('insight/income/total'),
   response: new Response(null, { status: 401 }),
 });
 

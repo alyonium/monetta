@@ -146,6 +146,20 @@ export const en = {
       loadFailed: 'Failed to load accounts',
     },
   },
+  history: {
+    from: 'From',
+    to: 'To',
+    empty: 'No transactions found',
+    loading: 'Loading transactions',
+    loadFailed: 'Failed to load transactions',
+    type: {
+      deposit: 'Deposit',
+      withdrawal: 'Withdrawal',
+      transfer: 'Transfer',
+      reconciliation: 'Reconciliation',
+      openingBalance: 'Opening balance',
+    },
+  },
   tags: {
     label: 'Tags',
     placeholder: 'Search or create a tag',

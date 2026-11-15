@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { listCurrencyExchangeRates } from '@/api/sdk.gen.ts';
+import { createFireflyRequest } from '@/helpers/tests/createFireflyRequest.ts';
 import { CurrencyExchangeRateRead } from '@/api/types.gen.ts';
 import {
   EXCHANGE_RATES_MISSING_ERROR,
@@ -14,9 +15,6 @@ vi.mock('@/api/sdk.gen.ts', () => ({
 
 const listCurrencyExchangeRatesMock = vi.mocked(listCurrencyExchangeRates);
 
-const createRequest = () =>
-  new Request('https://demo.firefly-iii.org/api/v1/exchange-rates');
-
 const pageResult = (
   data: CurrencyExchangeRateRead[],
   pagination: { current_page: number; total_pages: number },
@@ -27,7 +25,7 @@ const pageResult = (
     links: {},
   },
   error: undefined,
-  request: createRequest(),
+  request: createFireflyRequest('exchange-rates'),
   response: new Response(null, { status: 200 }),
 });
 
@@ -145,7 +143,7 @@ describe('fetchExchangeRates', () => {
     listCurrencyExchangeRatesMock.mockResolvedValue({
       data: undefined,
       error: { message: UNAUTHENTICATED_ERROR_MESSAGE },
-      request: createRequest(),
+      request: createFireflyRequest('exchange-rates'),
       response: new Response(null, { status: 401 }),
     });
 

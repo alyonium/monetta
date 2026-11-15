@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { getPrimaryCurrency } from '@/api/sdk.gen.ts';
+import { createFireflyRequest } from '@/helpers/tests/createFireflyRequest.ts';
 import { CurrencyProperties } from '@/api/types.gen.ts';
 import {
   PRIMARY_CURRENCY_MISSING_ERROR,
@@ -13,9 +14,6 @@ vi.mock('@/api/sdk.gen.ts', () => ({
 
 const getPrimaryCurrencyMock = vi.mocked(getPrimaryCurrency);
 
-const createRequest = () =>
-  new Request('https://demo.firefly-iii.org/api/v1/currencies/primary');
-
 const primaryCurrencyResult = (attributes: CurrencyProperties) => ({
   data: {
     data: {
@@ -25,7 +23,7 @@ const primaryCurrencyResult = (attributes: CurrencyProperties) => ({
     },
   },
   error: undefined,
-  request: createRequest(),
+  request: createFireflyRequest('currencies/primary'),
   response: new Response(null, { status: 200 }),
 });
 
@@ -72,7 +70,7 @@ describe('fetchPrimaryCurrency', () => {
     getPrimaryCurrencyMock.mockResolvedValue({
       data: undefined,
       error: { message: UNAUTHENTICATED_ERROR_MESSAGE },
-      request: createRequest(),
+      request: createFireflyRequest('currencies/primary'),
       response: new Response(null, { status: 401 }),
     });
 

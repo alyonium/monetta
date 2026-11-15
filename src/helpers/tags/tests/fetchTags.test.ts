@@ -1,15 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { listTag } from '@/api/sdk.gen.ts';
+import { createFireflyRequest } from '@/helpers/tests/createFireflyRequest.ts';
 import {
   TAGS_MISSING_ERROR,
   TAGS_PAGE_LIMIT,
 } from '@/helpers/tags/constants.ts';
 import { fetchTags } from '@/helpers/tags/fetchTags.ts';
-import {
-  createFireflyTag,
-  createRequest,
-  createTagPageResult,
-} from './testHelpers.ts';
+import { createFireflyTag, createTagPageResult } from './testHelpers.ts';
 
 vi.mock('@/api/sdk.gen.ts', () => ({
   listTag: vi.fn(),
@@ -63,7 +60,7 @@ describe('fetchTags', () => {
     listTagMock.mockResolvedValue({
       data: undefined,
       error: { message: 'Unauthenticated' },
-      request: createRequest(),
+      request: createFireflyRequest('tags'),
       response: new Response(null, { status: 401 }),
     });
 

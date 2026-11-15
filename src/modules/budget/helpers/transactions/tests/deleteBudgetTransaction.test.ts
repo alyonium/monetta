@@ -1,10 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { deleteTransaction } from '@/api/sdk.gen.ts';
+import { createFireflyRequest } from '@/helpers/tests/createFireflyRequest.ts';
 import { deleteBudgetTransaction } from '@/modules/budget/helpers/transactions/deleteBudgetTransaction.ts';
-import {
-  createMissingTransactionResult,
-  createRequest,
-} from './testHelpers.ts';
+import { createMissingTransactionResult } from './testHelpers.ts';
 
 vi.mock('@/api/sdk.gen.ts', () => ({
   deleteTransaction: vi.fn(),
@@ -15,7 +13,7 @@ const deleteTransactionMock = vi.mocked(deleteTransaction);
 const deleted = () => ({
   data: undefined,
   error: undefined,
-  request: createRequest('transactions/10'),
+  request: createFireflyRequest('transactions/10'),
   response: new Response(null, { status: 204 }),
 });
 
