@@ -1,4 +1,4 @@
-import { PointerSensor, type PointerSensorProps } from '@dnd-kit/core';
+import { PointerSensor, PointerSensorProps } from '@dnd-kit/core';
 import {
   ACCOUNT_DRAG_GESTURE,
   ACCOUNT_DRAG_HOLD_MS,

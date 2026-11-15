@@ -1,6 +1,6 @@
 import {
-  type Ref,
-  type RefCallback,
+  Ref,
+  RefCallback,
   useCallback,
   useImperativeHandle,
   useRef,
@@ -19,9 +19,9 @@ import {
 } from '@/modules/budget/helpers/layout/previewAccountPage.ts';
 import { useAccountDragPageEdge } from '@/modules/budget/hooks/useAccountDragPageEdge.ts';
 import { usePageSwipe } from '@/modules/budget/hooks/usePageSwipe.ts';
-import type { AccountBlockViewportHandle } from '@/modules/budget/types/accountBlockViewportHandle.ts';
-import type { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { AccountBlockViewportHandle } from '@/modules/budget/types/accountBlockViewportHandle.ts';
+import { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountBlockViewport.module.css';
 
 type AccountBlockViewportProps = {

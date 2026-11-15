@@ -1,5 +1,5 @@
-import type { AccountIconName } from '@/modules/budget/components/accountIcons.ts';
-import type { AccountType } from '@/modules/budget/types/budgetAccount.ts';
+import { AccountIconName } from '@/modules/budget/components/accountIcons.ts';
+import { AccountType } from '@/modules/budget/types/budgetAccount.ts';
 
 export type CreateAccountFormValues = {
   name: string;

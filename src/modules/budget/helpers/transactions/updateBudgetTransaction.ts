@@ -1,6 +1,6 @@
 import { updateTransaction } from '@/api/sdk.gen.ts';
-import type { TransactionUpdateWritable } from '@/api/types.gen.ts';
-import type { CreateBudgetTransactionResult } from '@/modules/budget/types/createBudgetTransaction.ts';
+import { TransactionUpdateWritable } from '@/api/types.gen.ts';
+import { CreateBudgetTransactionResult } from '@/modules/budget/types/createBudgetTransaction.ts';
 
 export const updateBudgetTransaction = async (
   groupId: string,

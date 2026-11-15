@@ -3,8 +3,8 @@ import { CREATE_BUDGET_ACCOUNT_FAILURE_REASON } from '@/modules/budget/constants
 import { hasNameError } from '@/modules/budget/helpers/account/hasNameError.ts';
 import { toAccountUpdateBody } from '@/modules/budget/helpers/account/toAccountUpdateBody.ts';
 import { writeAccountAppearance } from '@/modules/budget/helpers/account/writeAccountPreferences.ts';
-import type { CreateBudgetAccountResult } from '@/modules/budget/types/createBudgetAccount.ts';
-import type { UpdateBudgetAccountInput } from '@/modules/budget/types/editAccountForm.ts';
+import { CreateBudgetAccountResult } from '@/modules/budget/types/createBudgetAccount.ts';
+import { UpdateBudgetAccountInput } from '@/modules/budget/types/editAccountForm.ts';
 
 export const updateBudgetAccount = async ({
   id,

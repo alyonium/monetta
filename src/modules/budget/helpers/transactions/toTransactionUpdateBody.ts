@@ -1,6 +1,6 @@
-import type { TransactionUpdateWritable } from '@/api/types.gen.ts';
+import { TransactionUpdateWritable } from '@/api/types.gen.ts';
 import { toTransactionSplit } from '@/modules/budget/helpers/transactions/toTransactionSplit.ts';
-import type { ToTransactionStoreBodyInput } from '@/modules/budget/types/createBudgetTransaction.ts';
+import { ToTransactionStoreBodyInput } from '@/modules/budget/types/createBudgetTransaction.ts';
 
 export type ToTransactionUpdateBodyInput = ToTransactionStoreBodyInput & {
   journalId: string;

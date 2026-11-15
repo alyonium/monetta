@@ -10,13 +10,13 @@ import {
 } from '@/modules/budget/helpers/transactions/editTransactionAccounts.ts';
 import { initialEditTransactionFormValues } from '@/modules/budget/helpers/transactions/initialEditTransactionFormValues.ts';
 import { invalidateTransactionQueries } from '@/modules/budget/helpers/transactions/invalidateTransactionQueries.ts';
-import type { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
+import { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
 import { toTransactionUpdateBody } from '@/modules/budget/helpers/transactions/toTransactionUpdateBody.ts';
 import { updateBudgetTransaction } from '@/modules/budget/helpers/transactions/updateBudgetTransaction.ts';
 import { validateRecordTransactionForm } from '@/modules/budget/helpers/transactions/validateRecordTransactionForm.ts';
 import { validateRecordTransferForm } from '@/modules/budget/helpers/transactions/validateRecordTransferForm.ts';
-import type { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
-import type {
+import { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
+import {
   RecordTransferFormFieldErrors,
   RecordTransferFormValues,
 } from '@/modules/budget/types/recordTransferForm.ts';

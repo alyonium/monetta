@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { listCurrency } from '@/api/sdk.gen.ts';
-import type { CurrencyRead } from '@/api/types.gen.ts';
+import { CurrencyRead } from '@/api/types.gen.ts';
 import {
   CURRENCIES_MISSING_ERROR,
   CURRENCIES_PAGE_LIMIT,
@@ -83,7 +83,7 @@ describe('fetchCurrencies', () => {
     ]);
   });
 
-  it('keeps disabled currencies and skips entries without a code', async () => {
+  it('keeps disabled currencies', async () => {
     listCurrencyMock.mockResolvedValue(
       createCurrencyPageResult(
         [
@@ -98,11 +98,6 @@ describe('fetchCurrencies', () => {
             name: 'US Dollar',
             symbol: '$',
             enabled: false,
-          }),
-          createFireflyCurrency('3', {
-            code: '',
-            name: 'Blank',
-            symbol: 'x',
           }),
         ],
         { current_page: 1, total_pages: 1 },

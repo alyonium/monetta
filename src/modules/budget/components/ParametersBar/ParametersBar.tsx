@@ -3,12 +3,12 @@ import { MonthPickerInput } from '@mantine/dates';
 import { PencilSimpleIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { formatWalletAmount } from '@/helpers/currency/formatWalletAmount.ts';
-import type { WalletCurrency } from '@/helpers/currency/types.ts';
+import { WalletCurrency } from '@/helpers/currency/types.ts';
 import {
   startOfMonth,
   todayIso,
 } from '@/modules/budget/helpers/month/budgetMonth.ts';
-import type { BudgetMonthTotals } from '@/modules/budget/types/budgetMonthTotals.ts';
+import { BudgetMonthTotals } from '@/modules/budget/types/budgetMonthTotals.ts';
 import styles from './ParametersBar.module.css';
 
 const AMOUNT_PLACEHOLDER = '—';

@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { NumberInput, Select } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import type { WalletCurrency } from '@/helpers/currency/types.ts';
+import { WalletCurrency } from '@/helpers/currency/types.ts';
 import styles from './AccountMoneyFields.module.css';
 
 type AccountMoneyFieldsProps = {

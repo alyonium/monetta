@@ -3,10 +3,10 @@ import {
   pointerWithin,
   useSensor,
   useSensors,
-  type CollisionDetection,
-  type DragEndEvent,
-  type DragOverEvent,
-  type DragStartEvent,
+  CollisionDetection,
+  DragEndEvent,
+  DragOverEvent,
+  DragStartEvent,
 } from '@dnd-kit/core';
 import { useQueryClient } from '@tanstack/react-query';
 import { persistBlockOrder } from '@/modules/budget/helpers/account/persistBlockOrder.ts';
@@ -16,11 +16,11 @@ import {
   resolveRecordDrop,
 } from '@/modules/budget/helpers/transactions/resolveRecordDrop.ts';
 import { AccountPointerSensor } from '@/modules/budget/hooks/accountPointerSensor.ts';
-import type {
+import {
   AccountType,
   BudgetAccount,
 } from '@/modules/budget/types/budgetAccount.ts';
-import type { UseAccountDndArgs } from '@/modules/budget/types/useAccountDndArgs.ts';
+import { UseAccountDndArgs } from '@/modules/budget/types/useAccountDndArgs.ts';
 
 const sameBlockPointerWithin =
   (activeType: AccountType | undefined): CollisionDetection =>

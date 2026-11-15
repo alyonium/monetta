@@ -6,7 +6,7 @@ import AccountIconButton from '@/modules/budget/components/AccountIconButton/Acc
 import AccountIconPicker from '@/modules/budget/components/AccountIconPicker/AccountIconPicker.tsx';
 import { EDIT_ACCOUNT_TITLE_KEY } from '@/modules/budget/constants/account.ts';
 import { useEditAccountForm } from '@/modules/budget/hooks/useEditAccountForm.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 type EditAccountModalProps = {
   opened: boolean;

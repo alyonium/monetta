@@ -1,5 +1,5 @@
-import type { TransactionRead, TransactionSplit } from '@/api/types.gen.ts';
-import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
+import { TransactionRead, TransactionSplit } from '@/api/types.gen.ts';
+import { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 
 type PagePagination = { current_page: number; total_pages: number };
 

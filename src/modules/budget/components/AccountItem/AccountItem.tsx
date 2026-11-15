@@ -1,14 +1,14 @@
-import type {
+import {
   CSSProperties,
   KeyboardEvent,
   PointerEvent as ReactPointerEvent,
 } from 'react';
-import type {
+import {
   DraggableAttributes,
   DraggableSyntheticListeners,
 } from '@dnd-kit/core';
 import { clsx } from 'clsx';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import AccountItemBody from './AccountItemBody/AccountItemBody.tsx';
 import styles from './AccountItem.module.css';
 

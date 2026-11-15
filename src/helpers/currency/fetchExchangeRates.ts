@@ -1,11 +1,11 @@
 import { listCurrencyExchangeRates } from '@/api/sdk.gen.ts';
-import type { CurrencyExchangeProperties } from '@/api/types.gen.ts';
+import { CurrencyExchangeProperties } from '@/api/types.gen.ts';
 import { collectFireflyPages } from '@/helpers/collectFireflyPages.ts';
 import {
   EXCHANGE_RATES_MISSING_ERROR,
   EXCHANGE_RATES_PAGE_LIMIT,
 } from '@/helpers/currency/constants.ts';
-import type { ExchangeRate } from '@/helpers/currency/types.ts';
+import { ExchangeRate } from '@/helpers/currency/types.ts';
 
 type ExchangeRateAttributes = Pick<
   CurrencyExchangeProperties,
@@ -29,17 +29,15 @@ const mapExchangeRate = (
     rate: rawRate,
   } = attributes;
 
-  const fromCode = from_currency_code?.trim().toUpperCase();
-  const toCode = to_currency_code?.trim().toUpperCase();
-  const date = rawDate?.trim();
-  const trimmedRate = rawRate?.trim();
-  const rate = Number(trimmedRate);
+  const fromCode = from_currency_code?.toUpperCase();
+  const toCode = to_currency_code?.toUpperCase();
+  const rate = Number(rawRate);
 
-  if (!fromCode || !toCode || !date || !trimmedRate || !Number.isFinite(rate)) {
+  if (!fromCode || !toCode || !rawDate || !rawRate || !Number.isFinite(rate)) {
     return null;
   }
 
-  return { fromCode, toCode, rate, date };
+  return { fromCode, toCode, rate, date: rawDate };
 };
 
 const keepLatestByPair = (

@@ -1,4 +1,4 @@
-import type { AmountInCurrency, WalletCurrency } from '@/helpers/currency/types.ts';
+import { AmountInCurrency, WalletCurrency } from '@/helpers/currency/types.ts';
 
 export type BudgetInsights = {
   income: AmountInCurrency[];

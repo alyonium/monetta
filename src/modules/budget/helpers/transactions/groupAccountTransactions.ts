@@ -1,5 +1,5 @@
 import { formatAccountTransactionGroupDate } from '@/modules/budget/helpers/transactions/accountTransactionDate.ts';
-import type {
+import {
   AccountTransaction,
   AccountTransactionGroup,
 } from '@/modules/budget/types/accountTransaction.ts';

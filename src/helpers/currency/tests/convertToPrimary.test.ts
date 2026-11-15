@@ -44,11 +44,11 @@ describe('convertToPrimary', () => {
     ).toBe(20);
   });
 
-  it('returns null when a currency code is missing', () => {
+  it('returns null when a currency code is empty', () => {
     expect(
       convertToPrimary({
         amount: 10,
-        fromCode: undefined as unknown as string,
+        fromCode: '',
         primaryCurrencyCode: 'EUR',
         rates: [],
       }),
@@ -57,7 +57,7 @@ describe('convertToPrimary', () => {
       convertToPrimary({
         amount: 10,
         fromCode: 'USD',
-        primaryCurrencyCode: undefined as unknown as string,
+        primaryCurrencyCode: '',
         rates: [],
       }),
     ).toBeNull();

@@ -1,4 +1,4 @@
-import type { TransactionTypeProperty } from '@/api/types.gen.ts';
+import { TransactionTypeProperty } from '@/api/types.gen.ts';
 
 export type AccountTransaction = {
   id: string;

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { NumberInput, TextInput } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import styles from './RecordTransactionFields.module.css';

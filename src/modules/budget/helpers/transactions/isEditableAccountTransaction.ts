@@ -1,8 +1,8 @@
 import {
   FIREFLY_TRANSACTION_TYPE,
-  type FireflyTransactionType,
+  FireflyTransactionType,
 } from '@/modules/budget/constants/transactions.ts';
-import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
+import { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 
 export type EditableAccountTransaction = AccountTransaction & {
   type: FireflyTransactionType;

@@ -1,5 +1,5 @@
 import { listPreference } from '@/api/sdk.gen.ts';
-import type { PolymorphicProperty } from '@/api/types.gen.ts';
+import { PolymorphicProperty } from '@/api/types.gen.ts';
 import { collectFireflyPages } from '@/helpers/collectFireflyPages.ts';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import {
@@ -8,7 +8,7 @@ import {
   ACCOUNT_PREFERENCES_MISSING_ERROR,
   PREFERENCES_PAGE_LIMIT,
 } from '@/modules/budget/constants/queries.ts';
-import type {
+import {
   AccountAppearance,
   AccountPreferences,
   AccountType,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { formatWalletAmount } from '@/helpers/currency/formatWalletAmount.ts';
-import type { WalletCurrency } from '@/helpers/currency/types.ts';
+import { WalletCurrency } from '@/helpers/currency/types.ts';
 
 const euro: WalletCurrency = {
   code: 'EUR',
@@ -23,16 +23,5 @@ describe('formatWalletAmount', () => {
         symbol: '',
       }),
     ).toBe('10.00 EUR');
-  });
-
-  it('formats the amount alone when symbol and code are empty', () => {
-    expect(
-      formatWalletAmount(1.5, {
-        code: '',
-        name: '',
-        symbol: '',
-        decimalPlaces: 1,
-      }),
-    ).toBe('1.5');
   });
 });

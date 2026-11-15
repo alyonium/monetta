@@ -1,5 +1,5 @@
 import { validateAccountName } from '@/modules/budget/helpers/account/validateAccountName.ts';
-import type {
+import {
   CreateAccountFormFieldErrors,
   CreateAccountFormValues,
 } from '@/modules/budget/types/createAccountForm.ts';

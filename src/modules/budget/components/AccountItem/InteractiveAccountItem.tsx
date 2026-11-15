@@ -1,8 +1,8 @@
-import type { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 import { onEnterOrSpace } from '@/helpers/onEnterOrSpace.ts';
 import { useAccountDndNode } from '@/modules/budget/hooks/useAccountDndNode.ts';
 import { useClickAfterDrag } from '@/modules/budget/hooks/useClickAfterDrag.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import AccountItem from './AccountItem.tsx';
 
 type InteractiveAccountItemProps = {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { WalletCurrency } from '@/helpers/currency/types.ts';
+import { WalletCurrency } from '@/helpers/currency/types.ts';
 import { createExchangeRate } from '@/helpers/currency/tests/testHelpers.ts';
 import { toBudgetMonthTotals } from '@/modules/budget/helpers/month/toBudgetMonthTotals.ts';
 import { createCurrentAccount } from '@/modules/budget/helpers/account/tests/testHelpers.ts';

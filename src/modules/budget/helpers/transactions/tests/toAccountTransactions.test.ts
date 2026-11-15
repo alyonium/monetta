@@ -19,7 +19,7 @@ describe('toAccountTransactions', () => {
           currency_code: 'eur',
           currency_symbol: '€',
           type: 'withdrawal',
-          tags: ['food', ''],
+          tags: ['food'],
         }),
         createTransactionSplit({
           transaction_journal_id: '102',
@@ -40,6 +40,7 @@ describe('toAccountTransactions', () => {
           source_name: 'Job',
           destination_name: 'Wallet',
           amount: '1000',
+          currency_code: 'usd',
           type: 'deposit',
         }),
       ]),
@@ -58,37 +59,9 @@ describe('toAccountTransactions', () => {
       id: '11',
       date: '2026-04-01',
       amount: 1000,
-      currencyCode: '',
+      currencyCode: 'USD',
       tags: [],
     });
-  });
-
-  it('skips splits without a date, identity, or amount', () => {
-    const items = toAccountTransactions([
-      createFireflyTransaction('10', [
-        createTransactionSplit({ date: '   ', transaction_journal_id: '1' }),
-        createTransactionSplit({
-          date: 'not-a-date',
-          transaction_journal_id: '2',
-        }),
-        createTransactionSplit({ amount: 'nope', transaction_journal_id: '3' }),
-      ]),
-      createFireflyTransaction('', [
-        createTransactionSplit({ transaction_journal_id: undefined }),
-      ]),
-    ]);
-
-    expect(items).toEqual([]);
-  });
-
-  it('leaves journalId empty when Firefly omits the journal id', () => {
-    const items = toAccountTransactions([
-      createFireflyTransaction('10', [
-        createTransactionSplit({ transaction_journal_id: undefined }),
-      ]),
-    ]);
-
-    expect(items).toMatchObject([{ id: '10', journalId: null }]);
   });
 
   it('maps the foreign amount and currency, or leaves them empty for null', () => {

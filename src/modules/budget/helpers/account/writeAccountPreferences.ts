@@ -1,11 +1,11 @@
 import { storePreference, updatePreference } from '@/api/sdk.gen.ts';
-import type { PolymorphicProperty } from '@/api/types.gen.ts';
+import { PolymorphicProperty } from '@/api/types.gen.ts';
 import {
   ACCOUNT_APPEARANCE_PREFIX,
   ACCOUNT_ORDER_PREFIX,
   ACCOUNT_PREFERENCE_WRITE_ERROR,
 } from '@/modules/budget/constants/queries.ts';
-import type {
+import {
   AccountAppearance,
   AccountType,
 } from '@/modules/budget/types/budgetAccount.ts';

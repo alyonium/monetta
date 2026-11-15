@@ -1,7 +1,7 @@
 import { accountById } from '@/modules/budget/helpers/account/accountById.ts';
 import { isValidTransactionAmount } from '@/modules/budget/helpers/transactions/isValidTransactionAmount.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
-import type {
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import {
   RecordTransactionFormFieldErrors,
   RecordTransactionFormValues,
 } from '@/modules/budget/types/recordTransactionForm.ts';

@@ -1,6 +1,6 @@
-import type { TransactionStoreWritable } from '@/api/types.gen.ts';
+import { TransactionStoreWritable } from '@/api/types.gen.ts';
 import { toTransactionSplit } from '@/modules/budget/helpers/transactions/toTransactionSplit.ts';
-import type { ToTransactionStoreBodyInput } from '@/modules/budget/types/createBudgetTransaction.ts';
+import { ToTransactionStoreBodyInput } from '@/modules/budget/types/createBudgetTransaction.ts';
 
 export const toTransactionStoreBody = (
   input: ToTransactionStoreBodyInput,

@@ -1,4 +1,4 @@
-import type { KeyboardEvent } from 'react';
+import { KeyboardEvent } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { onEnterOrSpace } from '@/helpers/onEnterOrSpace.ts';
 

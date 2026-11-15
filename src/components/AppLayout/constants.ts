@@ -4,7 +4,7 @@ import {
   GearIcon,
   WalletIcon,
 } from '@phosphor-icons/react';
-import type { FooterTab } from '@/components/AppLayout/types/footerTab.ts';
+import { FooterTab } from '@/components/AppLayout/types/footerTab.ts';
 import { ROUTE } from '@/constants/router.ts';
 
 export const NAV_LABEL_KEY = {

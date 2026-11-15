@@ -9,8 +9,8 @@ import { BUDGET_INSIGHTS_QUERY_KEY } from '@/modules/budget/constants/queries.ts
 import { monthRange, todayIso } from '@/modules/budget/helpers/month/budgetMonth.ts';
 import { fetchBudgetInsights } from '@/modules/budget/helpers/month/fetchBudgetInsights.ts';
 import { toBudgetMonthTotals } from '@/modules/budget/helpers/month/toBudgetMonthTotals.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
-import type { BudgetMonthTotals } from '@/modules/budget/types/budgetMonthTotals.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { BudgetMonthTotals } from '@/modules/budget/types/budgetMonthTotals.ts';
 
 export const useBudgetMonthTotals = (
   month: string,

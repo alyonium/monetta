@@ -1,4 +1,4 @@
-import type { EnTranslation } from './en.ts';
+import { EnTranslation } from './en.ts';
 
 declare module 'i18next' {
   interface CustomTypeOptions {

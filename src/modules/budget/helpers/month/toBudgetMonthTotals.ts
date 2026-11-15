@@ -1,11 +1,11 @@
 import { sumToPrimary } from '@/helpers/currency/sumToPrimary.ts';
-import type {
+import {
   AmountInCurrency,
   ExchangeRate,
   WalletCurrency,
 } from '@/helpers/currency/types.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
-import type {
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import {
   BudgetInsights,
   BudgetMonthTotals,
 } from '@/modules/budget/types/budgetMonthTotals.ts';

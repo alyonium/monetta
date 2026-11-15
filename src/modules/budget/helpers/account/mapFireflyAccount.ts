@@ -1,7 +1,10 @@
-import type { AccountProperties, AccountRead } from '@/api/types.gen.ts';
-import { ACCOUNT_TYPE, FIREFLY_ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
+import { AccountProperties, AccountRead } from '@/api/types.gen.ts';
+import {
+  ACCOUNT_TYPE,
+  FIREFLY_ACCOUNT_TYPE,
+} from '@/modules/budget/constants/account.ts';
 import { toFiniteNumber } from '@/modules/budget/helpers/account/toFiniteNumber.ts';
-import type {
+import {
   AccountAppearance,
   AccountType,
   BudgetAccount,
@@ -25,6 +28,11 @@ const toBudgetAccountType = (
   }
 };
 
+const DEFAULT_DECIMAL_PLACES = 2;
+
+const roundMoney = (amount: number, decimalPlaces: number): number =>
+  Number(amount.toFixed(decimalPlaces));
+
 const debtFields = (
   isDebt: boolean,
   balance: number,
@@ -37,10 +45,15 @@ const debtFields = (
   const debtAmount =
     toFiniteNumber(attributes.debt_amount) ?? Math.abs(balance);
   const openingBalance = toFiniteNumber(attributes.opening_balance);
+  const decimalPlaces =
+    attributes.currency_decimal_places ?? DEFAULT_DECIMAL_PLACES;
   const paidAmount =
     openingBalance === null
       ? 0
-      : Math.max(0, Math.abs(openingBalance) - debtAmount);
+      : Math.max(
+          0,
+          roundMoney(Math.abs(openingBalance) - debtAmount, decimalPlaces),
+        );
 
   return { debtAmount, paidAmount };
 };
@@ -67,21 +80,11 @@ export const mapFireflyAccount = (
 
   const { type, isDebt } = mappedType;
   const { icon = null, color = null } = appearance ?? {};
-  const {
-    current_balance,
-    currency_code,
-    primary_currency_code,
-    currency_symbol,
-    primary_currency_symbol,
-  } = attributes;
+  const { current_balance, currency_code, currency_symbol } = attributes;
 
   const balance = toFiniteNumber(current_balance) ?? 0;
-  const currencyCode = (
-    currency_code ||
-    primary_currency_code ||
-    ''
-  ).toUpperCase();
-  const currencySymbol = currency_symbol || primary_currency_symbol || '';
+  const currencyCode = (currency_code ?? '').toUpperCase();
+  const currencySymbol = currency_symbol ?? '';
 
   return {
     id: account.id,

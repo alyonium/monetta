@@ -1,6 +1,6 @@
-import type { AccountUpdate } from '@/api/types.gen.ts';
+import { AccountUpdate } from '@/api/types.gen.ts';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
-import type { AccountType } from '@/modules/budget/types/budgetAccount.ts';
+import { AccountType } from '@/modules/budget/types/budgetAccount.ts';
 
 export type ToAccountUpdateBodyInput = {
   accountType: AccountType;

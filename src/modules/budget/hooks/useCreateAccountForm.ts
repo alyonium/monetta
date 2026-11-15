@@ -18,7 +18,7 @@ import { createAccountVisibility } from '@/modules/budget/helpers/account/create
 import { createBudgetAccount } from '@/modules/budget/helpers/account/createBudgetAccount.ts';
 import { validateCreateAccountForm } from '@/modules/budget/helpers/account/validateCreateAccountForm.ts';
 import { defaultTransactionDate, todayIso } from '@/modules/budget/helpers/month/budgetMonth.ts';
-import type {
+import {
   CreateAccountFormValues,
   UseCreateAccountFormParams,
 } from '@/modules/budget/types/createAccountForm.ts';

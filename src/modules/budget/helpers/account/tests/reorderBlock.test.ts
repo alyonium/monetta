@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { reorderBlock } from '@/modules/budget/helpers/account/reorderBlock.ts';
 import { createBudgetAccount } from '@/modules/budget/helpers/account/tests/testHelpers.ts';
-import type { AccountType } from '@/modules/budget/types/budgetAccount.ts';
+import { AccountType } from '@/modules/budget/types/budgetAccount.ts';
 
 const createAccount = (id: string, type: AccountType = ACCOUNT_TYPE.CURRENT) =>
   createBudgetAccount({ id, type });

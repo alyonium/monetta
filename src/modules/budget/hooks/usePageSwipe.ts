@@ -1,6 +1,6 @@
 import {
-  type MouseEvent,
-  type PointerEvent,
+  MouseEvent,
+  PointerEvent,
   useLayoutEffect,
   useRef,
 } from 'react';
@@ -13,7 +13,7 @@ import {
   resolvePageSwipe,
   rubberBandDragX,
 } from '@/modules/budget/helpers/layout/pageSwipe.ts';
-import type { PageSwipeDirection } from '@/modules/budget/types/pageSwipeDirection.ts';
+import { PageSwipeDirection } from '@/modules/budget/types/pageSwipeDirection.ts';
 
 const REST_TRANSFORM = 'translate3d(-100%, 0, 0)';
 const NEXT_TRANSFORM = 'translate3d(-200%, 0, 0)';

@@ -7,15 +7,15 @@ import { ACCOUNT_TRANSACTION_FLOW } from '@/modules/budget/constants/transaction
 import { formatAccountAmount } from '@/modules/budget/helpers/account/formatAccountAmount.ts';
 import {
   accountTransactionFlow,
-  type AccountTransactionFlow,
+  AccountTransactionFlow,
 } from '@/modules/budget/helpers/transactions/accountTransactionFlow.ts';
 import {
   isEditableAccountTransaction,
-  type EditableAccountTransaction,
+  EditableAccountTransaction,
 } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
 import { hasTransactionDescription } from '@/modules/budget/helpers/transactions/transactionDescription.ts';
-import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountTransactionCard.module.css';
 
 type AccountTransactionCardProps = {

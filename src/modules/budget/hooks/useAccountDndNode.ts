@@ -1,6 +1,6 @@
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { ACCOUNT_DND } from '@/modules/budget/constants/accountDnd.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 export const useAccountDndNode = (account: BudgetAccount, editing = false) => {
   const role = ACCOUNT_DND[account.type];

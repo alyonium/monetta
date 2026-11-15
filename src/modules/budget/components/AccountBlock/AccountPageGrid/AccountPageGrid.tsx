@@ -1,11 +1,11 @@
-import { type CSSProperties, useLayoutEffect, useState } from 'react';
+import { CSSProperties, useLayoutEffect, useState } from 'react';
 import AddAccountButton from '@/modules/budget/components/AddAccountButton/AddAccountButton.tsx';
 import AccountItem from '@/modules/budget/components/AccountItem/AccountItem.tsx';
 import InteractiveAccountItem from '@/modules/budget/components/AccountItem/InteractiveAccountItem.tsx';
 import { ACCOUNT_CARD_MIN_HEIGHT_DEFAULT } from '@/modules/budget/constants/layout.ts';
 import { cellPosition } from '@/modules/budget/helpers/layout/insertionShift.ts';
-import type { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountPageGrid.module.css';
 
 type AccountPageGridProps = {

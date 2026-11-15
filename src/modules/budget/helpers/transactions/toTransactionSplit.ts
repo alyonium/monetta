@@ -1,5 +1,5 @@
 import { transactionDescription } from '@/modules/budget/helpers/transactions/transactionDescription.ts';
-import type { ToTransactionStoreBodyInput } from '@/modules/budget/types/createBudgetTransaction.ts';
+import { ToTransactionStoreBodyInput } from '@/modules/budget/types/createBudgetTransaction.ts';
 
 export type TransactionSplitFields = {
   type: ToTransactionStoreBodyInput['type'];

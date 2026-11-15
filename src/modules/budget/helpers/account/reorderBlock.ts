@@ -1,5 +1,5 @@
 import { arrayMove } from '@dnd-kit/sortable';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 export const reorderBlock = (
   accounts: BudgetAccount[],

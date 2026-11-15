@@ -1,4 +1,4 @@
-import type { KeyboardEvent } from 'react';
+import { KeyboardEvent } from 'react';
 
 export const onEnterOrSpace =
   (callback: () => void) =>

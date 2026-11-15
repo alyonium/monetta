@@ -1,4 +1,4 @@
-import type { Icon } from '@phosphor-icons/react';
+import { Icon } from '@phosphor-icons/react';
 import { ACCOUNT_ICON_SIZE } from '@/modules/budget/constants/appearance.ts';
 import styles from './AccountDetailsGlyph.module.css';
 

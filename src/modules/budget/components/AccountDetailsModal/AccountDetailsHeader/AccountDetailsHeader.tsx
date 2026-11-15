@@ -1,4 +1,4 @@
-import { type CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 import { ActionIcon, Text } from '@mantine/core';
 import { PencilSimpleIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ import { DEFAULT_ACCOUNT_COLOR } from '@/modules/budget/constants/appearance.ts'
 import { accountDetailsHeader } from '@/modules/budget/helpers/account/accountDetailsHeader.ts';
 import { accountDetailsEditColor } from '@/modules/budget/helpers/appearance/accountDetailsEditColor.ts';
 import { accountIconGlyphColor } from '@/modules/budget/helpers/appearance/accountIconContrast.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountDetailsHeader.module.css';
 
 type AccountDetailsHeaderProps = {

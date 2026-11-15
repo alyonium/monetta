@@ -1,6 +1,6 @@
 import { CREATE_BUDGET_ACCOUNT_FAILURE_REASON } from '@/modules/budget/constants/account.ts';
-import type { AccountType } from '@/modules/budget/types/budgetAccount.ts';
-import type { CreateAccountFormValues } from '@/modules/budget/types/createAccountForm.ts';
+import { AccountType } from '@/modules/budget/types/budgetAccount.ts';
+import { CreateAccountFormValues } from '@/modules/budget/types/createAccountForm.ts';
 
 export type CreateBudgetAccountFailureReason =
   (typeof CREATE_BUDGET_ACCOUNT_FAILURE_REASON)[keyof typeof CREATE_BUDGET_ACCOUNT_FAILURE_REASON];

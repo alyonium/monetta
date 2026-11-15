@@ -1,4 +1,4 @@
-import type { QueryClient } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { TAGS_QUERY_KEY } from '@/helpers/tags/constants.ts';
 import {
   ACCOUNT_TRANSACTIONS_QUERY_KEY,

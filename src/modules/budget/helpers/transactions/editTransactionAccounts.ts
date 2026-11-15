@@ -1,10 +1,10 @@
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import {
   FIREFLY_TRANSACTION_TYPE,
-  type FireflyTransactionType,
+  FireflyTransactionType,
 } from '@/modules/budget/constants/transactions.ts';
 import { transferCurrenciesDiffer } from '@/modules/budget/helpers/transactions/transferCurrenciesDiffer.ts';
-import type {
+import {
   AccountType,
   BudgetAccount,
   BudgetAccountsByBlock,

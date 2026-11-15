@@ -1,9 +1,9 @@
-import { type CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 import { Modal } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import {
   ACCOUNT_ICONS,
-  type AccountIconName,
+  AccountIconName,
 } from '@/modules/budget/components/accountIcons.ts';
 import { accountIconGlyphColor } from '@/modules/budget/helpers/appearance/accountIconContrast.ts';
 import IconCell from './IconCell/IconCell.tsx';

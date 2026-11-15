@@ -1,5 +1,5 @@
 import { accountById } from '@/modules/budget/helpers/account/accountById.ts';
-import type {
+import {
   BudgetAccount,
   BudgetAccountsByBlock,
 } from '@/modules/budget/types/budgetAccount.ts';

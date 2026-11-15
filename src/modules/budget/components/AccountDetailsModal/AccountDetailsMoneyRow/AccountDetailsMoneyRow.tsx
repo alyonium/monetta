@@ -2,10 +2,10 @@ import { useTranslation } from 'react-i18next';
 import AccountDetailsField from '@/modules/budget/components/AccountDetailsModal/AccountDetailsField/AccountDetailsField.tsx';
 import {
   ACCOUNT_DETAILS_MONEY,
-  type AccountDetailsMoney,
+  AccountDetailsMoney,
 } from '@/modules/budget/helpers/account/accountDetailsHeader.ts';
 import { formatAccountAmount } from '@/modules/budget/helpers/account/formatAccountAmount.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountDetailsMoneyRow.module.css';
 
 type AccountDetailsMoneyRowProps = {

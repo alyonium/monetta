@@ -1,5 +1,5 @@
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
-import type { AccountBlockPagerLayout } from '@/modules/budget/types/accountBlockPagerLayout.ts';
+import { AccountBlockPagerLayout } from '@/modules/budget/types/accountBlockPagerLayout.ts';
 
 export const ACCOUNT_BLOCK_DESKTOP_MIN_PX = 961;
 export const ACCOUNT_BLOCK_MOBILE_COLUMNS = 4;

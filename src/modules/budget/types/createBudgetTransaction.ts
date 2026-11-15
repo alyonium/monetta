@@ -1,4 +1,4 @@
-import type { FireflyTransactionType } from '@/modules/budget/constants/transactions.ts';
+import { FireflyTransactionType } from '@/modules/budget/constants/transactions.ts';
 
 export type CreateBudgetTransactionResult = { ok: true } | { ok: false };
 

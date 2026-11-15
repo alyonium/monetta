@@ -1,4 +1,4 @@
-import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
+import { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 
 const searchableText = (item: AccountTransaction): string =>
   [

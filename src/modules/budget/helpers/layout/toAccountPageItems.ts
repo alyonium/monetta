@@ -1,5 +1,5 @@
-import type { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 const ADD_ITEM: AccountPageItem = { type: 'add' };
 

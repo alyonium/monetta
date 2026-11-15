@@ -1,4 +1,4 @@
-import type { AccountStore } from '@/api/types.gen.ts';
+import { AccountStore } from '@/api/types.gen.ts';
 import {
   ACCOUNT_TYPE,
   FIREFLY_ACCOUNT_ROLE,
@@ -8,8 +8,8 @@ import {
   FIREFLY_LIABILITY_INTEREST_PERIOD,
   FIREFLY_LIABILITY_TYPE,
 } from '@/modules/budget/constants/account.ts';
-import type { AccountType } from '@/modules/budget/types/budgetAccount.ts';
-import type { CreateAccountFormValues } from '@/modules/budget/types/createAccountForm.ts';
+import { AccountType } from '@/modules/budget/types/budgetAccount.ts';
+import { CreateAccountFormValues } from '@/modules/budget/types/createAccountForm.ts';
 
 export type ToAccountStoreBodyInput = Pick<
   CreateAccountFormValues,

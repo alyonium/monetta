@@ -1,12 +1,12 @@
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import {
   RECORD_DROP_KIND,
-  type RecordDropKind,
+  RecordDropKind,
 } from '@/modules/budget/constants/accountDnd.ts';
 import { FIREFLY_TRANSACTION_TYPE } from '@/modules/budget/constants/transactions.ts';
-import type { RecordDrop } from '@/modules/budget/helpers/transactions/resolveRecordDrop.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
-import type {
+import { RecordDrop } from '@/modules/budget/helpers/transactions/resolveRecordDrop.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import {
   RecordTransactionDrop,
   RecordTransactionKind,
   RecordTransactionKindConfig,

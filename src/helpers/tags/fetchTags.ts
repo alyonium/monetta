@@ -1,5 +1,5 @@
 import { listTag } from '@/api/sdk.gen.ts';
-import type { TagRead } from '@/api/types.gen.ts';
+import { TagRead } from '@/api/types.gen.ts';
 import { collectFireflyPages } from '@/helpers/collectFireflyPages.ts';
 import {
   TAGS_MISSING_ERROR,
@@ -7,7 +7,7 @@ import {
 } from '@/helpers/tags/constants.ts';
 
 const mapTag = (item: TagRead): string | null => {
-  const tag = item.attributes?.tag?.trim();
+  const tag = item.attributes?.tag;
 
   if (!tag) {
     return null;

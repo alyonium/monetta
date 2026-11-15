@@ -1,4 +1,4 @@
-import type { ValidationErrorResponse } from '@/api/types.gen.ts';
+import { ValidationErrorResponse } from '@/api/types.gen.ts';
 
 export const hasNameError = (
   error: ValidationErrorResponse | undefined,

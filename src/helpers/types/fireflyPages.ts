@@ -1,4 +1,4 @@
-import type { Meta } from '@/api/types.gen.ts';
+import { Meta } from '@/api/types.gen.ts';
 
 export type FireflyListPayload<T> = {
   data?: T[];

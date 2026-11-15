@@ -1,7 +1,7 @@
-import type { TransactionRead, TransactionSplit } from '@/api/types.gen.ts';
+import { TransactionRead, TransactionSplit } from '@/api/types.gen.ts';
 import { toFiniteNumber } from '@/modules/budget/helpers/account/toFiniteNumber.ts';
 import { accountTransactionDate } from '@/modules/budget/helpers/transactions/accountTransactionDate.ts';
-import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
+import { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 
 const toAccountTransaction = (
   groupId: string,
@@ -20,9 +20,6 @@ const toAccountTransaction = (
     return null;
   }
 
-  const foreignAmount =
-    split.foreign_amount == null ? null : toFiniteNumber(split.foreign_amount);
-
   return {
     id: groupId,
     journalId,
@@ -34,17 +31,12 @@ const toAccountTransaction = (
     sourceName: split.source_name ?? '',
     destinationName: split.destination_name ?? '',
     amount,
-    currencyCode: (
-      split.currency_code ??
-      split.primary_currency_code ??
-      ''
-    ).toUpperCase(),
-    currencySymbol:
-      split.currency_symbol || split.primary_currency_symbol || '',
-    foreignAmount,
+    currencyCode: (split.currency_code ?? '').toUpperCase(),
+    currencySymbol: split.currency_symbol ?? '',
+    foreignAmount: toFiniteNumber(split.foreign_amount),
     foreignCurrencyCode: (split.foreign_currency_code ?? '').toUpperCase(),
     type: split.type,
-    tags: split.tags?.filter((tag) => tag !== '') ?? [],
+    tags: split.tags ?? [],
   };
 };
 

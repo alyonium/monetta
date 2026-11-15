@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import AccountIcon from '@/modules/budget/components/AccountIcon/AccountIcon.tsx';
 import {
   ACCOUNT_ICONS,
-  type AccountIconName,
+  AccountIconName,
 } from '@/modules/budget/components/accountIcons.ts';
 import styles from './AccountIconButton.module.css';
 

@@ -1,4 +1,4 @@
-import i18n, { type TFunction } from 'i18next';
+import i18n, { TFunction } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { en } from './en.ts';
 

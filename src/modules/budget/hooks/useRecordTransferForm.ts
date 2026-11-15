@@ -10,8 +10,8 @@ import { invalidateTransactionQueries } from '@/modules/budget/helpers/transacti
 import { toTransactionStoreBody } from '@/modules/budget/helpers/transactions/toTransactionStoreBody.ts';
 import { transferCurrenciesDiffer } from '@/modules/budget/helpers/transactions/transferCurrenciesDiffer.ts';
 import { validateRecordTransferForm } from '@/modules/budget/helpers/transactions/validateRecordTransferForm.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
-import type { RecordTransferFormValues } from '@/modules/budget/types/recordTransferForm.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { RecordTransferFormValues } from '@/modules/budget/types/recordTransferForm.ts';
 
 type UseRecordTransferFormParams = {
   onClose: () => void;

@@ -6,7 +6,7 @@ import {
   writeAccountAppearance,
   writeAccountOrder,
 } from '@/modules/budget/helpers/account/writeAccountPreferences.ts';
-import type {
+import {
   CreateBudgetAccountInput,
   CreateBudgetAccountResult,
 } from '@/modules/budget/types/createBudgetAccount.ts';

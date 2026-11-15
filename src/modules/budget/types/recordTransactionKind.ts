@@ -1,5 +1,5 @@
-import type { recordTransactionKindConfig } from '@/modules/budget/helpers/transactions/recordTransactionKind.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { recordTransactionKindConfig } from '@/modules/budget/helpers/transactions/recordTransactionKind.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 export type RecordTransactionKind = keyof typeof recordTransactionKindConfig;
 

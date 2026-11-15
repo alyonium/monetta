@@ -9,8 +9,8 @@ import {
 } from '@/modules/budget/constants/queries.ts';
 import { deleteBudgetAccount } from '@/modules/budget/helpers/account/deleteBudgetAccount.ts';
 import { hideBudgetAccount } from '@/modules/budget/helpers/account/hideBudgetAccount.ts';
-import type { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 type AccountDetailsModalProps = {
   opened: boolean;

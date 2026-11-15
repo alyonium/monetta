@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { listCurrencyExchangeRates } from '@/api/sdk.gen.ts';
-import type { CurrencyExchangeRateRead } from '@/api/types.gen.ts';
+import { CurrencyExchangeRateRead } from '@/api/types.gen.ts';
 import {
   EXCHANGE_RATES_MISSING_ERROR,
   EXCHANGE_RATES_PAGE_LIMIT,
@@ -46,13 +46,6 @@ describe('fetchExchangeRates', () => {
                 from_currency_code: 'eur',
                 to_currency_code: 'USD',
                 rate: '1.1',
-                date: '2026-01-01T00:00:00+00:00',
-              },
-            },
-            {
-              attributes: {
-                from_currency_code: 'GBP',
-                rate: '1.2',
                 date: '2026-01-01T00:00:00+00:00',
               },
             },

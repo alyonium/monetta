@@ -6,7 +6,7 @@ import {
 } from '@/modules/budget/constants/queries.ts';
 import { fetchAccountPreferences } from '@/modules/budget/helpers/account/fetchAccountPreferences.ts';
 import { toBudgetAccounts } from '@/modules/budget/helpers/account/toBudgetAccounts.ts';
-import type { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
+import { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
 
 export const fetchBudgetAccounts = async (
   date: string,

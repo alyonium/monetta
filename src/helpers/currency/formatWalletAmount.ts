@@ -1,4 +1,4 @@
-import type { WalletCurrency } from '@/helpers/currency/types.ts';
+import { WalletCurrency } from '@/helpers/currency/types.ts';
 
 export const formatWalletAmount = (
   amount: number,

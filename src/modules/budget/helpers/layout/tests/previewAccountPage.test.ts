@@ -5,7 +5,7 @@ import {
   dragComesFrom,
   previewAccountPage,
 } from '@/modules/budget/helpers/layout/previewAccountPage.ts';
-import type { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
+import { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
 
 const items: AccountPageItem[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map(
   (id) => ({

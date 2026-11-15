@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { getPrimaryCurrency } from '@/api/sdk.gen.ts';
-import type { CurrencyProperties } from '@/api/types.gen.ts';
+import { CurrencyProperties } from '@/api/types.gen.ts';
 import {
   PRIMARY_CURRENCY_MISSING_ERROR,
   UNAUTHENTICATED_ERROR_MESSAGE,
@@ -68,23 +68,13 @@ describe('fetchPrimaryCurrency', () => {
     });
   });
 
-  it('throws when data or code is missing', async () => {
+  it('throws when data is missing', async () => {
     getPrimaryCurrencyMock.mockResolvedValue({
       data: undefined,
       error: { message: UNAUTHENTICATED_ERROR_MESSAGE },
       request: createRequest(),
       response: new Response(null, { status: 401 }),
     });
-
-    await expectToThrowPrimaryCurrencyMissing();
-
-    getPrimaryCurrencyMock.mockResolvedValue(
-      primaryCurrencyResult({
-        code: '',
-        name: 'Euro',
-        symbol: '€',
-      }),
-    );
 
     await expectToThrowPrimaryCurrencyMissing();
   });

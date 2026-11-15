@@ -1,5 +1,5 @@
 import { updateAccount } from '@/api/sdk.gen.ts';
-import type { HideBudgetAccountResult } from '@/modules/budget/types/hideBudgetAccount.ts';
+import { HideBudgetAccountResult } from '@/modules/budget/types/hideBudgetAccount.ts';
 
 export const hideBudgetAccount = async (
   id: string,

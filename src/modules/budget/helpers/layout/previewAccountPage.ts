@@ -1,7 +1,7 @@
 import { arrayMove } from '@dnd-kit/sortable';
 import { slicePage } from '@/modules/budget/helpers/layout/accountBlockPaging.ts';
-import type { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { AccountPageItem } from '@/modules/budget/types/accountPageItem.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 const accountsOf = (items: AccountPageItem[]): BudgetAccount[] =>
   items.flatMap((item) => (item.type === 'account' ? [item.account] : []));

@@ -1,5 +1,5 @@
 import { ACCOUNT_TRANSACTIONS_STATUS } from '@/modules/budget/constants/transactions.ts';
-import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
+import { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 
 export type AccountTransactionsStatus =
   (typeof ACCOUNT_TRANSACTIONS_STATUS)[keyof typeof ACCOUNT_TRANSACTIONS_STATUS];

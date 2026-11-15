@@ -1,7 +1,7 @@
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { RECORD_DROP_KIND } from '@/modules/budget/constants/accountDnd.ts';
-import type { RecordDropKind } from '@/modules/budget/constants/accountDnd.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { RecordDropKind } from '@/modules/budget/constants/accountDnd.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 export type RecordDrop = {
   kind: RecordDropKind;

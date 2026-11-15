@@ -1,4 +1,4 @@
-import type {
+import {
   AccountRead,
   PreferenceRead,
   ShortAccountTypeProperty,
@@ -8,7 +8,7 @@ import {
   ACCOUNT_APPEARANCE_PREFIX,
   ACCOUNT_ORDER_PREFIX,
 } from '@/modules/budget/constants/queries.ts';
-import type {
+import {
   AccountAppearance,
   AccountType,
   BudgetAccount,

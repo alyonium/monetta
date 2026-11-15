@@ -1,4 +1,4 @@
-import type { QueryClient } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { BUDGET_ACCOUNTS_QUERY_KEY } from '@/modules/budget/constants/queries.ts';
 import { sortAccountsByOrder } from '@/modules/budget/helpers/account/sortAccountsByOrder.ts';
 import { writeAccountOrder } from '@/modules/budget/helpers/account/writeAccountPreferences.ts';
@@ -6,7 +6,7 @@ import {
   fireflyBalanceDate,
   todayIso,
 } from '@/modules/budget/helpers/month/budgetMonth.ts';
-import type {
+import {
   AccountType,
   BudgetAccount,
   BudgetAccountsByBlock,

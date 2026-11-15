@@ -6,9 +6,9 @@ import AccountTransactionList from '@/modules/budget/components/AccountDetailsMo
 import { accountTransactionsStatus } from '@/modules/budget/helpers/transactions/accountTransactionsStatus.ts';
 import { filterAccountTransactions } from '@/modules/budget/helpers/transactions/filterAccountTransactions.ts';
 import { groupAccountTransactions } from '@/modules/budget/helpers/transactions/groupAccountTransactions.ts';
-import type { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
+import { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
 import { useAccountTransactions } from '@/modules/budget/hooks/useAccountTransactions.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountDetailsBody.module.css';
 
 type AccountDetailsBodyProps = {

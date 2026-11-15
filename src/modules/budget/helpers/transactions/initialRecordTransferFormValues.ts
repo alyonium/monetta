@@ -2,7 +2,7 @@ import {
   defaultTransactionDate,
   todayIso,
 } from '@/modules/budget/helpers/month/budgetMonth.ts';
-import type { RecordTransferFormValues } from '@/modules/budget/types/recordTransferForm.ts';
+import { RecordTransferFormValues } from '@/modules/budget/types/recordTransferForm.ts';
 
 export const initialRecordTransferFormValues = (
   sourceId: string,

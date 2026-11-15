@@ -1,5 +1,5 @@
 import { deleteAccount } from '@/api/sdk.gen.ts';
-import type { DeleteBudgetAccountResult } from '@/modules/budget/types/deleteBudgetAccount.ts';
+import { DeleteBudgetAccountResult } from '@/modules/budget/types/deleteBudgetAccount.ts';
 
 export const deleteBudgetAccount = async (
   id: string,

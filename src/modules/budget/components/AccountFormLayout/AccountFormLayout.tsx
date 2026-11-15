@@ -1,9 +1,9 @@
 import {
-  type CSSProperties,
-  type ReactNode,
-  type SubmitEventHandler,
+  CSSProperties,
+  ReactNode,
+  SubmitEventHandler,
 } from 'react';
-import { Group, Text, TextInput, type TextInputProps } from '@mantine/core';
+import { Group, Text, TextInput, TextInputProps } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import AccountColorPicker from '@/modules/budget/components/AccountColorPicker/AccountColorPicker.tsx';
 import { accountIconGlyphColor } from '@/modules/budget/helpers/appearance/accountIconContrast.ts';

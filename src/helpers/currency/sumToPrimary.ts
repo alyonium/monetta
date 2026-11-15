@@ -1,5 +1,5 @@
 import { convertToPrimary } from '@/helpers/currency/convertToPrimary.ts';
-import type {
+import {
   AmountInCurrency,
   ExchangeRate,
 } from '@/helpers/currency/types.ts';

@@ -1,11 +1,11 @@
-import { type RefObject, useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 import {
   ACCOUNT_PAGE_EDGE_HOLD_MS,
   ACCOUNT_PAGE_EDGE_PX,
   PAGE_SWIPE_DIRECTION,
 } from '@/modules/budget/constants/layout.ts';
 import { accountDragPageEdge } from '@/modules/budget/helpers/layout/accountDragPageEdge.ts';
-import type { PageSwipeDirection } from '@/modules/budget/types/pageSwipeDirection.ts';
+import { PageSwipeDirection } from '@/modules/budget/types/pageSwipeDirection.ts';
 
 type UseAccountDragPageEdgeArgs = {
   enabled: boolean;

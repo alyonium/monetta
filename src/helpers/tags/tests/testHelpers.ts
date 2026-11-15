@@ -1,4 +1,4 @@
-import type { TagRead } from '@/api/types.gen.ts';
+import { TagRead } from '@/api/types.gen.ts';
 
 export const createRequest = () =>
   new Request('https://demo.firefly-iii.org/api/v1/tags');

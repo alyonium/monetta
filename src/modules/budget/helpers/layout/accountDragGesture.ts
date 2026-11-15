@@ -3,7 +3,7 @@ import {
   PAGE_SWIPE_AXIS_LOCK_PX,
 } from '@/modules/budget/constants/layout.ts';
 import { isPageSwipeAxis } from '@/modules/budget/helpers/layout/pageSwipe.ts';
-import type { AccountDragGesture } from '@/modules/budget/types/accountDragGesture.ts';
+import { AccountDragGesture } from '@/modules/budget/types/accountDragGesture.ts';
 
 const dragDistanceReached = (dx: number, dy: number) =>
   Math.hypot(dx, dy) > PAGE_SWIPE_AXIS_LOCK_PX;

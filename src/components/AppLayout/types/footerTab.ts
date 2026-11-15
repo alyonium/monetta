@@ -1,4 +1,4 @@
-import type { Icon } from '@phosphor-icons/react';
+import { Icon } from '@phosphor-icons/react';
 import { NAV_LABEL_KEY } from '@/components/AppLayout/constants.ts';
 
 export type NavLabelKey =

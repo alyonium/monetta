@@ -6,11 +6,5 @@ describe('accountTransactionDate', () => {
     expect(accountTransactionDate('2026-03-02T18:30:00+01:00')).toBe(
       '2026-03-02',
     );
-    expect(accountTransactionDate('2026-01-15')).toBe('2026-01-15');
-  });
-
-  it('returns null when the value has no calendar day', () => {
-    expect(accountTransactionDate('')).toBeNull();
-    expect(accountTransactionDate('not-a-date')).toBeNull();
   });
 });

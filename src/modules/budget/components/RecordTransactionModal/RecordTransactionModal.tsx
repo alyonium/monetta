@@ -4,9 +4,9 @@ import RecordTransactionFields from '@/modules/budget/components/RecordTransacti
 import { toAccountSelectData } from '@/modules/budget/helpers/account/toAccountSelectData.ts';
 import { recordTransactionKindConfig } from '@/modules/budget/helpers/transactions/recordTransactionKind.ts';
 import { useRecordTransactionForm } from '@/modules/budget/hooks/useRecordTransactionForm.ts';
-import type { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
-import type { RecordAmountField } from '@/modules/budget/types/recordAmountField.ts';
-import type { RecordTransactionDrop } from '@/modules/budget/types/recordTransactionKind.ts';
+import { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
+import { RecordAmountField } from '@/modules/budget/types/recordAmountField.ts';
+import { RecordTransactionDrop } from '@/modules/budget/types/recordTransactionKind.ts';
 import styles from './RecordTransactionModal.module.css';
 
 type RecordTransactionModalProps = {

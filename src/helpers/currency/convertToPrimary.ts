@@ -1,4 +1,4 @@
-import type { ExchangeRate } from '@/helpers/currency/types.ts';
+import { ExchangeRate } from '@/helpers/currency/types.ts';
 
 const findRate = (
   rates: ExchangeRate[],

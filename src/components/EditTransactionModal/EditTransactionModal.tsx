@@ -7,10 +7,10 @@ import RecordTransactionFields from '@/modules/budget/components/RecordTransacti
 import { toAccountSelectData } from '@/modules/budget/helpers/account/toAccountSelectData.ts';
 import { deleteBudgetTransaction } from '@/modules/budget/helpers/transactions/deleteBudgetTransaction.ts';
 import { TRANSACTION_QUERY_KEYS } from '@/modules/budget/helpers/transactions/invalidateTransactionQueries.ts';
-import type { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
+import { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
 import { useEditTransactionForm } from '@/modules/budget/hooks/useEditTransactionForm.ts';
-import type { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
-import type { RecordAmountField } from '@/modules/budget/types/recordAmountField.ts';
+import { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
+import { RecordAmountField } from '@/modules/budget/types/recordAmountField.ts';
 
 type EditTransactionModalProps = {
   opened: boolean;

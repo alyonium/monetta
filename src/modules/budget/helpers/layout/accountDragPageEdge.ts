@@ -1,5 +1,5 @@
 import { PAGE_SWIPE_DIRECTION } from '@/modules/budget/constants/layout.ts';
-import type { PageSwipeDirection } from '@/modules/budget/types/pageSwipeDirection.ts';
+import { PageSwipeDirection } from '@/modules/budget/types/pageSwipeDirection.ts';
 
 export const accountDragPageEdge = (
   point: { x: number; y: number },

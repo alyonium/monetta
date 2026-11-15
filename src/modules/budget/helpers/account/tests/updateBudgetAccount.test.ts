@@ -10,7 +10,7 @@ import {
   DEFAULT_ACCOUNT_ICON,
 } from '@/modules/budget/constants/appearance.ts';
 import { updateBudgetAccount } from '@/modules/budget/helpers/account/updateBudgetAccount.ts';
-import type { EditAccountFormValues } from '@/modules/budget/types/editAccountForm.ts';
+import { EditAccountFormValues } from '@/modules/budget/types/editAccountForm.ts';
 import {
   appearancePreferenceKey,
   createAccountSingleResult,

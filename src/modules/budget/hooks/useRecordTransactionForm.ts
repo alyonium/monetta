@@ -6,12 +6,12 @@ import { accountById } from '@/modules/budget/helpers/account/accountById.ts';
 import { createBudgetTransaction } from '@/modules/budget/helpers/transactions/createBudgetTransaction.ts';
 import { initialRecordTransactionFormValues } from '@/modules/budget/helpers/transactions/initialRecordTransactionFormValues.ts';
 import { invalidateTransactionQueries } from '@/modules/budget/helpers/transactions/invalidateTransactionQueries.ts';
-import type { RecordTransactionKindConfig } from '@/modules/budget/types/recordTransactionKind.ts';
+import { RecordTransactionKindConfig } from '@/modules/budget/types/recordTransactionKind.ts';
 import { recordTransactionCurrencyAccount } from '@/modules/budget/helpers/transactions/recordTransactionKind.ts';
 import { toTransactionStoreBody } from '@/modules/budget/helpers/transactions/toTransactionStoreBody.ts';
 import { validateRecordTransactionForm } from '@/modules/budget/helpers/transactions/validateRecordTransactionForm.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
-import type { RecordTransactionFormValues } from '@/modules/budget/types/recordTransactionForm.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { RecordTransactionFormValues } from '@/modules/budget/types/recordTransactionForm.ts';
 
 type UseRecordTransactionFormParams = {
   onClose: () => void;

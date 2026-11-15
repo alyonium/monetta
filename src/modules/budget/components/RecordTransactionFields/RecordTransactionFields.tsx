@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { TextInput } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useTranslation } from 'react-i18next';
 import TagsField from '@/components/TagsField/TagsField.tsx';
 import { todayIso } from '@/modules/budget/helpers/month/budgetMonth.ts';
-import type { RecordAmountField } from '@/modules/budget/types/recordAmountField.ts';
+import { RecordAmountField } from '@/modules/budget/types/recordAmountField.ts';
 import RecordAmountRow from './RecordAmountRow.tsx';
 
 type RecordTransactionFieldsProps = {

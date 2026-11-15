@@ -49,7 +49,7 @@ import {
   VaultIcon,
   WalletIcon,
   WrenchIcon,
-  type Icon,
+  Icon,
 } from '@phosphor-icons/react';
 import { DEFAULT_ACCOUNT_ICON } from '@/modules/budget/constants/appearance.ts';
 

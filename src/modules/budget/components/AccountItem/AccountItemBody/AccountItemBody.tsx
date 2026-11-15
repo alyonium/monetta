@@ -4,7 +4,7 @@ import AccountIcon from '@/modules/budget/components/AccountIcon/AccountIcon.tsx
 import { resolveAccountIcon } from '@/modules/budget/components/accountIcons.ts';
 import { DEFAULT_ACCOUNT_COLOR } from '@/modules/budget/constants/appearance.ts';
 import { formatAccountAmount } from '@/modules/budget/helpers/account/formatAccountAmount.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './AccountItemBody.module.css';
 
 const AccountItemBody = ({ account }: { account: BudgetAccount }) => {

@@ -1,5 +1,5 @@
-import type { RecordDrop } from '@/modules/budget/helpers/transactions/resolveRecordDrop.ts';
-import type { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
+import { RecordDrop } from '@/modules/budget/helpers/transactions/resolveRecordDrop.ts';
+import { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
 
 export type UseAccountDndArgs = {
   editing: boolean;

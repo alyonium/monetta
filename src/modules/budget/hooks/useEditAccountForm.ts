@@ -15,8 +15,8 @@ import {
 import { updateBudgetAccount } from '@/modules/budget/helpers/account/updateBudgetAccount.ts';
 import { validateAccountName } from '@/modules/budget/helpers/account/validateAccountName.ts';
 import { todayIso } from '@/modules/budget/helpers/month/budgetMonth.ts';
-import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
-import type {
+import { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
+import {
   EditAccountFormValues,
   UseEditAccountFormParams,
 } from '@/modules/budget/types/editAccountForm.ts';

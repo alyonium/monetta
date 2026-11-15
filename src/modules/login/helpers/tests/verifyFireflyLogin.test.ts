@@ -4,7 +4,7 @@ import {
   describe,
   expect,
   it,
-  type Mock,
+  Mock,
   vi,
 } from 'vitest';
 import { getCurrentUser } from '@/api/sdk.gen.ts';

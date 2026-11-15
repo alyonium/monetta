@@ -1,5 +1,5 @@
-import type { AccountIconName } from '@/modules/budget/components/accountIcons.ts';
-import type {
+import { AccountIconName } from '@/modules/budget/components/accountIcons.ts';
+import {
   AccountType,
   BudgetAccount,
 } from '@/modules/budget/types/budgetAccount.ts';

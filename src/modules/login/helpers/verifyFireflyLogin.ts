@@ -2,7 +2,7 @@ import { getCurrentUser } from '@/api/sdk.gen.ts';
 import { setAccessToken, setBackendUrl } from '@/helpers/authStorage.ts';
 import { configureApiClient } from '@/helpers/configureApiClient.ts';
 import { LOGIN_FAILURE_REASON } from '@/modules/login/constants.ts';
-import type {
+import {
   VerifyFireflyLoginInput,
   VerifyFireflyLoginResult,
 } from '@/modules/login/types/verifyFireflyLogin.ts';

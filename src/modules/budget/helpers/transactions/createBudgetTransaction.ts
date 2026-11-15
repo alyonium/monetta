@@ -1,6 +1,6 @@
 import { storeTransaction } from '@/api/sdk.gen.ts';
-import type { TransactionStoreWritable } from '@/api/types.gen.ts';
-import type { CreateBudgetTransactionResult } from '@/modules/budget/types/createBudgetTransaction.ts';
+import { TransactionStoreWritable } from '@/api/types.gen.ts';
+import { CreateBudgetTransactionResult } from '@/modules/budget/types/createBudgetTransaction.ts';
 
 export const createBudgetTransaction = async (
   body: TransactionStoreWritable,

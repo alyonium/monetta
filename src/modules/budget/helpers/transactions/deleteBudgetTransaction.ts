@@ -1,5 +1,5 @@
 import { deleteTransaction } from '@/api/sdk.gen.ts';
-import type { CreateBudgetTransactionResult } from '@/modules/budget/types/createBudgetTransaction.ts';
+import { CreateBudgetTransactionResult } from '@/modules/budget/types/createBudgetTransaction.ts';
 
 export const deleteBudgetTransaction = async (
   groupId: string,

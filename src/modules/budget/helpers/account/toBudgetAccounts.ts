@@ -1,8 +1,8 @@
-import type { AccountRead } from '@/api/types.gen.ts';
+import { AccountRead } from '@/api/types.gen.ts';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { mapFireflyAccount } from '@/modules/budget/helpers/account/mapFireflyAccount.ts';
 import { sortAccountsByOrder } from '@/modules/budget/helpers/account/sortAccountsByOrder.ts';
-import type {
+import {
   AccountPreferences,
   BudgetAccountsByBlock,
 } from '@/modules/budget/types/budgetAccount.ts';

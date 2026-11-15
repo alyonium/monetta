@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { ACCOUNT_BLOCK_PAGER } from '@/modules/budget/constants/layout.ts';
-import type {
+import {
   AccountType,
   BudgetAccount,
 } from '@/modules/budget/types/budgetAccount.ts';

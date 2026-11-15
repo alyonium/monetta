@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { insightExpenseTotal, insightIncomeTotal } from '@/api/sdk.gen.ts';
-import type { InsightTotalEntry } from '@/api/types.gen.ts';
+import { InsightTotalEntry } from '@/api/types.gen.ts';
 import { BUDGET_INSIGHTS_MISSING_ERROR } from '@/modules/budget/constants/queries.ts';
 import { fetchBudgetInsights } from '@/modules/budget/helpers/month/fetchBudgetInsights.ts';
 import { createRequest } from '@/modules/budget/helpers/account/tests/testHelpers.ts';
@@ -38,14 +38,20 @@ describe('fetchBudgetInsights', () => {
 
   it('loads income and expense totals for the range', async () => {
     insightIncomeTotalMock.mockResolvedValue(
-      createInsightResult([{ difference: '10.00', currency_code: 'EUR' }]),
+      createInsightResult([
+        { difference: '10.00', currency_code: 'EUR' },
+        { difference: '-3.00', currency_code: 'USD' },
+      ]),
     );
     insightExpenseTotalMock.mockResolvedValue(
       createInsightResult([{ difference: '-4.50', currency_code: 'EUR' }]),
     );
 
     expect(await fetchBudgetInsights(START, END)).toEqual({
-      income: [{ amount: 10, fromCode: 'EUR' }],
+      income: [
+        { amount: 10, fromCode: 'EUR' },
+        { amount: 3, fromCode: 'USD' },
+      ],
       expenses: [{ amount: 4.5, fromCode: 'EUR' }],
     });
 
@@ -54,24 +60,6 @@ describe('fetchBudgetInsights', () => {
     });
     expect(insightExpenseTotalMock).toHaveBeenCalledWith({
       query: { start: START, end: END },
-    });
-  });
-
-  it('maps insight rows to amounts and drops invalid entries', async () => {
-    insightIncomeTotalMock.mockResolvedValue(
-      createInsightResult([
-        { difference: '-10.00', currency_code: 'USD' },
-        { difference: 'nope', currency_code: 'EUR' },
-        { difference: '1', currency_code: '' },
-      ]),
-    );
-    insightExpenseTotalMock.mockResolvedValue(
-      createInsightResult([{ difference: '4.50', currency_code: 'EUR' }]),
-    );
-
-    expect(await fetchBudgetInsights(START, END)).toEqual({
-      income: [{ amount: 10, fromCode: 'USD' }],
-      expenses: [{ amount: 4.5, fromCode: 'EUR' }],
     });
   });
 

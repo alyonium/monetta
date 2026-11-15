@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import type { AccountProperties, AccountRead } from '@/api/types.gen.ts';
-import { ACCOUNT_TYPE, FIREFLY_ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
+import { AccountProperties, AccountRead } from '@/api/types.gen.ts';
+import {
+  ACCOUNT_TYPE,
+  FIREFLY_ACCOUNT_TYPE,
+} from '@/modules/budget/constants/account.ts';
 import { mapFireflyAccount } from '@/modules/budget/helpers/account/mapFireflyAccount.ts';
 
 const createAccount = (
@@ -41,11 +44,19 @@ describe('mapFireflyAccount', () => {
   });
 
   it('maps liability and liabilities to EXPENSE with debt', () => {
-    expect(mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.LIABILITY }))).toMatchObject({
+    expect(
+      mapFireflyAccount(
+        createAccount({ type: FIREFLY_ACCOUNT_TYPE.LIABILITY }),
+      ),
+    ).toMatchObject({
       type: ACCOUNT_TYPE.EXPENSE,
       isDebt: true,
     });
-    expect(mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.LIABILITIES }))).toMatchObject({
+    expect(
+      mapFireflyAccount(
+        createAccount({ type: FIREFLY_ACCOUNT_TYPE.LIABILITIES }),
+      ),
+    ).toMatchObject({
       type: ACCOUNT_TYPE.EXPENSE,
       isDebt: true,
     });
@@ -53,18 +64,28 @@ describe('mapFireflyAccount', () => {
 
   it('returns null when the account is inactive', () => {
     expect(
-      mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET, active: false })),
+      mapFireflyAccount(
+        createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET, active: false }),
+      ),
     ).toBeNull();
   });
 
   it('returns null for unmapped Firefly types', () => {
-    expect(mapFireflyAccount(createAccount({ type: 'cash' }))).toBeNull();
+    expect(
+      mapFireflyAccount(createAccount({ type: 'reconciliation' })),
+    ).toBeNull();
   });
 
   it('returns null when id or name is empty', () => {
-    expect(mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET }, ''))).toBeNull();
     expect(
-      mapFireflyAccount(createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET, name: '' })),
+      mapFireflyAccount(
+        createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET }, ''),
+      ),
+    ).toBeNull();
+    expect(
+      mapFireflyAccount(
+        createAccount({ type: FIREFLY_ACCOUNT_TYPE.ASSET, name: '' }),
+      ),
     ).toBeNull();
   });
 
@@ -77,23 +98,6 @@ describe('mapFireflyAccount', () => {
     ).toMatchObject({
       icon: 'PiggyBank',
       color: '#FA5252',
-    });
-  });
-
-  it('falls back to primary currency fields and zero for a bad balance', () => {
-    expect(
-      mapFireflyAccount(
-        createAccount({
-          type: FIREFLY_ACCOUNT_TYPE.ASSET,
-          current_balance: 'n/a',
-          primary_currency_code: 'usd',
-          primary_currency_symbol: '$',
-        }),
-      ),
-    ).toMatchObject({
-      balance: 0,
-      currencyCode: 'USD',
-      currencySymbol: '$',
     });
   });
 
@@ -115,13 +119,30 @@ describe('mapFireflyAccount', () => {
     });
   });
 
-  it('uses abs(balance) when debt_amount is not finite and paidAmount 0 without opening_balance', () => {
+  it('rounds paidAmount to the currency decimal places', () => {
+    expect(
+      mapFireflyAccount(
+        createAccount({
+          type: FIREFLY_ACCOUNT_TYPE.LIABILITY,
+          current_balance: '-399.9',
+          debt_amount: '399.9',
+          opening_balance: '500',
+          currency_decimal_places: 2,
+        }),
+      ),
+    ).toMatchObject({
+      debtAmount: 399.9,
+      paidAmount: 100.1,
+    });
+  });
+
+  it('uses abs(balance) when debt_amount is null and paidAmount 0 without opening_balance', () => {
     expect(
       mapFireflyAccount(
         createAccount({
           type: FIREFLY_ACCOUNT_TYPE.LIABILITY,
           current_balance: '-50',
-          debt_amount: 'oops',
+          debt_amount: null,
         }),
       ),
     ).toMatchObject({

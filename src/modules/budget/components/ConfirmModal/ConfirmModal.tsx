@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Group, Modal, Text } from '@mantine/core';
-import { useQueryClient, type QueryKey } from '@tanstack/react-query';
+import { useQueryClient, QueryKey } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import styles from './ConfirmModal.module.css';
 

@@ -5,7 +5,7 @@ import {
   ACCOUNT_TRANSACTIONS_PAGE_LIMIT,
 } from '@/modules/budget/constants/queries.ts';
 import { toAccountTransactions } from '@/modules/budget/helpers/transactions/toAccountTransactions.ts';
-import type { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
+import { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 
 export const fetchAccountTransactions = async (
   accountId: string,

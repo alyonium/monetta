@@ -1,11 +1,11 @@
 import { listCurrency } from '@/api/sdk.gen.ts';
-import type { CurrencyRead } from '@/api/types.gen.ts';
+import { CurrencyRead } from '@/api/types.gen.ts';
 import { collectFireflyPages } from '@/helpers/collectFireflyPages.ts';
 import {
   CURRENCIES_MISSING_ERROR,
   CURRENCIES_PAGE_LIMIT,
 } from '@/helpers/currency/constants.ts';
-import type { WalletCurrency } from '@/helpers/currency/types.ts';
+import { WalletCurrency } from '@/helpers/currency/types.ts';
 
 const mapCurrency = (item: CurrencyRead): WalletCurrency | null => {
   const attributes = item.attributes;

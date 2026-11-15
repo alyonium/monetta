@@ -42,15 +42,13 @@ describe('fetchTags', () => {
     expect(tags).toEqual(['Groceries', 'Salary', 'rent']);
   });
 
-  it('skips empty tags and keeps the first lowercase duplicate', async () => {
+  it('keeps the first of a case-insensitive duplicate', async () => {
     listTagMock.mockResolvedValue(
       createTagPageResult(
         [
           createFireflyTag('1', 'Groceries'),
-          createFireflyTag('2', '  '),
-          createFireflyTag('3', 'groceries'),
-          createFireflyTag('4', ' GROCERIES '),
-          createFireflyTag('5', 'Bills'),
+          createFireflyTag('2', 'groceries'),
+          createFireflyTag('3', 'Bills'),
         ],
         { current_page: 1, total_pages: 1 },
       ),
