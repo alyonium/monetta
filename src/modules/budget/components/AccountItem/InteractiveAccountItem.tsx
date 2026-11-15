@@ -1,4 +1,5 @@
-import type { CSSProperties, KeyboardEvent } from 'react';
+import type { CSSProperties } from 'react';
+import { onEnterOrSpace } from '@/helpers/onEnterOrSpace.ts';
 import { useAccountDndNode } from '@/modules/budget/hooks/useAccountDndNode.ts';
 import { useClickAfterDrag } from '@/modules/budget/hooks/useClickAfterDrag.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
@@ -23,15 +24,6 @@ const InteractiveAccountItem = ({
     onSelectAccount(account),
   );
 
-  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key !== 'Enter' && event.key !== ' ') {
-      return;
-    }
-
-    event.preventDefault();
-    onSelectAccount(account);
-  };
-
   return (
     <AccountItem
       account={account}
@@ -39,7 +31,9 @@ const InteractiveAccountItem = ({
       isDragging={isDragging}
       cardRef={setNodeRef}
       onClick={editing ? undefined : onClick}
-      onKeyDown={editing ? undefined : onKeyDown}
+      onKeyDown={
+        editing ? undefined : onEnterOrSpace(() => onSelectAccount(account))
+      }
       onPointerDownCapture={editing ? undefined : onPointerDownCapture}
       listeners={listeners}
       attributes={attributes}

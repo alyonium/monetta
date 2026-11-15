@@ -28,9 +28,5 @@ export const toAccountUpdateBody = ({
       };
     case ACCOUNT_TYPE.EXPENSE:
       return { name: trimmedName };
-    default: {
-      const unexpectedAccountType: never = accountType;
-      return unexpectedAccountType;
-    }
   }
 };

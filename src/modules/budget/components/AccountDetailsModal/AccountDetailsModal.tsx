@@ -9,6 +9,7 @@ import {
 } from '@/modules/budget/constants/queries.ts';
 import { deleteBudgetAccount } from '@/modules/budget/helpers/account/deleteBudgetAccount.ts';
 import { hideBudgetAccount } from '@/modules/budget/helpers/account/hideBudgetAccount.ts';
+import type { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
 import type { BudgetAccount } from '@/modules/budget/types/budgetAccount.ts';
 
 type AccountDetailsModalProps = {
@@ -17,6 +18,7 @@ type AccountDetailsModalProps = {
   onExitTransitionEnd: () => void;
   account: BudgetAccount | null;
   onEdit: () => void;
+  onTransactionClick: (transaction: EditableAccountTransaction) => void;
 };
 
 const AccountDetailsModal = ({
@@ -25,6 +27,7 @@ const AccountDetailsModal = ({
   onExitTransitionEnd,
   account,
   onEdit,
+  onTransactionClick,
 }: AccountDetailsModalProps) => {
   const { t } = useTranslation();
   const [deleteOpened, { open: openDelete, close: closeDelete }] =
@@ -57,6 +60,7 @@ const AccountDetailsModal = ({
             onEdit={onEdit}
             onDelete={openDelete}
             onHide={openHide}
+            onTransactionClick={onTransactionClick}
           />
         )}
       </Modal>
@@ -79,6 +83,7 @@ const AccountDetailsModal = ({
             onConfirm={() => deleteBudgetAccount(account.id)}
             onSuccess={handleClose}
           />
+
           <ConfirmModal
             stackId='account-hide-confirm'
             opened={opened && hideOpened}

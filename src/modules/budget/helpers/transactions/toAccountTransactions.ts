@@ -6,10 +6,9 @@ import type { AccountTransaction } from '@/modules/budget/types/accountTransacti
 const toAccountTransaction = (
   groupId: string,
   split: TransactionSplit,
-  index: number,
 ): AccountTransaction | null => {
   const date = accountTransactionDate(split.date);
-  const journalId = split.transaction_journal_id ?? '';
+  const journalId = split.transaction_journal_id ?? null;
 
   if (!date || (!groupId && !journalId)) {
     return null;
@@ -21,9 +20,12 @@ const toAccountTransaction = (
     return null;
   }
 
+  const foreignAmount =
+    split.foreign_amount == null ? null : toFiniteNumber(split.foreign_amount);
+
   return {
     id: groupId,
-    journalId: journalId || `${groupId}:${index}`,
+    journalId,
     date,
     dateTime: split.date,
     description: split.description,
@@ -33,12 +35,14 @@ const toAccountTransaction = (
     destinationName: split.destination_name ?? '',
     amount,
     currencyCode: (
-      split.currency_code?.trim() ||
-      split.primary_currency_code?.trim() ||
+      split.currency_code ??
+      split.primary_currency_code ??
       ''
     ).toUpperCase(),
     currencySymbol:
       split.currency_symbol || split.primary_currency_symbol || '',
+    foreignAmount,
+    foreignCurrencyCode: (split.foreign_currency_code ?? '').toUpperCase(),
     type: split.type,
     tags: split.tags?.filter((tag) => tag !== '') ?? [],
   };
@@ -50,8 +54,8 @@ export const toAccountTransactions = (
   const items: AccountTransaction[] = [];
 
   groups.forEach((group) => {
-    group.attributes.transactions.forEach((split, index) => {
-      const mapped = toAccountTransaction(group.id, split, index);
+    group.attributes.transactions.forEach((split) => {
+      const mapped = toAccountTransaction(group.id, split);
 
       if (mapped) {
         items.push(mapped);

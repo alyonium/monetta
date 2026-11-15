@@ -66,9 +66,5 @@ export const toAccountStoreBody = ({
       }
 
       return { name: trimmedName, type: FIREFLY_ACCOUNT_TYPE.EXPENSE };
-    default: {
-      const unexpectedAccountType: never = accountType;
-      return unexpectedAccountType;
-    }
   }
 };

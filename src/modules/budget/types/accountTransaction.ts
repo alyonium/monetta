@@ -2,7 +2,7 @@ import type { TransactionTypeProperty } from '@/api/types.gen.ts';
 
 export type AccountTransaction = {
   id: string;
-  journalId: string;
+  journalId: string | null;
   date: string;
   dateTime: string;
   description: string;
@@ -13,6 +13,8 @@ export type AccountTransaction = {
   amount: number;
   currencyCode: string;
   currencySymbol: string;
+  foreignAmount: number | null;
+  foreignCurrencyCode: string;
   type: TransactionTypeProperty;
   tags: string[];
 };

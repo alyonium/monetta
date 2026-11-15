@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 import { Modal } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
+import EditTransactionModal from '@/components/EditTransactionModal/EditTransactionModal.tsx';
 import AccountBlock from '@/modules/budget/components/AccountBlock/AccountBlock.tsx';
 import AccountDetailsModal from '@/modules/budget/components/AccountDetailsModal/AccountDetailsModal.tsx';
 import AccountItem from '@/modules/budget/components/AccountItem/AccountItem.tsx';
@@ -16,6 +17,7 @@ import {
   startOfMonth,
   todayIso,
 } from '@/modules/budget/helpers/month/budgetMonth.ts';
+import type { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
 import {
   toRecordTransactionDrop,
   toRecordTransferDrop,
@@ -38,6 +40,7 @@ const Budget = () => {
   const createModal = useModalSession<AccountType>();
   const detailsModal = useModalSession<BudgetAccount>();
   const editModal = useModalSession<BudgetAccount>();
+  const editTransaction = useModalSession<EditableAccountTransaction>();
   const recordModal = useModalSession<RecordDrop>();
 
   const { data, isError } = useBudgetAccounts(month);
@@ -70,6 +73,7 @@ const Budget = () => {
   const onCloseDetails = () => {
     detailsModal.close();
     editModal.dispose();
+    editTransaction.dispose();
   };
 
   const onEditAccount = () => {
@@ -77,6 +81,23 @@ const Budget = () => {
       editModal.open(detailsAccount);
     }
   };
+
+  const details = (
+    <AccountDetailsModal
+      opened={detailsModal.session.opened}
+      onClose={onCloseDetails}
+      onExitTransitionEnd={detailsModal.dispose}
+      account={detailsAccount}
+      onEdit={onEditAccount}
+      onTransactionClick={editTransaction.open}
+    />
+  );
+
+  const showDetailsStack = Boolean(
+    detailsModal.session.opened ||
+    editModal.session.payload ||
+    editTransaction.session.payload,
+  );
 
   return (
     <div className={styles.page}>
@@ -130,15 +151,9 @@ const Budget = () => {
         month={month}
       />
 
-      {detailsModal.session.opened || editModal.session.payload ? (
+      {showDetailsStack ? (
         <Modal.Stack>
-          <AccountDetailsModal
-            opened={detailsModal.session.opened}
-            onClose={onCloseDetails}
-            onExitTransitionEnd={detailsModal.dispose}
-            account={detailsAccount}
-            onEdit={onEditAccount}
-          />
+          {details}
 
           {editModal.session.payload && (
             <EditAccountModal
@@ -149,15 +164,21 @@ const Budget = () => {
               account={editModal.session.payload}
             />
           )}
+
+          {editTransaction.session.payload && (
+            <EditTransactionModal
+              key={editTransaction.session.id}
+              stackId='edit-transaction'
+              opened={editTransaction.session.opened}
+              onClose={editTransaction.close}
+              onExitTransitionEnd={editTransaction.dispose}
+              transaction={editTransaction.session.payload}
+              accounts={recordAccounts}
+            />
+          )}
         </Modal.Stack>
       ) : (
-        <AccountDetailsModal
-          opened={detailsModal.session.opened}
-          onClose={onCloseDetails}
-          onExitTransitionEnd={detailsModal.dispose}
-          account={detailsAccount}
-          onEdit={onEditAccount}
-        />
+        details
       )}
 
       {transactionDrop && (

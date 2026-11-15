@@ -341,3 +341,25 @@
 ## 2026-10-12 18:30 - US-028
 - Holding a drag in the edge keeps turning pages, so the card can reach any later or earlier page of the same block. Each hold interval calls `onNext`/`onPrev` again. Leaving the edge stops it.
 ---
+
+## 2026-11-04 17:45 - US-029
+- Clicking a deposit, withdrawal, or transfer in account details opens `EditTransactionModal`. Save updates Firefly and balances. Delete asks for confirmation, then removes the transaction. Reconciliation and opening balance stay non-clickable.
+- **Learnings for future iterations:**
+    - Patterns discovered: the modal lives in `src/components/EditTransactionModal` and the session lives on Budget inside the Details `Modal.Stack`. Save uses `updateBudgetTransaction` plus `invalidateTransactionQueries`. Delete uses the shared `ConfirmModal` with `TRANSACTION_QUERY_KEYS`.
+    - Gotchas encountered: send `transaction_journal_id` only when it is not the synthetic `${groupId}:${index}` fallback. A blank description is still U+2066. An empty tag list is sent on update so tags can be cleared. Cross-currency transfers use debited and credited amounts from the selected accounts.
+    - Useful context: History (US-034) should open this same modal. Details stays open after save or delete. The card is `role="button"` only for deposit, withdrawal, and transfer.
+---
+
+## 2026-11-04 19:41 - US-029 review
+- Folded the edit form onto the record-transfer values and one kind table. The card is the only editability check, and it now requires a real journal id. PUT always sends that id. Shared split builder with store. Dropped the extra modal wrapper, form type, and CSS module.
+- **Learnings for future iterations:**
+    - Patterns discovered: `EditableAccountTransaction` is the Budget session type. `editTransactionKind` is the single deposit/withdrawal/transfer table. `toTransactionSplit` feeds both store and update.
+    - Gotchas encountered: do not omit `transaction_journal_id` by detecting a `${groupId}:` prefix in the update body. A transaction with that synthetic id is not clickable.
+    - Useful context: US-034 opens the same `EditTransactionModal`.
+---
+
+## 2026-11-04 20:11 - US-029 review
+- `journalId` is the Firefly journal id or `null`. The mapper no longer writes `${groupId}:${index}`. The list builds that pair only as a React key. Edit opens when the id is present and the type is deposit, withdrawal, or transfer.
+- **Learnings for future iterations:**
+    - Gotchas encountered: do not encode a missing journal id as a string the gate has to recognize.
+---

@@ -57,6 +57,8 @@ export const createAccountTransaction = (
   amount: 10,
   currencyCode: 'EUR',
   currencySymbol: '€',
+  foreignAmount: null,
+  foreignCurrencyCode: '',
   type: 'withdrawal',
   tags: [],
   ...extra,

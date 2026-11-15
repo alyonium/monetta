@@ -130,8 +130,6 @@ export class AccountPointerSensor extends PointerSensor {
       case ACCOUNT_DRAG_GESTURE.DRAG:
         sensor.handleStart();
         return;
-      default:
-        return gesture satisfies never;
     }
   }
 }

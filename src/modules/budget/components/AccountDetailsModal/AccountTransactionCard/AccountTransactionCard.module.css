@@ -7,6 +7,10 @@
   border-radius: var(--mantine-radius-md);
 }
 
+.interactive {
+  cursor: pointer;
+}
+
 .details {
   flex: 1;
   min-width: 0;

@@ -29,9 +29,5 @@ export const accountDetailsHeader = (
         showKind: true,
         money: isDebt ? ACCOUNT_DETAILS_MONEY.DEBT : ACCOUNT_DETAILS_MONEY.NONE,
       };
-    default: {
-      const unexpectedType: never = type;
-      return unexpectedType;
-    }
   }
 };

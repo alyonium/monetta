@@ -113,6 +113,15 @@ export const en = {
         saveFailed: 'Could not save the transaction',
       },
     },
+    editTransaction: {
+      title: 'Edit transaction',
+      from: 'From',
+      to: 'To',
+      delete: 'Delete',
+      deleteConfirm:
+        'Delete this transaction? This action cannot be undone.',
+      deleteFailed: 'Could not delete the transaction',
+    },
     recordIncome: {
       title: 'Record income',
       incomeAccount: 'Income account',

@@ -95,11 +95,6 @@ export const useEditAccountForm = ({
         case CREATE_BUDGET_ACCOUNT_FAILURE_REASON.FAILED:
           setSaveError(message);
           return;
-        default: {
-          const unexpectedReason: never = result.reason;
-          setSaveError(message);
-          void unexpectedReason;
-        }
       }
     } catch (error) {
       console.error(error);

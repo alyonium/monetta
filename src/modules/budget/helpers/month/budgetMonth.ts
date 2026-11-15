@@ -47,10 +47,6 @@ export const fireflyBalanceDate = ({ month, today }: MonthToday): string => {
     case MONTH_RELATION.CURRENT:
     case MONTH_RELATION.FUTURE:
       return today;
-    default: {
-      const unexpectedRelation: never = relation;
-      return unexpectedRelation;
-    }
   }
 };
 
@@ -74,9 +70,5 @@ export const defaultTransactionDate = ({
     case MONTH_RELATION.PAST:
     case MONTH_RELATION.FUTURE:
       return startOfMonth(month);
-    default: {
-      const unexpectedRelation: never = relation;
-      return unexpectedRelation;
-    }
   }
 };

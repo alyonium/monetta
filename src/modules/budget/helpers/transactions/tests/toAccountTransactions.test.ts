@@ -74,26 +74,40 @@ describe('toAccountTransactions', () => {
         createTransactionSplit({ amount: 'nope', transaction_journal_id: '3' }),
       ]),
       createFireflyTransaction('', [
-        createTransactionSplit({ transaction_journal_id: '' }),
+        createTransactionSplit({ transaction_journal_id: undefined }),
       ]),
     ]);
 
     expect(items).toEqual([]);
   });
 
-  it('uses the group id and index when the journal id is missing', () => {
+  it('leaves journalId empty when Firefly omits the journal id', () => {
     const items = toAccountTransactions([
       createFireflyTransaction('10', [
         createTransactionSplit({ transaction_journal_id: undefined }),
       ]),
     ]);
 
-    expect(items).toEqual([
-      expect.objectContaining({
-        id: '10',
-        journalId: '10:0',
-        date: '2026-01-15',
-      }),
+    expect(items).toMatchObject([{ id: '10', journalId: null }]);
+  });
+
+  it('maps the foreign amount and currency, or leaves them empty for null', () => {
+    const items = toAccountTransactions([
+      createFireflyTransaction('10', [
+        createTransactionSplit({
+          foreign_amount: '11.50',
+          foreign_currency_code: 'usd',
+        }),
+        createTransactionSplit({
+          foreign_amount: null,
+          foreign_currency_code: null,
+        }),
+      ]),
+    ]);
+
+    expect(items).toMatchObject([
+      { foreignAmount: 11.5, foreignCurrencyCode: 'USD' },
+      { foreignAmount: null, foreignCurrencyCode: '' },
     ]);
   });
 });

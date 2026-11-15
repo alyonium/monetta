@@ -60,10 +60,6 @@ export const useLoginForm = () => {
         case LOGIN_FAILURE_REASON.INVALID_BACKEND_URL:
           form.setFieldError('backendUrl', t('login.errors.invalidBackendUrl'));
           return;
-        default: {
-          const unexpectedReason: never = result.reason;
-          showUnexpectedError(unexpectedReason);
-        }
       }
     } catch (error) {
       showUnexpectedError(error);

@@ -1,0 +1,12 @@
+---
+description: Do not add never-typed exhaustiveness checks to switch statements
+alwaysApply: true
+---
+
+# No `never` exhaustiveness checks
+
+This project overrides the `typescript-exhaustive-switch` rule from the Cursor Team Kit plugin. Do not add a `default` branch that assigns the value to `never` (`const unexpected: never = value`, `value satisfies never`) or calls an `assertNever` helper.
+
+- When every `case` returns and the function has an explicit return type, TypeScript already reports a missing variant. Leave out `default`.
+- For a value-to-value mapping, use a `Record<Union, Value>` object instead of a `switch`.
+- For two outcomes, use an `if` or a ternary.
