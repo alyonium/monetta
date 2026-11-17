@@ -147,6 +147,7 @@ export const en = {
     },
   },
   history: {
+    search: 'Search',
     from: 'From',
     to: 'To',
     empty: 'No transactions found',

@@ -371,3 +371,17 @@
     - Gotchas encountered: do not use `collectFireflyPages` here. Do not slice to 10 cards. A stale `useIntersection` entry still says visible after the list grows — also check the sentinel rect against the page scroller before `fetchNextPage`, and skip while `isFetchNextPageError` or the loop refetches. Mantine `Badge` uppercases tags; the history tag sets `text-transform: none`. The card is not a button until US-034.
     - Useful context: one amount when `foreignAmount` is null or the currency codes match; otherwise `−` debited in red and `+` credited in green. Credited currency is `foreignCurrencyCode` through `formatAccountAmount`. i18n is `history.*` plus `history.type.*`. US-031 search, US-032 filters (`start`/`end`/`type`), and US-033 sort are not on this screen yet.
 ---
+
+## 2026-11-15 19:03 - US-031
+- History search filters loaded pages by description, account names, currency, amount, foreign amount and code, tags, type, date, and the group label. A short filtered list keeps loading the next page. tsc, vitest (272), eslint green.
+- **Learnings for future iterations:**
+    - Patterns discovered: `useHistoryTransactions` returns flat `items`. `useHistoryList` searches, then `groupAccountTransactions`. The search field stays above the list scroller. `historyListView` chooses list, loader, or `history.empty`.
+    - Gotchas encountered: do not put the search string on `HISTORY_TRANSACTIONS_QUERY_KEY`. Do not gate `fetchNextPage` with a request ref — the effect runs before `finally` and a short list stops paging. `filterAccountTransactions` is shared with account details.
+    - Useful context: cards stay plain divs until US-034. US-032 filters and US-033 sort should run before this search. Empty or whitespace search shows every loaded row.
+---
+
+## 2026-11-15 20:06 - US-031 review
+- `fetchNextPage({ cancelRefetch: false })`. A second call no longer cancels the page already in flight. The request ref stays gone.
+- **Learnings for future iterations:**
+    - Gotchas encountered: `cancelRefetch` defaults to `true`. `isFetchingNextPage` is only true after the next render, so the same tick can call `fetchNextPage` twice. Do not drop the argument as unused.
+---

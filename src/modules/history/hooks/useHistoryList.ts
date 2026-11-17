@@ -1,18 +1,21 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { filterAccountTransactions } from '@/modules/budget/helpers/transactions/filterAccountTransactions.ts';
+import { groupAccountTransactions } from '@/modules/budget/helpers/transactions/groupAccountTransactions.ts';
 import {
-  historyStatusKey,
+  historyListView,
   isHistoryListAtBottom,
 } from '@/modules/history/helpers/historyList.ts';
 import { useHistoryTransactions } from '@/modules/history/hooks/useHistoryTransactions.ts';
 
 export const useHistoryList = () => {
   const { t } = useTranslation();
+  const [search, setSearch] = useState('');
   const scrollRoot = useRef<HTMLDivElement>(null);
-  const nextPageRequested = useRef(false);
+
   const {
     data,
-    groups,
+    items,
     isLoading,
     isError,
     isFetchingNextPage,
@@ -20,13 +23,26 @@ export const useHistoryList = () => {
     hasNextPage,
     fetchNextPage,
   } = useHistoryTransactions();
+
   const pageCount = data?.pages.length ?? 0;
+
+  const groups = groupAccountTransactions(
+    filterAccountTransactions(items, search),
+  );
+
+  const view = historyListView({
+    hasPages: data !== undefined,
+    isLoading,
+    isError,
+    matchCount: groups.length,
+    hasNextPage: hasNextPage,
+    nextPageFailed: isFetchNextPageError,
+  });
 
   const loadNextPage = useCallback(() => {
     const root = scrollRoot.current;
 
     if (
-      nextPageRequested.current ||
       !root ||
       !isHistoryListAtBottom(root) ||
       !hasNextPage ||
@@ -36,25 +52,22 @@ export const useHistoryList = () => {
       return;
     }
 
-    nextPageRequested.current = true;
-    void fetchNextPage().finally(() => {
-      nextPageRequested.current = false;
-    });
+    void fetchNextPage({ cancelRefetch: false });
   }, [fetchNextPage, hasNextPage, isFetchNextPageError, isFetchingNextPage]);
 
   useEffect(() => {
     loadNextPage();
-  }, [loadNextPage, pageCount]);
-
-  const hasPages = data !== undefined;
+  }, [loadNextPage, pageCount, search, groups.length]);
 
   return {
     groups,
     loadNextPage,
-    loadingNextPage: isFetchingNextPage,
+    loadingNextPage: isFetchingNextPage || view.keepPaging,
     nextPageFailed: isFetchNextPageError,
     scrollRoot,
-    showList: hasPages && groups.length > 0,
-    statusLabel: t(historyStatusKey(hasPages, isLoading, isError)),
+    search,
+    setSearch,
+    showList: view.showList,
+    statusLabel: t(view.statusKey),
   };
 };

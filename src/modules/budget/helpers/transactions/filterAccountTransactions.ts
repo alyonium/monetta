@@ -1,3 +1,4 @@
+import { formatAccountTransactionGroupDate } from '@/modules/budget/helpers/transactions/accountTransactionDate.ts';
 import { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 
 const searchableText = (item: AccountTransaction): string =>
@@ -8,6 +9,11 @@ const searchableText = (item: AccountTransaction): string =>
     item.currencyCode,
     item.currencySymbol,
     String(item.amount),
+    ...(item.foreignAmount === null
+      ? []
+      : [String(item.foreignAmount), item.foreignCurrencyCode]),
+    item.date,
+    formatAccountTransactionGroupDate(item.date),
     item.type,
     ...item.tags,
   ]
