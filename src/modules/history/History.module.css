@@ -5,9 +5,25 @@
   min-height: 0;
 }
 
-.search {
+.toolbar {
+  --history-control-size: calc(2.25rem * var(--mantine-scale));
+  display: flex;
   flex-shrink: 0;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-md) 0;
+}
+
+.search {
+  flex: 1;
+}
+
+.filter {
+  --ai-size: var(--history-control-size);
+  width: var(--ai-size);
+  height: var(--ai-size);
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--mantine-color-default-border);
 }
 
 .list {

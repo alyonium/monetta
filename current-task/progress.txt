@@ -385,3 +385,17 @@
 - **Learnings for future iterations:**
     - Gotchas encountered: `cancelRefetch` defaults to `true`. `isFetchingNextPage` is only true after the next render, so the same tick can call `fetchNextPage` twice. Do not drop the argument as unused.
 ---
+
+## 2026-11-17 18:45 - US-032
+- History filters (period, type, one tag) refetch Firefly from page 1. Badge counts non-default filters. Search stays client-side on that result. tsc, vitest (284), eslint green.
+- **Learnings for future iterations:**
+    - Patterns discovered: filter state lives in `useHistoryList`. Query key is `[...HISTORY_TRANSACTIONS_QUERY_KEY, { start, end, type, tag }]`. A tag uses `listTransactionByTag`; otherwise `listTransaction`. Month is `startOfMonth`…`endOfMonth`, not `monthRange`.
+    - Gotchas encountered: do not put the search string or the page on the key. Do not add `placeholderData`. All types omits `type`. Switching to Month or Date range resets that period to today. A start after the end moves the other bound to the value just changed.
+    - Useful context: badge is scope + type + tag, max 3. Card type copy stays `Opening balance`; the select says `Opening Balance`. US-033 sort is not in this key yet. US-034 still does not make the card a button.
+---
+
+## 2026-11-17 19:10 - US-032 review
+- Dropped the identity type map and the second query assembly. `filters` is no longer a next-page effect dependency. `tag: null` stays on the query key.
+- **Learnings for future iterations:**
+    - Gotchas encountered: `HISTORY_FILTER_TYPE` other than `all` is already a Firefly type. `toHistoryTransactionsQuery` is the only place that drops empty `start` / `end` / `type`. Fetch spreads that object after taking `tag` off.
+---
