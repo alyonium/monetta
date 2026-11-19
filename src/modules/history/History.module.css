@@ -18,7 +18,7 @@
   flex: 1;
 }
 
-.filter {
+.toolbarButton {
   --ai-size: var(--history-control-size);
   width: var(--ai-size);
   height: var(--ai-size);

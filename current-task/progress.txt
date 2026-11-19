@@ -399,3 +399,11 @@
 - **Learnings for future iterations:**
     - Gotchas encountered: `HISTORY_FILTER_TYPE` other than `all` is already a Firefly type. `toHistoryTransactionsQuery` is the only place that drops empty `start` / `end` / `type`. Fetch spreads that object after taking `tag` off.
 ---
+
+## 2026-11-17 20:15 - US-033
+- History Sort toggles loaded groups and cards between newest-first and oldest-first. Order stays out of the Firefly query. tsc, vitest (284), eslint green.
+- **Learnings for future iterations:**
+    - Patterns discovered: `ACCOUNT_TRANSACTION_ORDER` is exported from `groupAccountTransactions`. Default `desc` keeps account details newest first. History state is `useHistoryList`; the button uses two static icon branches and shared `.toolbarButton`.
+    - Gotchas encountered: do not put sort on `['history', 'transactions', filters]` or `toHistoryTransactionsQuery`. `aria-pressed` is true only for `asc`. Equal timestamps stay in their previous order. Playwright's bundled Chrome was missing, so the check used the Cursor browser.
+    - Useful context: i18n `history.sort`. Toggle sets the list `scrollTop` to 0. The filter badge ignores sort. US-034 still does not make the card a button.
+---

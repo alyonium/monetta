@@ -1,9 +1,3 @@
-const HISTORY_LIST_BOTTOM_DISTANCE = 1;
-
-export const isHistoryListAtBottom = (root: HTMLElement): boolean =>
-  root.scrollHeight - root.scrollTop - root.clientHeight <=
-  HISTORY_LIST_BOTTOM_DISTANCE;
-
 type HistoryStatusKey =
   'history.loading' | 'history.loadFailed' | 'history.empty';
 
@@ -46,12 +40,15 @@ export const historyListView = ({
   hasNextPage,
   nextPageFailed,
 }: HistoryListViewInput): HistoryListView => {
+  const waitingForPages = hasNextPage && !nextPageFailed;
   const showList =
-    hasPages && (matchCount > 0 || hasNextPage || nextPageFailed);
+    hasPages && !waitingForPages && (matchCount > 0 || nextPageFailed);
 
   return {
     showList,
-    keepPaging: hasPages && matchCount === 0 && hasNextPage && !nextPageFailed,
-    statusKey: historyStatusKey(hasPages, isLoading, isError),
+    keepPaging: hasPages && waitingForPages,
+    statusKey: waitingForPages
+      ? 'history.loading'
+      : historyStatusKey(hasPages, isLoading, isError),
   };
 };

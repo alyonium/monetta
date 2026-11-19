@@ -148,6 +148,7 @@ export const en = {
   },
   history: {
     search: 'Search',
+    sort: 'Sort',
     from: 'From',
     to: 'To',
     empty: 'No transactions found',

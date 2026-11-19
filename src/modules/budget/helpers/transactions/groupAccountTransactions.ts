@@ -4,20 +4,31 @@ import {
   AccountTransactionGroup,
 } from '@/modules/budget/types/accountTransaction.ts';
 
-const compareDesc = (left: string, right: string): number => {
-  if (left < right) {
-    return 1;
+export const ACCOUNT_TRANSACTION_ORDER = {
+  DESC: 'desc',
+  ASC: 'asc',
+} as const;
+
+export type AccountTransactionOrder =
+  (typeof ACCOUNT_TRANSACTION_ORDER)[keyof typeof ACCOUNT_TRANSACTION_ORDER];
+
+const compareByOrder = (
+  left: string,
+  right: string,
+  order: AccountTransactionOrder,
+): number => {
+  if (left === right) {
+    return 0;
   }
 
-  if (left > right) {
-    return -1;
-  }
+  const earlierFirst = left < right ? -1 : 1;
 
-  return 0;
+  return order === ACCOUNT_TRANSACTION_ORDER.ASC ? earlierFirst : -earlierFirst;
 };
 
 export const groupAccountTransactions = (
   items: AccountTransaction[],
+  order: AccountTransactionOrder = ACCOUNT_TRANSACTION_ORDER.DESC,
 ): AccountTransactionGroup[] => {
   const byDate = new Map<string, AccountTransaction[]>();
 
@@ -33,12 +44,12 @@ export const groupAccountTransactions = (
   });
 
   return [...byDate.entries()]
-    .sort(([left], [right]) => compareDesc(left, right))
+    .sort(([left], [right]) => compareByOrder(left, right, order))
     .map(([date, groupItems]) => ({
       date,
       label: formatAccountTransactionGroupDate(date),
       items: [...groupItems].sort((left, right) =>
-        compareDesc(left.dateTime, right.dateTime),
+        compareByOrder(left.dateTime, right.dateTime, order),
       ),
     }));
 };

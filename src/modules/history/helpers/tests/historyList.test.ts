@@ -32,11 +32,11 @@ describe('historyListView', () => {
     });
   });
 
-  it('keeps paging when the filter is empty and another page exists', () => {
-    expect(view({ hasNextPage: true })).toEqual({
-      showList: true,
+  it('hides a partial page set so sort does not treat it as complete', () => {
+    expect(view({ matchCount: 4, hasNextPage: true })).toEqual({
+      showList: false,
       keepPaging: true,
-      statusKey: 'history.empty',
+      statusKey: 'history.loading',
     });
   });
 
