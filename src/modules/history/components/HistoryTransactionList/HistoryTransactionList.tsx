@@ -1,5 +1,6 @@
 import { Loader, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
+import { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
 import { AccountTransactionGroup } from '@/modules/budget/types/accountTransaction.ts';
 import HistoryTransactionCard from '@/modules/history/components/HistoryTransactionCard/HistoryTransactionCard.tsx';
 import styles from './HistoryTransactionList.module.css';
@@ -8,12 +9,14 @@ type HistoryTransactionListProps = {
   groups: AccountTransactionGroup[];
   loadingNextPage: boolean;
   nextPageFailed: boolean;
+  onSelect: (transaction: EditableAccountTransaction) => void;
 };
 
 const HistoryTransactionList = ({
   groups,
   loadingNextPage,
   nextPageFailed,
+  onSelect,
 }: HistoryTransactionListProps) => {
   const { t } = useTranslation();
 
@@ -29,6 +32,7 @@ const HistoryTransactionList = ({
             <HistoryTransactionCard
               key={item.journalId ?? `${item.id}:${index}`}
               transaction={item}
+              onSelect={onSelect}
             />
           ))}
         </section>

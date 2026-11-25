@@ -1,4 +1,11 @@
-import { ActionIcon, Badge, Loader, Text, TextInput } from '@mantine/core';
+import {
+  ActionIcon,
+  Badge,
+  Loader,
+  Modal,
+  Text,
+  TextInput,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   FunnelIcon,
@@ -7,7 +14,16 @@ import {
   SortDescendingIcon,
 } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
+import EditTransactionModal from '@/components/EditTransactionModal/EditTransactionModal.tsx';
+import {
+  startOfMonth,
+  todayIso,
+} from '@/modules/budget/helpers/month/budgetMonth.ts';
 import { ACCOUNT_TRANSACTION_ORDER } from '@/modules/budget/helpers/transactions/groupAccountTransactions.ts';
+import { EditableAccountTransaction } from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
+import { toRecordAccounts } from '@/modules/budget/helpers/transactions/toRecordAccounts.ts';
+import { useBudgetAccounts } from '@/modules/budget/hooks/useBudgetAccounts.ts';
+import { useModalSession } from '@/modules/budget/hooks/useModalSession.ts';
 import HistoryFiltersModal from '@/modules/history/components/HistoryFiltersModal/HistoryFiltersModal.tsx';
 import HistoryTransactionList from '@/modules/history/components/HistoryTransactionList/HistoryTransactionList.tsx';
 import { useHistoryList } from '@/modules/history/hooks/useHistoryList.ts';
@@ -17,6 +33,9 @@ const History = () => {
   const { t } = useTranslation();
   const [filtersOpened, { open: openFilters, close: closeFilters }] =
     useDisclosure(false);
+  const editTransaction = useModalSession<EditableAccountTransaction>();
+  const { data: accounts } = useBudgetAccounts(startOfMonth(todayIso()));
+  const recordAccounts = toRecordAccounts(accounts);
 
   const {
     filterCount,
@@ -89,6 +108,7 @@ const History = () => {
             groups={groups}
             loadingNextPage={loadingNextPage}
             nextPageFailed={nextPageFailed}
+            onSelect={editTransaction.open}
           />
         ) : pending ? (
           <div className={styles.status}>
@@ -107,6 +127,20 @@ const History = () => {
         filters={filters}
         onChange={setFilters}
       />
+
+      {editTransaction.session.payload && (
+        <Modal.Stack>
+          <EditTransactionModal
+            key={editTransaction.session.id}
+            stackId='edit-transaction'
+            opened={editTransaction.session.opened}
+            onClose={editTransaction.close}
+            onExitTransitionEnd={editTransaction.dispose}
+            transaction={editTransaction.session.payload}
+            accounts={recordAccounts}
+          />
+        </Modal.Stack>
+      )}
     </div>
   );
 };

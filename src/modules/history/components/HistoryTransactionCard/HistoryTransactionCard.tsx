@@ -1,5 +1,11 @@
 import { Badge, Text } from '@mantine/core';
+import { clsx } from 'clsx';
 import { useTranslation } from 'react-i18next';
+import { onEnterOrSpace } from '@/helpers/onEnterOrSpace.ts';
+import {
+  isEditableAccountTransaction,
+  EditableAccountTransaction,
+} from '@/modules/budget/helpers/transactions/isEditableAccountTransaction.ts';
 import { hasTransactionDescription } from '@/modules/budget/helpers/transactions/transactionDescription.ts';
 import { AccountTransaction } from '@/modules/budget/types/accountTransaction.ts';
 import { historyTransactionAmount } from '@/modules/history/helpers/historyTransactionAmount.ts';
@@ -8,16 +14,28 @@ import styles from './HistoryTransactionCard.module.css';
 
 type HistoryTransactionCardProps = {
   transaction: AccountTransaction;
+  onSelect?: (transaction: EditableAccountTransaction) => void;
 };
 
 const HistoryTransactionCard = ({
   transaction,
+  onSelect,
 }: HistoryTransactionCardProps) => {
   const { t } = useTranslation();
   const amount = historyTransactionAmount(transaction);
+  const onSelectTransaction =
+    onSelect && isEditableAccountTransaction(transaction)
+      ? () => onSelect(transaction)
+      : undefined;
 
   return (
-    <div className={styles.card}>
+    <div
+      className={clsx(styles.card, onSelectTransaction && styles.interactive)}
+      role={onSelectTransaction ? 'button' : undefined}
+      tabIndex={onSelectTransaction ? 0 : undefined}
+      onClick={onSelectTransaction}
+      onKeyDown={onSelectTransaction && onEnterOrSpace(onSelectTransaction)}
+    >
       <div className={styles.details}>
         <div className={styles.line}>
           <Text c='dimmed' className={styles.label} size='sm' span>
