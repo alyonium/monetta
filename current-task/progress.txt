@@ -407,3 +407,27 @@
     - Gotchas encountered: do not put sort on `['history', 'transactions', filters]` or `toHistoryTransactionsQuery`. `aria-pressed` is true only for `asc`. Equal timestamps stay in their previous order. Playwright's bundled Chrome was missing, so the check used the Cursor browser.
     - Useful context: i18n `history.sort`. Toggle sets the list `scrollTop` to 0. The filter badge ignores sort. US-034 still does not make the card a button.
 ---
+
+## 2026-11-25 21:43 - US-034
+- History already opens the same `EditTransactionModal` from a deposit, withdrawal, or transfer card. Save and delete already refresh the History list and Budget accounts. Marked passing.
+- **Learnings for future iterations:**
+    - Patterns discovered: `useModalSession` on History, `EditTransactionModal` inside its own `Modal.Stack` while `session.payload` is set. Account selects use `useBudgetAccounts(startOfMonth(todayIso()))` and `toRecordAccounts`. The card is `role="button"` only when `isEditableAccountTransaction`.
+    - Gotchas encountered: do not add a second modal or a second invalidation path. Reconciliation, opening balance, and a missing `journalId` stay plain divs.
+    - Useful context: save and delete already call `invalidateTransactionQueries` / `TRANSACTION_QUERY_KEYS` (`HISTORY_TRANSACTIONS_QUERY_KEY` and `BUDGET_ACCOUNTS_QUERY_KEY`). Next story is US-035.
+---
+
+## 2026-11-25 22:30 - US-035
+- Analytics shell: Diagram/Chart with separate From/To, shared tag and Expenses/Incomes, period label, empty chart slot. No charts, lists, or insight queries.
+- **Learnings for future iterations:**
+    - Patterns discovered: state lives in `useAnalyticsFilters`; `todayIso()` runs once in the initializer. Ranges are `{ year, month }` with month `1–12`. Compare with padded `YYYY-MM`. `formatAnalyticsPeriod` takes 12 labels. Tag select is `useQuery` + `TAGS_QUERY_KEY` + `fetchTags`.
+    - Gotchas encountered: clamp the changed point to today's month before the From/To check, or a future December is copied onto the other bound. A past year still enables December. The app route is `/#/monetta/analytics`. Leaving the tab unmounts the page and resets state.
+    - Useful context: the empty slot is `.visualization` (`min-height: 16rem`). US-036 fills it and adds lists under Expenses/Incomes. US-037 swipes only Diagram when From equals To. US-038 uses the Chart range. Do not import `@mantine/charts` until those stories.
+---
+
+## 2026-11-25 23:05 - US-035 review
+- Range is two `YYYY-MM-DD` month starts. Removed the `{ year, month }` point and the bound-plus-part update. Selects assemble `${year}-${month}-01` and call `clampAnalyticsRange`. Period labels are a 12-tuple.
+- **Learnings for future iterations:**
+    - Patterns discovered: same order rule as History, on month-start strings. `from > to` sets both bounds to the date just written.
+    - Gotchas encountered: do not parse the select back into numbers. Chart's January is `YYYY-01-01`, so the month option value is `01`.
+    - Useful context: `formatAnalyticsPeriod` rejects a labels array shorter than 12.
+---

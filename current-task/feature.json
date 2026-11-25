@@ -563,7 +563,7 @@
         "Verify in browser using agent-browser mcp"
       ],
       "priority": 34,
-      "passes": false,
+      "passes": true,
       "designReference": []
     },
     {
@@ -579,7 +579,7 @@
         "Verify in browser using agent-browser mcp"
       ],
       "priority": 35,
-      "passes": false,
+      "passes": true,
       "designReference": []
     },
     {

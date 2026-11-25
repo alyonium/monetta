@@ -1,0 +1,18 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+}
+
+.period {
+  margin: 0;
+}
+
+.visualization {
+  flex: 1;
+  min-height: 12rem;
+}
