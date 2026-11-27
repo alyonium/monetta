@@ -447,3 +447,11 @@
     - Gotchas encountered: finger left is the previous month. Budget's page swipe uses the opposite (`dx < 0` is the next page). Reuse `PAGE_SWIPE_PX` and `PAGE_SWIPE_AXIS_LOCK_PX`, not `resolvePageSwipe`. `touch-action: pan-y` leaves vertical scrolling to the legend. Dots are `aria-hidden` spans, not buttons.
     - Useful context: both the gesture and the dots come from the current range. There is no separate swipe mode. The floor is January 2000 (`ANALYTICS_MIN_YEAR`). US-038 should leave the Chart slot without this pager.
 ---
+
+## 2026-11-27 16:20 - US-038
+- Chart draws a monthly LineChart of incomes and expenses in the primary currency. Chart keeps its own From/To and the shared tag. Diagram is unchanged. tsc, vitest (336), eslint green.
+- **Learnings for future iterations:**
+    - Patterns discovered: `useAnalyticsChart` mounts only inside `IncomeExpenseChart`. Key is `['analytics', 'chart', start, end, tag]` and is on `TRANSACTION_QUERY_KEYS`. No tag uses `listTransaction`; a tag uses `listTransactionByTag`. Both go through `collectFireflyPages` with `ANALYTICS_CHART_PAGE_LIMIT` (50). Period is `analyticsBreakdownPeriod`.
+    - Gotchas encountered: a missing rate nulls the whole series, and the screen shows `—` without mounting `LineChart`. An empty month is 0, so a quiet month still draws. The X label is the `dataKey`, so a repeated month name includes the year or two Jans collapse. Y ticks need width from the formatted amount: Mantine shifts them left by 10px and `formatWalletAmount` includes the symbol. `interval: 0` plus a 24px right margin keeps the last month on screen.
+    - Useful context: deposit is income by source, withdrawal is expense by destination, amount is `amount` plus `currencyCode`. Transfer, reconciliation, and opening balance are skipped. Series are `incomes` (`green.6`) then `expenses` (`red.6`). No `withLegend` and no `DiagramMonthPager`. The heading legend is CSS `green.6` / `red.6`. Expenses | Incomes changes only the list. US-039 is logout.
+---

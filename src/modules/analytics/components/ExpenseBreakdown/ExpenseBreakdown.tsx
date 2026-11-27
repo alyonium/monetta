@@ -5,6 +5,7 @@ import { formatWalletAmount } from '@/helpers/currency/formatWalletAmount.ts';
 import { WalletCurrency } from '@/helpers/currency/types.ts';
 import { formatAnalyticsAmount } from '@/modules/analytics/helpers/formatAnalyticsAmount.ts';
 import {
+  DONUT_CORNER_RADIUS,
   DONUT_PADDING_ANGLE,
   DONUT_THICKNESS,
   toExpenseBreakdownChart,
@@ -53,6 +54,7 @@ const ExpenseBreakdown = ({
               },
             }}
             paddingAngle={DONUT_PADDING_ANGLE}
+            pieProps={{ cornerRadius: DONUT_CORNER_RADIUS }}
             strokeWidth={0}
             thickness={DONUT_THICKNESS}
             tooltipDataSource='segment'

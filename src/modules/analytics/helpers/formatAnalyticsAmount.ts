@@ -10,3 +10,11 @@ export const formatAnalyticsAmount = (
   amount !== null && currency
     ? formatWalletAmount(amount, currency)
     : ANALYTICS_AMOUNT_PLACEHOLDER;
+
+export const formatAnalyticsAxisAmount = (
+  amount: number,
+  currency: WalletCurrency,
+): string =>
+  formatWalletAmount(amount, currency)
+    .replace(/(\.\d*?)0+(?=\s|$)/, '$1')
+    .replace(/\.(?=\s|$)/, '');

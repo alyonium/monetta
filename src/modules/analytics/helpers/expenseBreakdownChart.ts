@@ -9,6 +9,7 @@ export const DONUT_MAX_SIZE = 180;
 export const DONUT_MIN_SIZE = 128;
 export const DONUT_THICKNESS = 22;
 export const DONUT_PADDING_ANGLE = 3;
+export const DONUT_CORNER_RADIUS = 4;
 
 const CHART_HUES = [
   'red',

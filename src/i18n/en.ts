@@ -190,6 +190,7 @@ export const en = {
     expenses: 'Expenses',
     incomes: 'Incomes',
     expenseBreakdown: 'Expense breakdown',
+    incomesVsExpenses: 'Incomes vs Expenses',
     noLegend: 'No legend',
     loading: 'Loading analytics',
     loadFailed: 'Failed to load analytics',

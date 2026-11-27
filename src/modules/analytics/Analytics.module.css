@@ -10,15 +10,61 @@
 
 .heading {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  gap: var(--mantine-spacing-sm);
+  min-width: 0;
 }
 
 .title,
-.period {
+.period,
+.seriesLabel {
   margin: 0;
+  white-space: nowrap;
+}
+
+.title {
+  flex-shrink: 0;
+}
+
+.headingAside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.seriesLegend {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--mantine-spacing-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seriesItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.incomesMark,
+.expensesMark {
+  width: 0.5rem;
+  height: 2px;
+  border-radius: 999px;
+}
+
+.incomesMark {
+  background: var(--mantine-color-green-6);
+}
+
+.expensesMark {
+  background: var(--mantine-color-red-6);
 }
 
 .visualization {
@@ -27,21 +73,6 @@
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
-}
-
-.diagramFrame {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.visualization .status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: var(--mantine-spacing-xl) auto;
 }
 
 .rankStatus {
