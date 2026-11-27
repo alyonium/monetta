@@ -189,8 +189,9 @@ Application:
                 3. Date range
             2. Transaction type
             3. Filter by tag
-            4. Reset filters button
-            5. Close button
+            4. Filter by account
+            5. Reset filters button
+            6. Close button
         2. Sorting
     2. Transactions list
         1. Transaction card
@@ -940,11 +941,17 @@ Select picker with 6 options: ”All types”, “Deposit”, “Withdrawal”, 
 
 Shows all the created tags in a select picker, allows to select one tag.
 
-2.1.1.4 Reset filters button
+2.1.1.4 Filter by account
+
+A select picker of visible income and expense accounts, including debt accounts that appear in the Expenses list. Only one account can be selected. Empty means all accounts and is the default.
+
+When an account is selected, the list shows only transactions of that account. When an account and a tag are both selected, the list shows transactions of that account that also have the selected tag. The active-filter count includes this filter.
+
+2.1.1.5 Reset filters button
 
 Reset all the filters to default.
 
-2.1.1.5 Close button
+2.1.1.6 Close button
 
 Close the filters modal window.
 
@@ -1012,9 +1019,13 @@ A block consisting of the following elements: a switch between Diagram and Chart
 
 Filters applied to the diagram. By default: from - current month and year, to - current month and year, tags - All tags.
 
-When no date filters are selected, the current month is displayed. The user can navigate between available months by swiping left or right on diagram. Future months cannot be selected. Three page indicator dots are displayed at the bottom: previous month, current month, and next month. If the next month has not started yet, two page indicator dots are displayed: previous month and current month. 
+Swiping the diagram block changes the month when From and To are the same month, including any later month the user has already opened. A swipe to the left (the finger moves left) selects the previous month. A swipe to the right selects the next month. Earlier months have no limit. A swipe that would open a future month does nothing. After a swipe, From and To are both set to the month now shown, so further swipes keep working.
 
-When navigating between months this way, the filters are updated to the month currently displayed on the diagram.
+When From and To are the same month, three page indicator dots are displayed under the diagram: the previous month, the month on screen, and the next month. If the next month has not started, two dots are displayed: the previous month and the month on screen.
+
+When From and To cover more than one month, the diagram stays on that range and the page indicator dots are hidden.
+
+A swipe that changes the month updates the filters to that month.
 
 Above the filters, display the diagram title “Expense breakdown” and the currently selected period in the format Jan - Aug 2026.
 
@@ -1040,9 +1051,21 @@ To the right of the chart, display a legend listing the Expenses shown on the ch
 
 A list of Expenses for the selected period, sorted from highest to lowest. Display the name, percentage, and amount.
 
+Clicking a row opens the History tab and shows the transactions that make up this row. Filter by account (2.1.1.4) is set to this expense account. The search field is cleared. Sorting is newest first. Transaction type is All types.
+
+If From and To of the diagram are the same month, History scope is Month for that month. If they cover more than one month, History scope is Date range from the first day of From through the last day of To.
+
+The History tag filter is set to the tag selected in Analytics. When Analytics is on All tags, the History tag filter is empty.
+
 #### 3.1.4 Incomes
 
 A list of Incomes for the selected period, sorted from highest to lowest. Display the name, percentage, and amount. The diagram does not change when switching to this list.
+
+Clicking a row opens the History tab and shows the transactions that make up this row. Filter by account (2.1.1.4) is set to this income account. The search field is cleared. Sorting is newest first. Transaction type is All types.
+
+If From and To of the diagram are the same month, History scope is Month for that month. If they cover more than one month, History scope is Date range from the first day of From through the last day of To.
+
+The History tag filter is set to the tag selected in Analytics. When Analytics is on All tags, the History tag filter is empty.
 
 ### 3.2 Chart
 
@@ -1076,9 +1099,21 @@ When hovering over the chart, a tooltip should display the Incomes and Expenses 
 
 A list of Expenses for the selected period, sorted from highest to lowest. Display the name, percentage, and amount.
 
+Clicking a row opens the History tab and shows the transactions that make up this row. Filter by account (2.1.1.4) is set to this expense account. The search field is cleared. Sorting is newest first. Transaction type is All types.
+
+If From and To of the chart are the same month, History scope is Month for that month. If they cover more than one month, History scope is Date range from the first day of From through the last day of To.
+
+The History tag filter is set to the tag selected in Analytics. When Analytics is on All tags, the History tag filter is empty.
+
 #### 3.2.4 Incomes
 
 A list of Incomes for the selected period, sorted from highest to lowest. Display the name, percentage, and amount. The chart does not change when switching to this list.
+
+Clicking a row opens the History tab and shows the transactions that make up this row. Filter by account (2.1.1.4) is set to this income account. The search field is cleared. Sorting is newest first. Transaction type is All types.
+
+If From and To of the chart are the same month, History scope is Month for that month. If they cover more than one month, History scope is Date range from the first day of From through the last day of To.
+
+The History tag filter is set to the tag selected in Analytics. When Analytics is on All tags, the History tag filter is empty.
 
 ## 4 Settings
 

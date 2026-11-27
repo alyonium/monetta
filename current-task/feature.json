@@ -19,6 +19,8 @@
     "FR-8: В режиме Edit счета в блоке можно переставить, в том числе на другую страницу",
     "FR-9: History показывает все транзакции с поиском, фильтрами, сортировкой и подгрузкой по скроллу (первая страница 10 штук, далее по 10); после мутаций на Budget список обновляется сразу",
     "FR-10: Analytics: DonutChart разбивки расходов и линейный график доходов/расходов с фильтрами месяц/год и тег",
+    "FR-13: Клик по строке Expenses или Incomes открывает History по этому счёту за период активного вида и с тем же тегом",
+    "FR-14: Свайп блока Diagram меняет месяц, только когда From и To — один месяц: палец влево — предыдущий, палец вправо — следующий",
     "FR-11: Итоги в parameters bar и в аналитике переводятся в основную валюту кошелька курсами Firefly",
     "FR-12: При повторном открытии на этом устройстве сразу показывается последний кеш Query, затем refetch из Firefly"
   ],
@@ -35,7 +37,9 @@
     "Держаться существующей раскладки src, второе дерево не плодить. Экраны живут в src/modules/<name>/ с components, constants, helpers, hooks, types, tests (образец — src/modules/budget). Общий UI — src/components. Общие helpers и типы — src/helpers и src/types. Маршруты — src/constants/router.ts и src/router/AppRouter.tsx. Импорты через @/. App уже монтирует BrowserRouter и AppRouter; Budget — заглушка на /monetta/budget. Пустые модули login, history, analytics, settings уже созданы, их расширяем. Сгенерированный src/api не править; configure-файл класть в src/helpers.",
     "Стили — CSS modules рядом с компонентом: ComponentName.tsx и ComponentName.module.css в одной папке. Не заводить общую папку стилей на модуль и не сваливать стили компонентов в один CSS.",
     "Тесты helpers модуля — в src/modules/<name>/helpers/tests/ (фикстуры там же, testHelpers.ts, не helpers.ts). Тесты не-helpers — рядом с функцией. Общие helpers — в src/helpers/tests. Верхнеуровневый src/modules/<name>/tests не заводить.",
-    "Analytics: From/To свои у Diagram и у Chart (старт Diagram — текущий месяц, старт Chart — январь–текущий месяц). Тег и блок Expenses | Incomes общие. Свайп месяцев только у Diagram, когда её From=To.",
+    "Analytics: From/To свои у Diagram и у Chart (старт Diagram — текущий месяц, старт Chart — январь–текущий месяц). Тег и блок Expenses | Incomes общие. Свайп месяца только у блока Diagram и только когда From и To — один месяц, любой, не только текущий: палец влево — предыдущий месяц, палец вправо — следующий; будущий месяц не открывается; после свайпа From и To становятся этим месяцем; если период длиннее месяца, свайпа и точек нет.",
+    "Клик по строке Expenses или Incomes (и на Diagram, и на Chart) открывает History. Account — этот счёт. Один месяц активного вида — scope Month, несколько месяцев — Date range с первого дня From по последний день To. Тег Analytics переносится, пустой тег остаётся пустым. Поиск очищается, сортировка — сначала новые, тип — All types. Предыдущие фильтры History заменяются этим набором.",
+    "В модалке History поле Account: видимые income и expense, включая debt из списка Expenses. Пусто — все счета, это дефолт. Бейдж считает выбранный счёт, пользователь может сменить его, Reset снимает. Тип транзакции при переходе из Analytics не выставляется. Firefly не фильтрует счёт и тег одним запросом: список берётся по счёту за период, тег дофильтровывается на клиенте.",
     "Backend URL: обрезаем ввод до origin (схема, хост, порт); путь, /api и /v1 игнорируем. baseUrl клиента — {origin}/api. Сегмент /v1 клеит сгенерированный SDK, не helper. Инстанс в подпути в V1 не поддерживаем."
   ],
   "Non-Goals (Out of Scope for V1)": [
@@ -46,7 +50,8 @@
     "Русские (и любые вторые) строки интерфейса в V1",
     "Redux, вторая UI-библиотека, карусель, Chart.js/Nivo",
     "Нативные iOS/Android приложения и проверка на устройстве",
-    "Показ скрытых счетов из Monetta"
+    "Показ скрытых счетов из Monetta",
+    "Свайп месяцев на вкладке Chart"
   ],
   "description": "Monetta V1 — PWA личных финансов на Firefly III: Budget, History, Analytics, Settings",
   "userStories": [
@@ -602,7 +607,7 @@
       "title": "Листать месяцы на диаграмме свайпом",
       "description": "Как пользователь, я хочу свайпать DonutChart на прошлый или следующий месяц, если не задан свой диапазон.",
       "changes": [
-        "Свайп только у Diagram и только по From/To диаграммы; у Chart свайпа нет. Если у Diagram From и To — один месяц, свайп влево/вправо меняет этот месяц и пишет его в From/To диаграммы; в прошлое — без лимита, будущий месяц нельзя",
+        "Свайп только у блока Diagram и только когда From и To диаграммы — один и тот же месяц, любой, не только текущий. Палец влево показывает предыдущий месяц, палец вправо — следующий. На текущем месяце жест вправо ничего не делает. Новый месяц пишется в From и To, дальше листать можно",
         "Точки только если у Diagram From=To: предыдущий, текущий и следующий, если следующий уже начался; две точки, если следующий месяц ещё не наступил",
         "Если после свайпа меняют From/To диаграммы: период больше месяца — точки скрыть и свайп выключить; период ровно один месяц — показать этот месяц и точки вокруг него",
         "Typecheck passes",
@@ -638,6 +643,39 @@
         "Verify in browser using agent-browser mcp"
       ],
       "priority": 39,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-040",
+      "title": "Фильтровать History по счёту",
+      "description": "Как пользователь, я хочу оставить в History транзакции одного income или expense счёта и увидеть это в бейдже фильтров.",
+      "changes": [
+        "В модалке фильтров History селект Account: видимые income и expense счета, включая debt из списка Expenses; пусто — все счета и это дефолт; выбранный счёт входит в бейдж; Reset его снимает",
+        "При выбранном счёте список берётся из accounts/{id}/transactions за период и тип фильтра; если выбран ещё и тег, на экране остаются только транзакции этого счёта с этим тегом",
+        "Add or update automated tests",
+        "Tests pass",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 40,
+      "passes": false,
+      "designReference": []
+    },
+    {
+      "id": "US-041",
+      "title": "Открывать History из строки расхода или дохода",
+      "description": "Как пользователь, я хочу нажать строку Expenses или Incomes в Analytics и увидеть в History транзакции этого счёта за тот же период и тег.",
+      "changes": [
+        "Клик по строке Expenses или Incomes на Diagram и на Chart открывает вкладку History",
+        "Фильтры History заменяются: Account — этот счёт; From и To активного вида совпадают — scope Month этого месяца; период длиннее месяца — Date range с первого дня From по последний день To; тег — тег Analytics или пусто; тип — All types",
+        "Поиск History пустой, сортировка — сначала новые",
+        "Add or update automated tests",
+        "Tests pass",
+        "Typecheck passes",
+        "Verify in browser using agent-browser mcp"
+      ],
+      "priority": 41,
       "passes": false,
       "designReference": []
     }
