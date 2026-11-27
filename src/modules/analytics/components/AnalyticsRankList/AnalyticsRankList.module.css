@@ -1,3 +1,12 @@
+.empty {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  text-align: center;
+}
+
 .list {
   display: flex;
   flex-direction: column;

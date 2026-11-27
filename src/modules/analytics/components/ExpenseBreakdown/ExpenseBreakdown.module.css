@@ -17,8 +17,19 @@
   min-width: 0;
 }
 
+.empty {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  border-style: solid;
+  border-color: var(--mantine-color-dark-4);
+  border-radius: 50%;
+}
+
 .total {
   margin: 0;
+  text-align: center;
 }
 
 .legendSlot {
@@ -26,6 +37,16 @@
   z-index: 0;
   flex: 1;
   min-width: 0;
+}
+
+.legendEmpty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  text-align: center;
 }
 
 .legend {

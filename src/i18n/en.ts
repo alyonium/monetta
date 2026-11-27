@@ -190,8 +190,10 @@ export const en = {
     expenses: 'Expenses',
     incomes: 'Incomes',
     expenseBreakdown: 'Expense breakdown',
+    noLegend: 'No legend',
     loading: 'Loading analytics',
     loadFailed: 'Failed to load analytics',
+    empty: 'List is empty',
     months: {
       m1: 'Jan',
       m2: 'Feb',

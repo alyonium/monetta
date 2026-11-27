@@ -1,5 +1,6 @@
 import { Text } from '@mantine/core';
 import { clsx } from 'clsx';
+import { useTranslation } from 'react-i18next';
 import { formatWalletAmount } from '@/helpers/currency/formatWalletAmount.ts';
 import { WalletCurrency } from '@/helpers/currency/types.ts';
 import { RANK_SIGN } from '@/modules/analytics/constants/rankSign.ts';
@@ -21,8 +22,14 @@ const AnalyticsRankList = ({
   items,
   label,
 }: AnalyticsRankListProps) => {
+  const { t } = useTranslation();
+
   if (items.length === 0) {
-    return null;
+    return (
+      <Text c='dimmed' className={styles.empty} size='sm'>
+        {t('analytics.empty')}
+      </Text>
+    );
   }
 
   return (

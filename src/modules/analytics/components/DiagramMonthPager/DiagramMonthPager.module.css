@@ -1,0 +1,38 @@
+.pager {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.dots {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mantine-spacing-xs);
+  margin-top: 14px;
+}
+
+.dot {
+  position: relative;
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--mantine-color-dimmed);
+  cursor: pointer;
+}
+
+.dot::after {
+  content: '';
+  position: absolute;
+  inset: -0.5rem;
+}
+
+.dotCurrent {
+  background: var(--mantine-color-indigo-4);
+}

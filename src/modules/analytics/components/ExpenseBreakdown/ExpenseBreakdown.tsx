@@ -7,8 +7,8 @@ import { formatAnalyticsAmount } from '@/modules/analytics/helpers/formatAnalyti
 import {
   DONUT_PADDING_ANGLE,
   DONUT_THICKNESS,
+  toExpenseBreakdownChart,
 } from '@/modules/analytics/helpers/expenseBreakdownChart.ts';
-import { useExpenseBreakdownChart } from '@/modules/analytics/hooks/useExpenseBreakdownChart.ts';
 import { AnalyticsRankSide } from '@/modules/analytics/types/analyticsBreakdown.ts';
 import { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
 import styles from './ExpenseBreakdown.module.css';
@@ -16,23 +16,25 @@ import styles from './ExpenseBreakdown.module.css';
 type ExpenseBreakdownProps = {
   accounts: BudgetAccountsByBlock | undefined;
   currency: WalletCurrency | null;
+  donutSize: number;
   side: AnalyticsRankSide;
 };
 
 const ExpenseBreakdown = ({
   accounts,
   currency,
+  donutSize,
   side,
 }: ExpenseBreakdownProps) => {
   const { t } = useTranslation();
-  const { chart, donutSize, ref, segments } = useExpenseBreakdownChart(
+  const { chart, segments } = toExpenseBreakdownChart(
     accounts,
     currency,
     side,
   );
 
   return (
-    <div className={styles.layout} ref={ref}>
+    <div className={styles.layout}>
       <div className={styles.chart}>
         {chart ? (
           <DonutChart
@@ -59,14 +61,23 @@ const ExpenseBreakdown = ({
             }
           />
         ) : (
-          <Text className={styles.total} fw={600} size='sm'>
-            {formatAnalyticsAmount(side.total, currency)}
-          </Text>
+          <div
+            className={styles.empty}
+            style={{
+              width: donutSize,
+              height: donutSize,
+              borderWidth: DONUT_THICKNESS,
+            }}
+          >
+            <Text className={styles.total} fw={600} size='sm'>
+              {formatAnalyticsAmount(side.total, currency)}
+            </Text>
+          </div>
         )}
       </div>
 
-      {side.items.length > 0 && (
-        <div className={styles.legendSlot}>
+      <div className={styles.legendSlot}>
+        {side.items.length > 0 ? (
           <ul
             aria-label={t('analytics.expenseBreakdown')}
             className={styles.legend}
@@ -90,8 +101,12 @@ const ExpenseBreakdown = ({
               </li>
             ))}
           </ul>
-        </div>
-      )}
+        ) : (
+          <Text c='dimmed' className={styles.legendEmpty} size='sm'>
+            {t('analytics.noLegend')}
+          </Text>
+        )}
+      </div>
     </div>
   );
 };

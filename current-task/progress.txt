@@ -439,3 +439,11 @@
     - Gotchas encountered: do not mount `DonutChart` with empty `data`. `chartLabel` is a string. Do not use `withLegend`. A missing rate is `{ total: null, items: [] }`, so the screen shows one `—` and no names. Percent comes from the sum of the shares that are drawn; do not drop a formatted `0%` afterwards. Account colors come from `useBudgetAccounts(startOfMonth(today))` and do not block the chart; a missing account uses `DEFAULT_ACCOUNT_COLOR`. Loading and errors stay in `.visualization` on both views.
     - Useful context: the title `analytics.expenseBreakdown` is only on Diagram, beside the period label. Switching to Incomes does not change the donut. Chart already ranks lists for its own From/To. US-037 adds swipe only on Diagram when From equals To. US-038 fills the empty `.visualization` on Chart. Page limit is `ANALYTICS_BREAKDOWN_PAGE_LIMIT` (50), not another module's constant.
 ---
+
+## 2026-11-27 11:10 - US-037
+- Diagram swipes months only when From equals To. Finger left opens the previous month, finger right the next. A future month and anything before January 2000 stay put. Dots hide when the range is longer than a month. Chart keeps its own range. tsc, vitest (322), eslint green.
+- **Learnings for future iterations:**
+    - Patterns discovered: `setDiagramRange` writes only `ranges.diagram`. `DiagramMonthPager` mounts only while the view is diagram. Month math is `shiftAnalyticsMonth`, `stepDiagramMonth`, and `diagramMonthDots`. Direction is `DIAGRAM_MONTH_SWIPE` (`previous` | `next`), chosen with a ternary.
+    - Gotchas encountered: finger left is the previous month. Budget's page swipe uses the opposite (`dx < 0` is the next page). Reuse `PAGE_SWIPE_PX` and `PAGE_SWIPE_AXIS_LOCK_PX`, not `resolvePageSwipe`. `touch-action: pan-y` leaves vertical scrolling to the legend. Dots are `aria-hidden` spans, not buttons.
+    - Useful context: both the gesture and the dots come from the current range. There is no separate swipe mode. The floor is January 2000 (`ANALYTICS_MIN_YEAR`). US-038 should leave the Chart slot without this pager.
+---

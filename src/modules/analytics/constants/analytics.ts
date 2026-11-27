@@ -13,6 +13,11 @@ export const ANALYTICS_RANGE_BOUND = {
   TO: 'to',
 } as const;
 
+export const DIAGRAM_MONTH_SWIPE = {
+  PREVIOUS: 'previous',
+  NEXT: 'next',
+} as const;
+
 export const ANALYTICS_MIN_YEAR = 2000;
 
 export const ANALYTICS_MONTHS = [

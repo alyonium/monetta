@@ -1,4 +1,6 @@
 import { DEFAULT_THEME } from '@mantine/core';
+import { WalletCurrency } from '@/helpers/currency/types.ts';
+import { AnalyticsRankSide } from '@/modules/analytics/types/analyticsBreakdown.ts';
 import { ACCOUNT_TYPE } from '@/modules/budget/constants/account.ts';
 import { DEFAULT_ACCOUNT_COLOR } from '@/modules/budget/constants/appearance.ts';
 import { BudgetAccountsByBlock } from '@/modules/budget/types/budgetAccount.ts';
@@ -73,4 +75,20 @@ export const segmentColorById = (
   });
 
   return colors;
+};
+
+export const toExpenseBreakdownChart = (
+  accounts: BudgetAccountsByBlock | undefined,
+  currency: WalletCurrency | null,
+  side: AnalyticsRankSide,
+) => {
+  const colors = segmentColorById(accounts, side.items);
+  const segments = side.items.map((item) => ({
+    name: item.name,
+    value: item.amount,
+    color: colors.get(item.id) as string,
+  }));
+  const chart = currency && segments.length > 0 ? { currency, segments } : null;
+
+  return { chart, segments };
 };

@@ -81,6 +81,16 @@ export const useAnalyticsFilters = () => {
     }));
   };
 
+  const setDiagramRange = (range: AnalyticsRange) => {
+    setState((current) => ({
+      ...current,
+      ranges: {
+        ...current.ranges,
+        [ANALYTICS_VIEW.DIAGRAM]: range,
+      },
+    }));
+  };
+
   return {
     view: state.view,
     category: state.category,
@@ -91,5 +101,6 @@ export const useAnalyticsFilters = () => {
     setCategory,
     setTag,
     setRangeBound,
+    setDiagramRange,
   };
 };

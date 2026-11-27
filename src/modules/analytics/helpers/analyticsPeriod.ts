@@ -1,13 +1,20 @@
+import dayjs from 'dayjs';
 import { startOfMonth } from '@/modules/budget/helpers/month/budgetMonth.ts';
 import {
+  ANALYTICS_MIN_YEAR,
   ANALYTICS_MONTH_LABEL_KEYS,
   ANALYTICS_RANGE_BOUND,
+  DIAGRAM_MONTH_SWIPE,
 } from '@/modules/analytics/constants/analytics.ts';
 import {
   AnalyticsMonthLabels,
   AnalyticsRange,
   AnalyticsRangeBound,
+  DiagramMonthSwipe,
 } from '@/modules/analytics/types/analytics.ts';
+
+const ISO_DATE = 'YYYY-MM-DD';
+const ANALYTICS_MIN_MONTH = `${ANALYTICS_MIN_YEAR}-01-01`;
 
 export const defaultDiagramRange = (today: string): AnalyticsRange => {
   const month = startOfMonth(today);
@@ -40,6 +47,58 @@ export const clampAnalyticsRange = (
   }
 
   return updated;
+};
+
+export const shiftAnalyticsMonth = (
+  monthStart: string,
+  delta: number,
+): string =>
+  dayjs(monthStart).add(delta, 'month').startOf('month').format(ISO_DATE);
+
+export const stepDiagramMonth = (
+  range: AnalyticsRange,
+  direction: DiagramMonthSwipe,
+  today: string,
+): AnalyticsRange | null => {
+  if (range.from !== range.to) {
+    return null;
+  }
+
+  const delta = direction === DIAGRAM_MONTH_SWIPE.PREVIOUS ? -1 : 1;
+  const month = shiftAnalyticsMonth(range.from, delta);
+
+  if (month < ANALYTICS_MIN_MONTH || month > startOfMonth(today)) {
+    return null;
+  }
+
+  return { from: month, to: month };
+};
+
+export const diagramMonthDots = (
+  range: AnalyticsRange,
+  today: string,
+): AnalyticsRange[] | null => {
+  if (range.from !== range.to) {
+    return null;
+  }
+
+  const previous = stepDiagramMonth(
+    range,
+    DIAGRAM_MONTH_SWIPE.PREVIOUS,
+    today,
+  );
+  const next = stepDiagramMonth(range, DIAGRAM_MONTH_SWIPE.NEXT, today);
+  const dots = [range];
+
+  if (previous) {
+    dots.unshift(previous);
+  }
+
+  if (next) {
+    dots.push(next);
+  }
+
+  return dots;
 };
 
 export const periodMonthLabels = (
