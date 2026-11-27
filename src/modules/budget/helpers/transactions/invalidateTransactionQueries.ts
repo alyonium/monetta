@@ -5,6 +5,7 @@ import {
   BUDGET_ACCOUNTS_QUERY_KEY,
   BUDGET_INSIGHTS_QUERY_KEY,
 } from '@/modules/budget/constants/queries.ts';
+import { ANALYTICS_BREAKDOWN_QUERY_KEY } from '@/modules/analytics/constants/queries.ts';
 import { HISTORY_TRANSACTIONS_QUERY_KEY } from '@/modules/history/constants/queries.ts';
 
 export const TRANSACTION_QUERY_KEYS = [
@@ -13,6 +14,7 @@ export const TRANSACTION_QUERY_KEYS = [
   ACCOUNT_TRANSACTIONS_QUERY_KEY,
   TAGS_QUERY_KEY,
   HISTORY_TRANSACTIONS_QUERY_KEY,
+  ANALYTICS_BREAKDOWN_QUERY_KEY,
 ] as const;
 
 export const invalidateTransactionQueries = (queryClient: QueryClient) =>

@@ -431,3 +431,11 @@
     - Gotchas encountered: do not parse the select back into numbers. Chart's January is `YYYY-01-01`, so the month option value is `01`.
     - Useful context: `formatAnalyticsPeriod` rejects a labels array shorter than 12.
 ---
+
+## 2026-11-26 00:15 - US-036
+- Diagram shows an expense DonutChart (center total, percent labels, custom legend). Expenses/Incomes lists sit under the switch and follow the active view's range. Chart still has an empty slot.
+- **Learnings for future iterations:**
+    - Patterns discovered: one query `['analytics', 'breakdown', start, end, tag]`. `start` is `range.from`, `end` is `endOfMonth(range.to)`. No tag uses `insightExpenseExpense` and `insightIncomeRevenue` (raw arrays). A tag uses `listTransactionByTag` plus `collectFireflyPages` and `toAccountTransactions`. Withdrawal groups by destination, deposit by source. `ANALYTICS_BREAKDOWN_QUERY_KEY` is on `TRANSACTION_QUERY_KEYS`.
+    - Gotchas encountered: do not mount `DonutChart` with empty `data`. `chartLabel` is a string. Do not use `withLegend`. A missing rate is `{ total: null, items: [] }`, so the screen shows one `—` and no names. Percent comes from the sum of the shares that are drawn; do not drop a formatted `0%` afterwards. Account colors come from `useBudgetAccounts(startOfMonth(today))` and do not block the chart; a missing account uses `DEFAULT_ACCOUNT_COLOR`. Loading and errors stay in `.visualization` on both views.
+    - Useful context: the title `analytics.expenseBreakdown` is only on Diagram, beside the period label. Switching to Incomes does not change the donut. Chart already ranks lists for its own From/To. US-037 adds swipe only on Diagram when From equals To. US-038 fills the empty `.visualization` on Chart. Page limit is `ANALYTICS_BREAKDOWN_PAGE_LIMIT` (50), not another module's constant.
+---

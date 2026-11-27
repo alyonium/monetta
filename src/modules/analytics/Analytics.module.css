@@ -3,16 +3,38 @@
   flex-direction: column;
   height: 100%;
   min-height: 0;
-  overflow: auto;
+  overflow: hidden;
   gap: var(--mantine-spacing-sm);
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
 }
 
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+}
+
+.title,
 .period {
   margin: 0;
 }
 
 .visualization {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.visualization .status {
+  margin: var(--mantine-spacing-xl) auto;
+}
+
+.rank {
   flex: 1;
-  min-height: 12rem;
+  min-height: 0;
+  overflow: auto;
 }

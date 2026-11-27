@@ -189,6 +189,9 @@ export const en = {
     allTags: 'All tags',
     expenses: 'Expenses',
     incomes: 'Incomes',
+    expenseBreakdown: 'Expense breakdown',
+    loading: 'Loading analytics',
+    loadFailed: 'Failed to load analytics',
     months: {
       m1: 'Jan',
       m2: 'Feb',
